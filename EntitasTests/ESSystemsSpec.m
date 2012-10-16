@@ -2,7 +2,8 @@
 #import "ESSystems.h"
 #import "ESSystem.h"
 
-SPEC_BEGIN(SystemsSpec)
+SPEC_BEGIN(ESSystemsSpec)
+
         describe(@"Systems", ^{
 
             __block ESSystems *systems = nil;
