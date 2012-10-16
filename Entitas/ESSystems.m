@@ -29,4 +29,9 @@
     [systems removeObject:system];
 }
 
+- (void)execute
+{
+    for (NSObject <ESSystem>* system in systems)
+        [system execute];
+}
 @end

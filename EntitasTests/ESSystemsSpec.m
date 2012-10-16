@@ -38,5 +38,11 @@ SPEC_BEGIN(ESSystemsSpec)
                 [[theValue([systems containsSystem:systemMock]) should] equal:theValue(NO)];
             });
 
+            it(@"should execute its sub-systems", ^{
+                [[[systemMock should] receive] execute];
+                [systems addSystem:systemMock];
+                [systems execute];
+            });
+
         });
 SPEC_END
