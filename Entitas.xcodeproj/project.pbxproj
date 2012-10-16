@@ -7,13 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6026611BF7005CBCCBA49909 /* ESEntitySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 602665E109AC8CE9FE47191E /* ESEntitySpec.m */; };
 		6026631FBF95A838C00D9611 /* ESSystem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6026633037CC88FB18D8F589 /* ESSystem.h */; };
 		602663C1E330312CA8A12A1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		602663E20AC390008AA94EEA /* ESSystems.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266272CF6FA2C8D1078D5C /* ESSystems.m */; };
+		602663F0630E5E37DF0A9E03 /* ESEntity.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60266CFEC85DBE0652DEC43D /* ESEntity.h */; };
+		6026640BA8B2DCB7AE73B564 /* ESEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6026612B451F8481D098CDEF /* ESEntity.m */; };
 		602664582817771B8A1D6BBA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602669907842FE97CDAA2AE2 /* UIKit.framework */; };
 		6026646ACA691D1F9B0DDFDB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60266F46E3E5F3490E945A5A /* SenTestingKit.framework */; };
 		6026653A34B510A930E2B69F /* ESSystems.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266272CF6FA2C8D1078D5C /* ESSystems.m */; };
+		602665EC42AF419AAFE877C8 /* ESComponent.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 602665223559809BE1026D0A /* ESComponent.h */; };
 		6026688500EC722EA8272F77 /* ESSystems.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60266A29483978C38551FE07 /* ESSystems.h */; };
+		602668A6EA959904A86C5848 /* ESEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6026612B451F8481D098CDEF /* ESEntity.m */; };
+		60266AB8EB19D41EE6CD5227 /* SomeComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266C94291599832FCB9846 /* SomeComponent.m */; };
 		60266B7A28294BD4648903D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
@@ -39,6 +45,8 @@
 			files = (
 				6026688500EC722EA8272F77 /* ESSystems.h in CopyFiles */,
 				6026631FBF95A838C00D9611 /* ESSystem.h in CopyFiles */,
+				602663F0630E5E37DF0A9E03 /* ESEntity.h in CopyFiles */,
+				602665EC42AF419AAFE877C8 /* ESComponent.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,14 +55,20 @@
 /* Begin PBXFileReference section */
 		38591DBF038641D3B9A8355C /* libPods-EntitasTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-EntitasTests.a"; path = "libPods-EntitasTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		602660DC88A48822B365AACC /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6026612B451F8481D098CDEF /* ESEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntity.m; sourceTree = "<group>"; };
 		602661D19EC1B09C0C7C444C /* EntitasTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "EntitasTests-Info.plist"; sourceTree = "<group>"; };
 		60266272CF6FA2C8D1078D5C /* ESSystems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSystems.m; sourceTree = "<group>"; };
 		6026633037CC88FB18D8F589 /* ESSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESSystem.h; sourceTree = "<group>"; };
+		602664F5ECFD7036D547B890 /* SomeComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeComponent.h; sourceTree = "<group>"; };
+		602665223559809BE1026D0A /* ESComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESComponent.h; sourceTree = "<group>"; };
+		602665E109AC8CE9FE47191E /* ESEntitySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntitySpec.m; sourceTree = "<group>"; };
 		602666AFD5B81735B7375037 /* Entitas-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Entitas-Prefix.pch"; sourceTree = "<group>"; };
 		6026678E2FE43938233FC26B /* libEntitas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libEntitas.a; path = libEntitas.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		602669907842FE97CDAA2AE2 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		60266A29483978C38551FE07 /* ESSystems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESSystems.h; sourceTree = "<group>"; };
 		60266A672BFD024861B3540E /* EntitasTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EntitasTests.octest; path = EntitasTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		60266C94291599832FCB9846 /* SomeComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeComponent.m; sourceTree = "<group>"; };
+		60266CFEC85DBE0652DEC43D /* ESEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntity.h; sourceTree = "<group>"; };
 		60266DB5B510EE20C17FA196 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSystemsSpec.m; sourceTree = "<group>"; };
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -89,6 +103,8 @@
 			children = (
 				602661D19EC1B09C0C7C444C /* EntitasTests-Info.plist */,
 				602666B1B326B33430D2AB89 /* InfoPlist.strings */,
+				60266C94291599832FCB9846 /* SomeComponent.m */,
+				602664F5ECFD7036D547B890 /* SomeComponent.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -122,6 +138,9 @@
 				60266272CF6FA2C8D1078D5C /* ESSystems.m */,
 				60266A29483978C38551FE07 /* ESSystems.h */,
 				6026633037CC88FB18D8F589 /* ESSystem.h */,
+				6026612B451F8481D098CDEF /* ESEntity.m */,
+				60266CFEC85DBE0652DEC43D /* ESEntity.h */,
+				602665223559809BE1026D0A /* ESComponent.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -148,6 +167,7 @@
 			children = (
 				60266352126736875957001E /* Supporting Files */,
 				60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */,
+				602665E109AC8CE9FE47191E /* ESEntitySpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -263,6 +283,9 @@
 			files = (
 				60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */,
 				602663E20AC390008AA94EEA /* ESSystems.m in Sources */,
+				6026611BF7005CBCCBA49909 /* ESEntitySpec.m in Sources */,
+				6026640BA8B2DCB7AE73B564 /* ESEntity.m in Sources */,
+				60266AB8EB19D41EE6CD5227 /* SomeComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6026653A34B510A930E2B69F /* ESSystems.m in Sources */,
+				602668A6EA959904A86C5848 /* ESEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

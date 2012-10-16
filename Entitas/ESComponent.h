@@ -1,0 +1,3 @@
+@protocol ESComponent <NSObject>
+
+@end

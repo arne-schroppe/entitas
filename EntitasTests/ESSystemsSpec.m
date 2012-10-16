@@ -4,7 +4,7 @@
 
 SPEC_BEGIN(ESSystemsSpec)
 
-        describe(@"Systems", ^{
+        describe(@"ESSystems", ^{
 
             __block ESSystems *systems = nil;
             __block id systemMock = nil;
