@@ -1,0 +1,6 @@
+.DS_Store
+.idea
+
+# Let's try and keep the Pods out of the repo
+Entitas.xcworkspace
+Pods

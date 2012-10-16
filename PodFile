@@ -1,0 +1,5 @@
+platform :ios
+
+target :EntitasTests, :exclusive => true do
+	pod 'Kiwi', 	"~> 1.1.1" 
+end

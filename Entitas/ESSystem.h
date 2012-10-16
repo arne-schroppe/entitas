@@ -1,0 +1,3 @@
+@protocol ESSystem <NSObject>
+
+@end
