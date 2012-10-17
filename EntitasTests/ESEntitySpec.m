@@ -21,14 +21,12 @@ SPEC_BEGIN(ESEntitySpec)
             });
 
             it(@"should add a component", ^{
-                id componentMock = [KWMock mockForProtocol:@protocol(ESComponent)];
-                [entity addComponent:componentMock];
-                [[theValue([entity containsComponent:componentMock]) should] equal:theValue(YES)];
+                [entity addComponent:component];
+                [[theValue([entity containsComponent:component]) should] equal:theValue(YES)];
             });
 
             it(@"should not contain a component which hasn't been added", ^{
-                id componentMock = [KWMock mockForProtocol:@protocol(ESComponent)];
-                [[theValue([entity containsComponent:componentMock]) should] equal:theValue(NO)];
+                [[theValue([entity containsComponent:component]) should] equal:theValue(NO)];
             });
 
             it(@"should have a component of type when component of that type was added", ^{
