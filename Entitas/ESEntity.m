@@ -52,4 +52,12 @@
             componentOfType = component;
     return componentOfType;
 }
+
+- (BOOL)hasComponentsOfTypes:(NSArray *)types
+{
+    for (Class type in types)
+        if (![self hasComponentOfType:type])
+            return NO;
+    return YES;
+}
 @end

@@ -7,4 +7,6 @@
 - (BOOL)containsEntity:(ESEntity *)entity;
 
 - (void)destroyEntity:(ESEntity *)entity;
+
+- (NSMutableArray *)getEntitiesWithComponentsOfTypes:(NSArray *)types;
 @end

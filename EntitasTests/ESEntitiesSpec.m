@@ -1,6 +1,7 @@
 #import "Kiwi.h"
 #import "ESEntities.h"
 #import "ESEntity.h"
+#import "SomeComponent.h"
 
 SPEC_BEGIN(ESEntitiesSpec)
 
@@ -37,6 +38,19 @@ SPEC_BEGIN(ESEntitiesSpec)
                 ESEntity *entity = [entities createEntity];
                 [entities destroyEntity:entity];
                 [[theValue([entities containsEntity:entity]) should] equal:theValue(NO)];
+            });
+
+            it(@"should return a subset of all entities which contain the given component types", ^{
+                [entities createEntity];
+                SomeComponent *someComponent = [[SomeComponent alloc] init];
+                ESEntity *entityWithSomeComponent = [entities createEntity];
+                [entityWithSomeComponent addComponent:someComponent];
+
+                NSMutableArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:@[[SomeComponent class]]];
+
+                [[entitiesWithSomeComponent should] contain:entityWithSomeComponent];
+                [[entitiesWithSomeComponent should] haveCountOf:1];
+
             });
 
         });

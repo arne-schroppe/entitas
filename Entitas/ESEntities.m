@@ -33,4 +33,15 @@
 {
     [entities removeObject:entity];
 }
+
+- (NSMutableArray *)getEntitiesWithComponentsOfTypes:(NSArray *)types
+{
+    NSMutableArray *matchingEntities = [NSMutableArray array];
+    for (ESEntity *entity in entities)
+    {
+        if ([entity hasComponentsOfTypes:types])
+            [matchingEntities addObject:entity];
+    }
+    return matchingEntities;
+}
 @end

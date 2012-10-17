@@ -11,4 +11,6 @@
 - (void)removeComponentOfType:(Class)type;
 
 - (NSObject <ESComponent> *)getComponentOfType:(Class)type;
+
+- (BOOL)hasComponentsOfTypes:(NSArray *)types;
 @end
