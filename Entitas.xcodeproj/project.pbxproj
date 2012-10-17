@@ -23,6 +23,10 @@
 		60266B7A28294BD4648903D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
+		B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
+		B06B05511ECA4929A43C60FD /* ESEntitiesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */; };
+		B06B0D3D28ADB7081DACD905 /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
+		B06B0F953BAE8A8EEBE00C5E /* ESEntities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B06B003BC9B7BF20962E1E90 /* ESEntities.h */; };
 		EEDBFD4C9F104B31AA479998 /* libPods-EntitasTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38591DBF038641D3B9A8355C /* libPods-EntitasTests.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +51,7 @@
 				6026631FBF95A838C00D9611 /* ESSystem.h in CopyFiles */,
 				602663F0630E5E37DF0A9E03 /* ESEntity.h in CopyFiles */,
 				602665EC42AF419AAFE877C8 /* ESComponent.h in CopyFiles */,
+				B06B0F953BAE8A8EEBE00C5E /* ESEntities.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +78,9 @@
 		60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSystemsSpec.m; sourceTree = "<group>"; };
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		B06B003BC9B7BF20962E1E90 /* ESEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntities.h; sourceTree = "<group>"; };
+		B06B05414306C58E1034B764 /* ESEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntities.m; sourceTree = "<group>"; };
+		B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntitiesSpec.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +149,8 @@
 				6026612B451F8481D098CDEF /* ESEntity.m */,
 				60266CFEC85DBE0652DEC43D /* ESEntity.h */,
 				602665223559809BE1026D0A /* ESComponent.h */,
+				B06B05414306C58E1034B764 /* ESEntities.m */,
+				B06B003BC9B7BF20962E1E90 /* ESEntities.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -168,6 +178,7 @@
 				60266352126736875957001E /* Supporting Files */,
 				60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */,
 				602665E109AC8CE9FE47191E /* ESEntitySpec.m */,
+				B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -286,6 +297,8 @@
 				6026611BF7005CBCCBA49909 /* ESEntitySpec.m in Sources */,
 				6026640BA8B2DCB7AE73B564 /* ESEntity.m in Sources */,
 				60266AB8EB19D41EE6CD5227 /* SomeComponent.m in Sources */,
+				B06B0D3D28ADB7081DACD905 /* ESEntities.m in Sources */,
+				B06B05511ECA4929A43C60FD /* ESEntitiesSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +308,7 @@
 			files = (
 				6026653A34B510A930E2B69F /* ESSystems.m in Sources */,
 				602668A6EA959904A86C5848 /* ESEntity.m in Sources */,
+				B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
