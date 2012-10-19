@@ -34,7 +34,7 @@
     [entities removeObject:entity];
 }
 
-- (NSArray *)getEntitiesWithComponentsOfTypes:(NSArray *)types
+- (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types
 {
     NSMutableArray *matchingEntities = [NSMutableArray array];
     [entities enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {

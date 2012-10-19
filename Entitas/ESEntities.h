@@ -8,5 +8,5 @@
 
 - (void)destroyEntity:(ESEntity *)entity;
 
-- (NSArray *)getEntitiesWithComponentsOfTypes:(NSArray *)types;
+- (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types;
 @end

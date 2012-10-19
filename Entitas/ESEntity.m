@@ -2,13 +2,15 @@
 #import "ESComponent.h"
 
 @implementation ESEntity {
-    NSMutableArray *components;
+    NSMutableSet *componentTypes;
+    NSMutableDictionary *components;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        components = [NSMutableArray array];
+        components = [NSMutableDictionary dictionary];
+        componentTypes = [NSMutableSet set];
     }
 
     return self;
@@ -18,46 +20,34 @@
 {
     if ([self hasComponentOfType:[component class]])
         [NSException raise:@"An entity cannot contain multiple components of the same type." format:@""];
-    [components addObject:component];
+
+    [componentTypes addObject:[component class]];
+    [components setObject:component forKey:[component class]];
 }
 
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component
 {
-    return [components containsObject:component];
+    return !![components objectForKey:[component class]];
 }
 
 - (BOOL)hasComponentOfType:(Class)type
 {
-    for (NSObject <ESComponent>*component in components)
-        if( [component class] == type )
-            return YES;
-    return NO;
+    return [componentTypes containsObject:type];
 }
 
 - (void)removeComponentOfType:(Class)type
 {
-    NSObject <ESComponent>*componentToRemove = nil;
-    for (NSObject <ESComponent>*component in components)
-        if( [component class] == type )
-            componentToRemove = component;
-    if(!!componentToRemove)
-        [components removeObject:componentToRemove];
+    [components removeObjectForKey:type];
+    [componentTypes removeObject:type];
 }
 
 - (NSObject <ESComponent> *)getComponentOfType:(Class)type
 {
-    NSObject <ESComponent>*componentOfType = nil;
-    for (NSObject <ESComponent>*component in components)
-        if( [component class] == type )
-            componentOfType = component;
-    return componentOfType;
+    return [components objectForKey:type];
 }
 
-- (BOOL)hasComponentsOfTypes:(NSArray *)types
+- (BOOL)hasComponentsOfTypes:(NSSet *)types
 {
-    for (Class type in types)
-        if (![self hasComponentOfType:type])
-            return NO;
-    return YES;
+    return [types isSubsetOfSet:componentTypes];
 }
 @end

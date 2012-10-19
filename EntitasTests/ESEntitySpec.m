@@ -40,17 +40,17 @@ SPEC_BEGIN(ESEntitySpec)
             });
 
             it(@"should not have components of types when no components of these types were added", ^{
-                [[theValue([entity hasComponentsOfTypes:@[[SomeComponent class]]]) should] equal:theValue(NO)];
+                [[theValue([entity hasComponentsOfTypes:[NSSet setWithObject:[SomeComponent class]]]) should] equal:theValue(NO)];
             });
 
             it(@"should not have components of types when not all components of these types were added", ^{
-                NSArray *types = @[[SomeComponent class], [SomeOtherComponent class]];
+                NSSet *types = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
                 [entity addComponent:component];
                 [[theValue([entity hasComponentsOfTypes:types]) should] equal:theValue(NO)];
             });
 
             it(@"should have components of types when all components of these types were added", ^{
-                NSArray *types = @[[SomeComponent class], [SomeOtherComponent class]];
+                NSSet *types = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
                 [entity addComponent:component];
                 [entity addComponent:[[SomeOtherComponent alloc] init] ];
                 [[theValue([entity hasComponentsOfTypes:types]) should] equal:theValue(YES)];
