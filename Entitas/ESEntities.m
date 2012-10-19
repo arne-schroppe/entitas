@@ -34,12 +34,13 @@
     [entities removeObject:entity];
 }
 
-- (NSMutableArray *)getEntitiesWithComponentsOfTypes:(NSArray *)types
+- (NSArray *)getEntitiesWithComponentsOfTypes:(NSArray *)types
 {
     NSMutableArray *matchingEntities = [NSMutableArray array];
-    for (ESEntity *entity in entities)
+    [entities enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {
         if ([entity hasComponentsOfTypes:types])
             [matchingEntities addObject:entity];
+    }];
     return matchingEntities;
 }
 @end

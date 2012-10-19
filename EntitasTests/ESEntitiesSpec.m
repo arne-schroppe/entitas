@@ -46,7 +46,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 ESEntity *entityWithSomeComponent = [entities createEntity];
                 [entityWithSomeComponent addComponent:someComponent];
 
-                NSMutableArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:@[[SomeComponent class]]];
+                NSArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:@[[SomeComponent class]]];
 
                 [[entitiesWithSomeComponent should] contain:entityWithSomeComponent];
                 [[entitiesWithSomeComponent should] haveCountOf:1];
@@ -56,7 +56,7 @@ SPEC_BEGIN(ESEntitiesSpec)
             it(@"should return an empty array if no entities contain the given component types", ^{
                 [entities createEntity];
 
-                NSMutableArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:@[[SomeComponent class]]];
+                NSArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:@[[SomeComponent class]]];
 
                 [[entitiesWithSomeComponent should] beEmpty];
             });
