@@ -3,6 +3,7 @@
 #import "ESComponent.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
+#import "ESEntities.h"
 
 SPEC_BEGIN(ESEntitySpec)
 
@@ -72,6 +73,34 @@ SPEC_BEGIN(ESEntitySpec)
                     [entity addComponent:component];
                     [entity addComponent:component];
                 }) should] raiseWithName:@"An entity cannot contain multiple components of the same type."];
+            });
+
+            it(@"should call ESEntities object that a component has been added to this entity", ^{
+                ESEntities *entities = [[ESEntities alloc] init];
+                entity.entities = entities;
+                [[[entities should] receive] componentOfType:[component class] hasBeenAddedToEntity:entity];
+                [entity addComponent:component];
+            });
+
+            it(@"should call ESEntities object that a component has been removed from this entity", ^{
+                ESEntities *entities = [[ESEntities alloc] init];
+                entity.entities = entities;
+                [[[entities should] receive] componentOfType:[component class] hasBeenRemovedFromEntity:entity];
+                [entity addComponent:component];
+                [entity removeComponentOfType:[component class]];
+            });
+
+            it(@"should not call ESEntities object that a component has been removed from this entity if it didn't contain a component of that type", ^{
+                ESEntities *entities = [[ESEntities alloc] init];
+                entity.entities = entities;
+                [[[entities shouldNot] receive] componentOfType:[component class] hasBeenRemovedFromEntity:entity];
+                [entity removeComponentOfType:[component class]];
+            });
+
+            it(@"should not have a component of type when a component of that has been removed", ^{
+                [entity addComponent:component];
+                [entity removeComponentOfType:[component class]];
+                [[theValue([entity hasComponentOfType:[component class]]) should] equal:theValue(NO)];
             });
 
         });

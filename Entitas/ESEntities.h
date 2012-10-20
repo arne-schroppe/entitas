@@ -9,4 +9,9 @@
 - (void)destroyEntity:(ESEntity *)entity;
 
 - (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types;
+
+- (void)componentOfType:(Class)component hasBeenAddedToEntity:(ESEntity *)entity;
+
+- (void)componentOfType:(Class)component hasBeenRemovedFromEntity:(ESEntity *)entity;
+
 @end

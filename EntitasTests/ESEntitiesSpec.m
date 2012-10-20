@@ -61,6 +61,11 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[entitiesWithSomeComponent should] beEmpty];
             });
 
+            it(@"should add a reference to itself when creating and entity", ^{
+                ESEntity *entity = [entities createEntity];
+                [[entity.entities should] equal:entities];
+            });
+
         });
 
 SPEC_END

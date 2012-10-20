@@ -20,6 +20,7 @@
 - (ESEntity *)createEntity
 {
     ESEntity *entity = [[ESEntity alloc] init];
+    entity.entities = self;
     [entities addObject:entity];
     return entity;
 }
@@ -43,4 +44,15 @@
     }];
     return matchingEntities;
 }
+
+- (void)componentOfType:(Class)component hasBeenAddedToEntity:(ESEntity *)entity
+{
+
+}
+
+- (void)componentOfType:(Class)component hasBeenRemovedFromEntity:(ESEntity *)entity
+{
+
+}
+
 @end

@@ -1,10 +1,13 @@
 #import "ESEntity.h"
 #import "ESComponent.h"
+#import "ESEntities.h"
 
 @implementation ESEntity {
     NSMutableSet *componentTypes;
     NSMutableDictionary *components;
 }
+
+@synthesize entities;
 
 - (id)init {
     self = [super init];
@@ -23,6 +26,7 @@
 
     [componentTypes addObject:[component class]];
     [components setObject:component forKey:[component class]];
+    [entities componentOfType:[component class] hasBeenAddedToEntity:self];
 }
 
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component
@@ -37,8 +41,12 @@
 
 - (void)removeComponentOfType:(Class)type
 {
-    [components removeObjectForKey:type];
-    [componentTypes removeObject:type];
+    if([self hasComponentOfType:type])
+    {
+        [components removeObjectForKey:type];
+        [componentTypes removeObject:type];
+        [entities componentOfType:type hasBeenRemovedFromEntity:self];
+    }
 }
 
 - (NSObject <ESComponent> *)getComponentOfType:(Class)type
