@@ -6,36 +6,42 @@ SPEC_BEGIN(ESCollectionSpec)
 
     describe(@"ESCollection", ^{
 
+        __block ESCollection *collection;
+        __block NSSet *set;
+        __block ESEntity *entity;
+
         beforeEach(^{
+            set = [NSSet set];
+            collection = [[ESCollection alloc] initWithSet:set];
+            entity = [[ESEntity alloc] init];
         });
 
         it(@"should be instantiated", ^{
-            ESCollection *collection = [[ESCollection alloc] init];
             [collection shouldNotBeNil];
             [[collection should] beKindOfClass:[ESCollection class]];
         });
 
         it(@"should be initialized with a Set", ^{
-            NSSet *set = [NSSet set];
-            ESCollection *collection = [[ESCollection alloc] initWithSet:set];
             [[[collection set] should] equal:set];
         });
 
         it(@"should add an entity", ^{
-            ESEntity *entity = [[ESEntity alloc] init];
-            NSSet *set = [NSSet set];
-            ESCollection *collection = [[ESCollection alloc] initWithSet:set];
+
             [collection addEntity:entity];
             [[[collection entities] should] contain:entity];
         });
 
         it(@"should remove an entity", ^{
-            ESEntity *entity = [[ESEntity alloc] init];
-            NSSet *set = [NSSet set];
-            ESCollection *collection = [[ESCollection alloc] initWithSet:set];
             [collection addEntity:entity];
             [collection removeEntity:entity];
             [[[collection entities] shouldNot] contain:entity];
+        });
+
+        it(@"should not add an entity more than once", ^{
+            [collection addEntity:entity];
+            [collection addEntity:entity];
+            [[[collection entities] should] contain:entity];
+            [[[collection entities] should] haveCountOf:1];
         });
 
     });

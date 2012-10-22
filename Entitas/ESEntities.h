@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "ESEntity.h"
+#import "ESCollection.h"
 
 @interface ESEntities : NSObject
 - (ESEntity *)createEntity;
@@ -10,8 +11,9 @@
 
 - (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types;
 
-- (void)componentOfType:(Class)component hasBeenAddedToEntity:(ESEntity *)entity;
+- (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity;
 
-- (void)componentOfType:(Class)component hasBeenRemovedFromEntity:(ESEntity *)entity;
+- (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity;
 
+- (ESCollection *)getCollection:(NSSet *)set;
 @end

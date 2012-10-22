@@ -2,6 +2,7 @@
 #import "ESEntities.h"
 #import "ESEntity.h"
 #import "SomeComponent.h"
+#import "ESCollection.h"
 
 SPEC_BEGIN(ESEntitiesSpec)
 
@@ -64,6 +65,36 @@ SPEC_BEGIN(ESEntitiesSpec)
             it(@"should add a reference to itself when creating and entity", ^{
                 ESEntity *entity = [entities createEntity];
                 [[entity.entities should] equal:entities];
+            });
+
+            it(@"should return a collection with the given set", ^{
+                NSSet *set = [NSSet set];
+                ESCollection *collection = [entities getCollection:set];
+                [[[collection set] should] equal:set];
+            });
+
+            it(@"should return the same instance of collections with the same set", ^{
+                NSSet *set = [NSSet set];
+                ESCollection *collectionA = [entities getCollection:set];
+                ESCollection *collectionB = [entities getCollection:set];
+                [[collectionA should] equal:collectionB];
+            });
+
+            it(@"should add an entity to a collection", ^{
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
+                ESCollection *collection = [entities getCollection:set];
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[[SomeComponent alloc] init] ];
+                [[[collection entities] should] contain:entity];
+            });
+
+            it(@"should remove an entity from a collection", ^{
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
+                ESCollection *collection = [entities getCollection:set];
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[[SomeComponent alloc] init] ];
+                [entity removeComponentOfType:[SomeComponent class]];
+                [[[collection entities] shouldNot] contain:entity];
             });
 
         });

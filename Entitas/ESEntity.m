@@ -58,4 +58,8 @@
 {
     return [types isSubsetOfSet:componentTypes];
 }
+
+- (NSSet *)set {
+ return componentTypes;
+}
 @end

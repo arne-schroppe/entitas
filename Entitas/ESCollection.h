@@ -9,7 +9,7 @@
 
 - (void)addEntity:(ESEntity *)entity;
 
-- (NSArray *)entities;
+- (NSSet *)entities;
 
 - (void)removeEntity:(ESEntity *)entity;
 @end

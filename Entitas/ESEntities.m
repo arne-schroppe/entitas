@@ -1,9 +1,11 @@
 #import "ESEntities.h"
 #import "ESEntity.h"
+#import "ESCollection.h"
 
 
 @implementation ESEntities {
     NSMutableArray *entities;
+    NSMutableDictionary *collections;
 }
 
 - (id)init
@@ -11,6 +13,7 @@
     self = [super init];
     if (self) {
         entities = [NSMutableArray array];
+        collections = [NSMutableDictionary dictionary];
     }
 
     return self;
@@ -45,14 +48,26 @@
     return matchingEntities;
 }
 
-- (void)componentOfType:(Class)component hasBeenAddedToEntity:(ESEntity *)entity
+- (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
 {
-
+    [collections enumerateKeysAndObjectsUsingBlock:^(NSSet *set, ESCollection *collection, BOOL *stop) {
+        if ([set isSubsetOfSet:[entity set]])
+            [collection addEntity:entity];
+    }];
 }
 
-- (void)componentOfType:(Class)component hasBeenRemovedFromEntity:(ESEntity *)entity
+- (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
-
+    [collections enumerateKeysAndObjectsUsingBlock:^(NSSet *set, ESCollection *collection, BOOL *stop) {
+        if (![set isSubsetOfSet:[entity set]])
+            [collection removeEntity:entity];
+    }];
 }
 
+- (ESCollection *)getCollection:(NSSet *)set
+{
+    if (![collections objectForKey:set])
+        [collections setObject:[[ESCollection alloc] initWithSet:set] forKey:set];
+    return [collections objectForKey:set];
+}
 @end

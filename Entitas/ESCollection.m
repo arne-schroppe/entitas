@@ -4,7 +4,7 @@
 
 @implementation ESCollection {
     NSSet *set_;
-    NSMutableArray *entities_;
+    NSMutableSet *entities_;
 }
 
 - (id)initWithSet:(NSSet *)set
@@ -12,7 +12,7 @@
     self = [super init];
     if (self) {
         set_ = set;
-        entities_ = [[NSMutableArray alloc] init];
+        entities_ = [[NSMutableSet alloc] init];
     }
 
     return self;
@@ -28,7 +28,7 @@
     [entities_ addObject:entity];
 }
 
-- (NSArray *)entities
+- (NSSet *)entities
 {
     return entities_;
 }
