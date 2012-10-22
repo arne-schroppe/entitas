@@ -3,9 +3,15 @@
 #import "ESCollection.h"
 
 
+@interface ESEntities ()
+- (NSMutableSet *)getCollectionsForType:(Class)type;
+
+@end
+
 @implementation ESEntities {
     NSMutableArray *entities;
     NSMutableDictionary *collections;
+    NSMutableDictionary *collectionsForType;
 }
 
 - (id)init
@@ -14,6 +20,7 @@
     if (self) {
         entities = [NSMutableArray array];
         collections = [NSMutableDictionary dictionary];
+        collectionsForType = [NSMutableDictionary dictionary];
     }
 
     return self;
@@ -50,21 +57,21 @@
 
 - (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
 {
-    [collections enumerateKeysAndObjectsUsingBlock:^(NSSet *set, ESCollection *collection, BOOL *stop) {
-        if ([set isSubsetOfSet:[entity set]])
+    [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
+        if ([[collection types] isSubsetOfSet:[entity set]])
             [collection addEntity:entity];
     }];
 }
 
 - (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
-    [collections enumerateKeysAndObjectsUsingBlock:^(NSSet *set, ESCollection *collection, BOOL *stop) {
-        if (![set isSubsetOfSet:[entity set]])
+    [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
+        if (![[collection types] isSubsetOfSet:[entity set]])
             [collection removeEntity:entity];
     }];
 }
 
-- (ESCollection *)getCollection:(NSSet *)types
+- (ESCollection *)getCollectionForTypes:(NSSet *)types
 {
     if (![collections objectForKey:types])
     {
@@ -72,8 +79,20 @@
         [[self getEntitiesWithComponentsOfTypes:types] enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {
             [collection addEntity:entity];
         }];
+
         [collections setObject:collection forKey:types];
+
+        [types enumerateObjectsUsingBlock:^(id type, BOOL *stop_types) {
+            [[self getCollectionsForType:type] addObject:collection];
+        }];
     }
     return [collections objectForKey:types];
+}
+
+- (NSMutableSet *)getCollectionsForType:(Class)type
+{
+    if (![collectionsForType objectForKey:type])
+        [collectionsForType setObject:[NSMutableSet set] forKey:type];
+    return [collectionsForType objectForKey:type];
 }
 @end
