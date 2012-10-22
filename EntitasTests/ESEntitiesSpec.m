@@ -70,7 +70,7 @@ SPEC_BEGIN(ESEntitiesSpec)
             it(@"should return a collection with the given set", ^{
                 NSSet *set = [NSSet set];
                 ESCollection *collection = [entities getCollection:set];
-                [[[collection set] should] equal:set];
+                [[[collection types] should] equal:set];
             });
 
             it(@"should return the same instance of collections with the same set", ^{
@@ -95,6 +95,14 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [entity addComponent:[[SomeComponent alloc] init] ];
                 [entity removeComponentOfType:[SomeComponent class]];
                 [[[collection entities] shouldNot] contain:entity];
+            });
+
+            it(@"should add an entity to the collection that existed before the collection", ^{
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[[SomeComponent alloc] init] ];
+                ESCollection *collection = [entities getCollection:set];
+                [[[collection entities] should] contain:entity];
             });
 
         });

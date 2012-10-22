@@ -64,10 +64,16 @@
     }];
 }
 
-- (ESCollection *)getCollection:(NSSet *)set
+- (ESCollection *)getCollection:(NSSet *)types
 {
-    if (![collections objectForKey:set])
-        [collections setObject:[[ESCollection alloc] initWithSet:set] forKey:set];
-    return [collections objectForKey:set];
+    if (![collections objectForKey:types])
+    {
+        ESCollection *collection = [[ESCollection alloc] initWithTypes:types];
+        [[self getEntitiesWithComponentsOfTypes:types] enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {
+            [collection addEntity:entity];
+        }];
+        [collections setObject:collection forKey:types];
+    }
+    return [collections objectForKey:types];
 }
 @end

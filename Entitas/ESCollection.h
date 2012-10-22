@@ -3,9 +3,9 @@
 
 
 @interface ESCollection : NSObject
-- (id)initWithSet:(NSSet *)set;
+- (id)initWithTypes:(NSSet *)types;
 
-- (NSSet *)set;
+- (NSSet *)types;
 
 - (void)addEntity:(ESEntity *)entity;
 

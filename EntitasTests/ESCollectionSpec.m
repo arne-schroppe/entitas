@@ -12,7 +12,7 @@ SPEC_BEGIN(ESCollectionSpec)
 
         beforeEach(^{
             set = [NSSet set];
-            collection = [[ESCollection alloc] initWithSet:set];
+            collection = [[ESCollection alloc] initWithTypes:set];
             entity = [[ESEntity alloc] init];
         });
 
@@ -22,7 +22,7 @@ SPEC_BEGIN(ESCollectionSpec)
         });
 
         it(@"should be initialized with a Set", ^{
-            [[[collection set] should] equal:set];
+            [[[collection types] should] equal:set];
         });
 
         it(@"should add an entity", ^{

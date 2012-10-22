@@ -3,24 +3,24 @@
 
 
 @implementation ESCollection {
-    NSSet *set_;
+    NSSet *types_;
     NSMutableSet *entities_;
 }
 
-- (id)initWithSet:(NSSet *)set
+- (id)initWithTypes:(NSSet *)types
 {
     self = [super init];
     if (self) {
-        set_ = set;
+        types_ = types;
         entities_ = [[NSMutableSet alloc] init];
     }
 
     return self;
 }
 
-- (NSSet *)set
+- (NSSet *)types
 {
-    return set_;
+    return types_;
 }
 
 - (void)addEntity:(ESEntity *)entity
