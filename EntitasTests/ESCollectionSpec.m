@@ -1,6 +1,8 @@
 #import "Kiwi.h"
 #import "ESCollection.h"
 #import "ESEntity.h"
+#import "ESEntities.h"
+#import "SomeComponent.h"
 
 SPEC_BEGIN(ESCollectionSpec)
 
@@ -43,6 +45,28 @@ SPEC_BEGIN(ESCollectionSpec)
             [[[collection entities] should] contain:entity];
             [[[collection entities] should] haveCountOf:1];
         });
+        
+        context(@"Collection is provided by Entities", ^{
+            //Given
+            ESEntities *entities = [[ESEntities alloc]init];
+            ESEntity *e1 = [entities createEntity];
+            ESEntity *e2 = [entities createEntity];
+            [e1 addComponent:[SomeComponent new]];
+            [e2 addComponent:[SomeComponent new]];
+            ESCollection *collection = [entities getCollectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+            
+            it(@"should be possible to remove components on entities during the loop. There for return a copy of entities set.", ^{
+                
+                [[[collection entities] should] haveCountOf:2];
+                
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeComponent class]];
+                }
+                
+                [[[collection entities] should] haveCountOf:0];
+            });
+        });
+        
 
     });
 

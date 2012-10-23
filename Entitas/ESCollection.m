@@ -30,7 +30,7 @@
 
 - (NSSet *)entities
 {
-    return entities_;
+    return [NSSet setWithSet:entities_];
 }
 
 - (void)removeEntity:(ESEntity *)entity
