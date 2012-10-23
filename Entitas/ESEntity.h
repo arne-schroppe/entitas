@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "ESComponent.h"
 
+#define getComponent(entity, ComponentType) (ComponentType *)[entity getComponentOfType:[ComponentType class]];
+
 @class ESEntities;
 
 @interface ESEntity : NSObject
