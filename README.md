@@ -10,3 +10,10 @@ Still to do:
   [ash]: http://www.richardlord.net/blog/introducing-ash
   [ember]: https://github.com/tdavies/Ember
   [xember]: https://github.com/alecmce/xember
+
+Embed:
+--
+To embed this library with CocoaPods please add Wooga CocoaPods-Specs
+
+  - Wooga CocoaPods-Specs: https://github.com/wooga/cocoapods-specs
+  - Instruction on adding external specs: https://github.com/CocoaPods/CocoaPods/wiki/Sharing-pod-specifications-with-yourself-and-the-world
