@@ -1,5 +1,4 @@
 #import "ESEntity.h"
-#import "ESComponent.h"
 #import "ESEntities.h"
 
 @implementation ESEntity {
@@ -26,7 +25,7 @@
 
     [componentTypes addObject:[component class]];
     [components setObject:component forKey:[component class]];
-    [entities componentOfType:[component class] hasBeenAddedToEntity:self];
+    [entities component:component ofType:[component class] hasBeenAddedToEntity:self];
 }
 
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component
@@ -43,9 +42,10 @@
 {
     if([self hasComponentOfType:type])
     {
+        NSObject <ESComponent> *component = [components objectForKey:type];
         [components removeObjectForKey:type];
         [componentTypes removeObject:type];
-        [entities componentOfType:type hasBeenRemovedFromEntity:self];
+        [entities component:component ofType:type hasBeenRemovedFromEntity:self];
     }
 }
 

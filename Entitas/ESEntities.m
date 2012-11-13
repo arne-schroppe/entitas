@@ -59,19 +59,19 @@
     return matchingEntities;
 }
 
-- (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
+- (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
 {
     [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
         if ([[collection types] isSubsetOfSet:[entity componentTypes]])
-            [collection addEntity:entity];
+            [collection addEntity:entity becauseOfAddedComponent:component];
     }];
 }
 
-- (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
+- (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
     [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
         if (![[collection types] isSubsetOfSet:[entity componentTypes]])
-            [collection removeEntity:entity];
+            [collection removeEntity:entity becauseOfRemovedComponent:component];
     }];
 }
 
@@ -81,7 +81,7 @@
     {
         ESCollection *collection = [[ESCollection alloc] initWithTypes:types];
         [[self getEntitiesWithComponentsOfTypes:types] enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {
-            [collection addEntity:entity];
+            [collection addEntity:entity becauseOfAddedComponent:nil];
         }];
 
         [collections setObject:collection forKey:types];
