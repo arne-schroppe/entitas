@@ -42,27 +42,6 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[theValue([entities containsEntity:entity]) should] equal:theValue(NO)];
             });
 
-            it(@"should return a subset of all entities which contain the given component types", ^{
-                [entities createEntity];
-                SomeComponent *someComponent = [[SomeComponent alloc] init];
-                ESEntity *entityWithSomeComponent = [entities createEntity];
-                [entityWithSomeComponent addComponent:someComponent];
-
-                NSArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:[NSSet setWithObject:[SomeComponent class]]];
-
-                [[entitiesWithSomeComponent should] contain:entityWithSomeComponent];
-                [[entitiesWithSomeComponent should] haveCountOf:1];
-
-            });
-
-            it(@"should return an empty array if no entities contain the given component types", ^{
-                [entities createEntity];
-
-                NSArray *entitiesWithSomeComponent = [entities getEntitiesWithComponentsOfTypes:[NSSet setWithObject:[SomeComponent class]]];
-
-                [[entitiesWithSomeComponent should] beEmpty];
-            });
-
             it(@"should add a reference to itself when creating and entity", ^{
                 ESEntity *entity = [entities createEntity];
                 [[entity.entities should] equal:entities];
@@ -124,6 +103,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[[collection shouldNot] receive] removeEntity:entity];
                 [entity removeComponentOfType:[SomeComponent class]];
             });
+
 
         });
 

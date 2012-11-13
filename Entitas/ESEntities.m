@@ -4,6 +4,8 @@
 
 
 @interface ESEntities ()
+- (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types;
+
 - (NSMutableSet *)getCollectionsForType:(Class)type;
 
 @end
