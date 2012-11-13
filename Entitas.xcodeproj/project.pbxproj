@@ -27,10 +27,14 @@
 		B06B0433B7A950AA7E9EB93E /* SomeOtherComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */; };
 		B06B0548E606537B6E9332AE /* ESCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B053196DBFCB05D945CB5 /* ESCollection.m */; };
 		B06B05511ECA4929A43C60FD /* ESEntitiesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */; };
+		B06B06CD147780CB059993A0 /* ESChangedEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B01CFFB3DF4BEB4F63E87 /* ESChangedEntity.m */; };
 		B06B088EEB6026FDC8FC91BB /* ESCollectionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */; };
 		B06B091F1F944550AD2CF038 /* ESCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B053196DBFCB05D945CB5 /* ESCollection.m */; };
+		B06B094464B7F84EA4571C8C /* ESChangedEntitySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B0C2E82BE7C568D784D50 /* ESChangedEntitySpec.m */; };
+		B06B0CAE252AEEE73A440336 /* ESChangedEntity.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B06B080ECACACA0ECA776E96 /* ESChangedEntity.h */; };
 		B06B0D3D28ADB7081DACD905 /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
 		B06B0D72DE9F71CEDA96DF27 /* ESCollection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B06B03C052A655C348D441D2 /* ESCollection.h */; };
+		B06B0DBE30F4B10526FFEE60 /* ESChangedEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B01CFFB3DF4BEB4F63E87 /* ESChangedEntity.m */; };
 		B06B0F953BAE8A8EEBE00C5E /* ESEntities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B06B003BC9B7BF20962E1E90 /* ESEntities.h */; };
 		EEDBFD4C9F104B31AA479998 /* libPods-EntitasTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38591DBF038641D3B9A8355C /* libPods-EntitasTests.a */; };
 /* End PBXBuildFile section */
@@ -58,6 +62,7 @@
 				602665EC42AF419AAFE877C8 /* ESComponent.h in CopyFiles */,
 				B06B0F953BAE8A8EEBE00C5E /* ESEntities.h in CopyFiles */,
 				B06B0D72DE9F71CEDA96DF27 /* ESCollection.h in CopyFiles */,
+				B06B0CAE252AEEE73A440336 /* ESChangedEntity.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,12 +91,15 @@
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		B06B003BC9B7BF20962E1E90 /* ESEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntities.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
+		B06B01CFFB3DF4BEB4F63E87 /* ESChangedEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESChangedEntity.m; sourceTree = "<group>"; };
 		B06B01E58C73C158BF02110B /* SomeOtherComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeOtherComponent.h; sourceTree = "<group>"; };
 		B06B03C052A655C348D441D2 /* ESCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESCollection.h; sourceTree = "<group>"; };
 		B06B053196DBFCB05D945CB5 /* ESCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESCollection.m; sourceTree = "<group>"; };
 		B06B05414306C58E1034B764 /* ESEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntities.m; sourceTree = "<group>"; };
 		B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESCollectionSpec.m; sourceTree = "<group>"; };
+		B06B080ECACACA0ECA776E96 /* ESChangedEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESChangedEntity.h; sourceTree = "<group>"; };
 		B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntitiesSpec.m; sourceTree = "<group>"; };
+		B06B0C2E82BE7C568D784D50 /* ESChangedEntitySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESChangedEntitySpec.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +174,8 @@
 				B06B003BC9B7BF20962E1E90 /* ESEntities.h */,
 				B06B053196DBFCB05D945CB5 /* ESCollection.m */,
 				B06B03C052A655C348D441D2 /* ESCollection.h */,
+				B06B01CFFB3DF4BEB4F63E87 /* ESChangedEntity.m */,
+				B06B080ECACACA0ECA776E96 /* ESChangedEntity.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -195,6 +205,7 @@
 				602665E109AC8CE9FE47191E /* ESEntitySpec.m */,
 				B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */,
 				B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */,
+				B06B0C2E82BE7C568D784D50 /* ESChangedEntitySpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -318,6 +329,8 @@
 				B06B0433B7A950AA7E9EB93E /* SomeOtherComponent.m in Sources */,
 				B06B088EEB6026FDC8FC91BB /* ESCollectionSpec.m in Sources */,
 				B06B0548E606537B6E9332AE /* ESCollection.m in Sources */,
+				B06B094464B7F84EA4571C8C /* ESChangedEntitySpec.m in Sources */,
+				B06B06CD147780CB059993A0 /* ESChangedEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +342,7 @@
 				602668A6EA959904A86C5848 /* ESEntity.m in Sources */,
 				B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */,
 				B06B091F1F944550AD2CF038 /* ESCollection.m in Sources */,
+				B06B0DBE30F4B10526FFEE60 /* ESChangedEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

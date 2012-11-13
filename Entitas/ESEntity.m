@@ -61,6 +61,6 @@
 
 - (NSSet *)componentTypes
 {
- return componentTypes;
+    return componentTypes;
 }
 @end
