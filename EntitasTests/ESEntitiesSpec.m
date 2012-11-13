@@ -104,7 +104,18 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [entity removeComponentOfType:[SomeComponent class]];
             });
 
+            context(@"when destroying an entity", ^{
 
+                it(@"should remove that entity from a collection containing it", ^{
+                    NSSet *types = [NSSet setWithObject:[SomeComponent class]];
+                    ESCollection *collection = [entities getCollectionForTypes:types];
+                    ESEntity *entity = [entities createEntity];
+                    [entity addComponent:[[SomeComponent alloc] init] ];
+                    [entities destroyEntity:entity];
+                    [[[collection entities] shouldNot] contain:entity];
+                });
+
+            });
         });
 
 SPEC_END

@@ -44,6 +44,8 @@
 
 - (void)destroyEntity:(ESEntity *)entity
 {
+    for (Class componentType in [entity componentTypes])
+        [entity removeComponentOfType:componentType];
     [entities removeObject:entity];
 }
 
@@ -60,7 +62,7 @@
 - (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
 {
     [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
-        if ([[collection types] isSubsetOfSet:[entity set]])
+        if ([[collection types] isSubsetOfSet:[entity componentTypes]])
             [collection addEntity:entity];
     }];
 }
@@ -68,7 +70,7 @@
 - (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
     [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
-        if (![[collection types] isSubsetOfSet:[entity set]])
+        if (![[collection types] isSubsetOfSet:[entity componentTypes]])
             [collection removeEntity:entity];
     }];
 }
