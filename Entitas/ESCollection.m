@@ -26,10 +26,10 @@ extern  NSString * const ESEntityRemoved = @"ESEntityRemoved";
     return types_;
 }
 
-- (void)addEntity:(ESEntity *)entity becauseOfAddedComponent:(NSObject <ESComponent> *)component
+- (void)addEntity:(ESEntity *)entity
 {
     [entities_ addObject:entity];
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity ChangedComponents:[NSArray arrayWithObject:component] ];
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity ChangedComponents:[NSArray array] ];
     [[NSNotificationCenter defaultCenter] postNotificationName:ESEntityAdded object:self userInfo:[NSDictionary dictionaryWithObject:changedEntity forKey:[ESChangedEntity class]]];
 }
 

@@ -63,7 +63,7 @@
 {
     [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
         if ([[collection types] isSubsetOfSet:[entity componentTypes]])
-            [collection addEntity:entity becauseOfAddedComponent:component];
+            [collection addEntity:entity];
     }];
 }
 
@@ -81,7 +81,7 @@
     {
         ESCollection *collection = [[ESCollection alloc] initWithTypes:types];
         [[self getEntitiesWithComponentsOfTypes:types] enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {
-            [collection addEntity:entity becauseOfAddedComponent:nil];
+            [collection addEntity:entity];
         }];
 
         [collections setObject:collection forKey:types];

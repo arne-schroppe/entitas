@@ -9,7 +9,7 @@ extern  NSString * const ESEntityRemoved;
 
 - (NSSet *)types;
 
-- (void)addEntity:(ESEntity *)entity becauseOfAddedComponent:(NSObject <ESComponent> *)component;
+- (void)addEntity:(ESEntity *)entity;
 
 - (NSSet *)entities;
 

@@ -35,19 +35,19 @@ SPEC_BEGIN(ESCollectionSpec)
 
         it(@"should add an entity", ^{
 
-            [collection addEntity:entity becauseOfAddedComponent:nil];
+            [collection addEntity:entity];
             [[[collection entities] should] contain:entity];
         });
 
         it(@"should remove an entity", ^{
-            [collection addEntity:entity becauseOfAddedComponent:nil];
-            [collection removeEntity:entity becauseOfRemovedComponent:nil];
+            [collection addEntity:entity];
+            [collection removeEntity:entity becauseOfRemovedComponent:[KWMock mockForClass:[SomeComponent class]]];
             [[[collection entities] shouldNot] contain:entity];
         });
 
         it(@"should not add an entity more than once", ^{
-            [collection addEntity:entity becauseOfAddedComponent:nil];
-            [collection addEntity:entity becauseOfAddedComponent:nil];
+            [collection addEntity:entity];
+            [collection addEntity:entity];
             [[[collection entities] should] contain:entity];
             [[[collection entities] should] haveCountOf:1];
         });
@@ -56,7 +56,7 @@ SPEC_BEGIN(ESCollectionSpec)
             [notificationReceiver stub:@selector(notification)];
             [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityAdded object:collection];
             [[notificationReceiver should] receive:@selector(notification) withCount:1];
-            [collection addEntity:entity becauseOfAddedComponent:nil];
+            [collection addEntity:entity];
         });
 
 //        it(@"should post a notfication when an entity is added the contains an ESChangedEntity object", ^{
@@ -76,8 +76,8 @@ SPEC_BEGIN(ESCollectionSpec)
             [notificationReceiver stub:@selector(notification)];
             [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityRemoved object:collection];
             [[notificationReceiver should] receive:@selector(notification) withCount:1];
-            [collection addEntity:entity becauseOfAddedComponent:nil];
-            [collection removeEntity:entity becauseOfRemovedComponent:nil];
+            [collection addEntity:entity];
+            [collection removeEntity:entity becauseOfRemovedComponent:[KWMock mockForClass:[SomeComponent class]]];
         });
         
         context(@"Collection is provided by Entities", ^{
