@@ -44,7 +44,7 @@
 
 - (void)destroyEntity:(ESEntity *)entity
 {
-    for (Class componentType in [entity componentTypes])
+    for (Class componentType in [[entity componentTypes] copy])
         [entity removeComponentOfType:componentType];
     [entities removeObject:entity];
 }
