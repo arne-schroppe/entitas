@@ -33,4 +33,17 @@
     for (NSObject <ESSystem>* system in systems)
         [system execute];
 }
+
+- (void)activate
+{
+    for (NSObject <ESSystem>* system in systems)
+        [system activate];
+}
+
+- (void)deactivate
+{
+    for (NSObject <ESSystem>* system in systems)
+        [system deactivate];
+}
+
 @end

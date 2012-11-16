@@ -44,5 +44,17 @@ SPEC_BEGIN(ESSystemsSpec)
                 [systems execute];
             });
 
+            it(@"should activate its sub-systems", ^{
+                [[[systemMock should] receive] activate];
+                [systems addSystem:systemMock];
+                [systems activate];
+            });
+
+            it(@"should deactivate its sub-systems", ^{
+                [[[systemMock should] receive] deactivate];
+                [systems addSystem:systemMock];
+                [systems deactivate];
+            });
+
         });
 SPEC_END
