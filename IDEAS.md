@@ -16,3 +16,4 @@ Unsorted list of ideas for Entitas, we need to find a place to discuss them.
 - Move internal API to internal Categories
 - Systems should have a NSBlockOperation property witch is executed before execute on each sub system.
 - EntityRepository should reuse deleted Entities.
+- Replace Notifications dispatched in ESCollection with Delegates
