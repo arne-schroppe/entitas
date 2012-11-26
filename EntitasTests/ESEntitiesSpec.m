@@ -100,7 +100,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
                 ESCollection *collection = [entities getCollectionForTypes:set];
-                [[[collection shouldNot] receive] removeEntity:entity becauseOfRemovedComponent:nil];
+                [[[collection shouldNot] receive] removeEntity:entity];
                 [entity removeComponentOfType:[SomeComponent class]];
             });
 

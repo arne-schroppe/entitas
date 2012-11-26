@@ -63,4 +63,9 @@
 {
     return componentTypes;
 }
+
+- (NSDictionary *)components
+{
+    return [NSDictionary dictionaryWithDictionary:components];
+}
 @end

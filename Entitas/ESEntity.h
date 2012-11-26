@@ -29,4 +29,6 @@
 - (BOOL)hasComponentsOfTypes:(NSSet *)types;
 
 - (NSSet *)componentTypes;
+
+- (NSDictionary *)components;
 @end

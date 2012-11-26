@@ -3,16 +3,17 @@
 @implementation ESChangedEntity
 {
     ESEntity *_originalEntity;
-    NSArray *_changedComponents;
+    NSDictionary *_components;
+    ESEntityChange _changeType;
 }
 
-- (id)initWithOriginalEntity:(ESEntity *)originalEntity ChangedComponents:(NSArray *)changedComponents
-{
+- (id)initWithOriginalEntity:(ESEntity *)originalEntity Components:(NSDictionary *)components ChangeType:(ESEntityChange)changeType {
     self = [super init];
     if (self)
     {
         _originalEntity = originalEntity;
-        _changedComponents = changedComponents;
+        _components = components;
+        _changeType = changeType;
     }
 
     return self;
@@ -25,9 +26,11 @@
 
 - (NSObject <ESComponent> *)getComponentOfType:(Class)type
 {
-    for (NSObject <ESComponent>*component in _changedComponents)
-        if ([component class] == type)
-            return component;
-    return [_originalEntity getComponentOfType:type];
+    return [_components objectForKey:type];
+}
+
+- (ESEntityChange)changeType 
+{
+    return _changeType;
 }
 @end
