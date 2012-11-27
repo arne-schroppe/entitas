@@ -10,7 +10,7 @@ This project uses [CocoaPods] for dependency-management.
 Setting up CocoaPods:
 
 ```
-$ gem install
+$ gem install cocoapods
 $ pod setup
 $ cd path/to/Entitas
 $ pod install
