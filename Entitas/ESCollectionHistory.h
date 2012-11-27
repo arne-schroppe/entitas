@@ -11,4 +11,8 @@
 - (NSArray *)changes;
 
 - (void)clearChanges;
+
+- (void)startRecording;
+
+- (void)stopRecording;
 @end

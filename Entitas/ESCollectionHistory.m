@@ -3,6 +3,10 @@
 #import "ESChangedEntity.h"
 
 
+@interface ESCollectionHistory ()
+- (void)entityChanged:(NSNotification *)notification;
+@end
+
 @implementation ESCollectionHistory {
 
     ESCollection *_collection;
@@ -15,8 +19,6 @@
     if (self) {
         _changes = [NSMutableArray array];
         _collection = collection;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entityChanged:) name:ESEntityAdded object:_collection];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entityChanged:) name:ESEntityRemoved object:_collection];
     }
     return self;
 }
@@ -40,5 +42,17 @@
 - (void)clearChanges
 {
     [_changes removeAllObjects];
+}
+
+- (void)startRecording
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entityChanged:) name:ESEntityAdded object:_collection];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entityChanged:) name:ESEntityRemoved object:_collection];
+}
+
+- (void)stopRecording
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ESEntityAdded object:_collection];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ESEntityRemoved object:_collection];
 }
 @end
