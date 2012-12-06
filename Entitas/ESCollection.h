@@ -13,5 +13,5 @@ extern  NSString * const ESEntityRemoved;
 
 - (NSSet *)entities;
 
-- (void)removeEntity:(ESEntity *)entity;
+- (void)removeEntity:(ESEntity *)entity becauseOfRemovedComponent:(NSObject <ESComponent> *)removedComponent;
 @end

@@ -71,7 +71,7 @@
 {
     [[self getCollectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop) {
         if (![[collection types] isSubsetOfSet:[entity componentTypes]])
-            [collection removeEntity:entity];
+            [collection removeEntity:entity becauseOfRemovedComponent:component];
     }];
 }
 
