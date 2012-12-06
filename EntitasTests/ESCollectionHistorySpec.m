@@ -71,7 +71,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 it(@"should contain a changedentity when an entity is removed from the collection", ^{
                     ESEntity *entity = [[ESEntity alloc] init];
                     [collection addEntity:entity];
-                    [collection removeEntity:entity];
+                    [collection removeEntity:entity becauseOfRemovedComponent:nil];
                     [[[history changes] should] have:2];
                     ESChangedEntity *changedEntity = [[history changes] objectAtIndex:1];
                     [[[changedEntity getOriginalEntity] should] equal:entity];
@@ -80,7 +80,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 it(@"should not contain previous changes when the history was cleared", ^{
                     ESEntity *entity = [[ESEntity alloc] init];
                     [collection addEntity:entity];
-                    [collection removeEntity:entity];
+                    [collection removeEntity:entity becauseOfRemovedComponent:nil];
                     [history clearChanges];
                     [[[history changes] should] beEmpty];
                 });

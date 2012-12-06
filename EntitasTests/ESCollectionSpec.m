@@ -41,7 +41,7 @@ SPEC_BEGIN(ESCollectionSpec)
 
         it(@"should remove an entity", ^{
             [collection addEntity:entity];
-            [collection removeEntity:entity];
+            [collection removeEntity:entity becauseOfRemovedComponent:nil];
             [[[collection entities] shouldNot] contain:entity];
         });
 
@@ -77,7 +77,7 @@ SPEC_BEGIN(ESCollectionSpec)
             [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityRemoved object:collection];
             [[notificationReceiver should] receive:@selector(notification) withCount:1];
             [collection addEntity:entity];
-            [collection removeEntity:entity];
+            [collection removeEntity:entity becauseOfRemovedComponent:nil];
         });
         
         context(@"Collection is provided by Entities", ^{
