@@ -48,4 +48,11 @@
             [system deactivate];
 }
 
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@", NSStringFromClass([self class]), [systems description]];
+}
+
+
 @end
