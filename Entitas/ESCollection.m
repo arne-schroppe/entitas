@@ -29,7 +29,7 @@ extern  NSString * const ESEntityRemoved = @"ESEntityRemoved";
 - (void)addEntity:(ESEntity *)entity
 {
     [entities_ addObject:entity];
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity ChangedComponents:[NSArray array] ];
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity Components:[entity components] ChangeType:ESEntityAddedToCollection];
     [[NSNotificationCenter defaultCenter] postNotificationName:ESEntityAdded object:self userInfo:[NSDictionary dictionaryWithObject:changedEntity forKey:[ESChangedEntity class]]];
 }
 
@@ -38,10 +38,12 @@ extern  NSString * const ESEntityRemoved = @"ESEntityRemoved";
     return [NSSet setWithSet:entities_];
 }
 
-- (void)removeEntity:(ESEntity *)entity becauseOfRemovedComponent:(NSObject <ESComponent> *)component
+- (void)removeEntity:(ESEntity *)entity becauseOfRemovedComponent:(NSObject <ESComponent> *)removedComponent
 {
     [entities_ removeObject:entity];
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity ChangedComponents:[NSArray arrayWithObject:component] ];
+    NSMutableDictionary *components = [NSMutableDictionary dictionaryWithDictionary:[entity components]];
+    [components setObject:removedComponent forKey:[removedComponent class]];
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity Components:components ChangeType:ESEntityRemovedFromCollection];
     [[NSNotificationCenter defaultCenter] postNotificationName:ESEntityRemoved object:self userInfo:[NSDictionary dictionaryWithObject:changedEntity forKey:[ESChangedEntity class]]];
 }
 @end

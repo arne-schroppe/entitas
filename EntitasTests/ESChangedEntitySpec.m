@@ -22,24 +22,23 @@ SPEC_BEGIN(ESChangedEntitySpec)
                 [[changedEntity should] beKindOfClass:[ESChangedEntity class]];
             });
 
+            it(@"should contain the change type it was initialized with", ^{
+                ESEntityChange changeType = ESEntityAddedToCollection;
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:nil Components:nil ChangeType:changeType];
+                [[theValue([changedEntity changeType]) should] equal:theValue(changeType)];
+            });
+
             it(@"should contain a reference to the original component", ^{
                 ESEntity *originalEntity = [entities createEntity];
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity ChangedComponents:nil];
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity Components:nil ChangeType:0];
                 [[[changedEntity getOriginalEntity] should] equal:originalEntity];
             });
 
-            it(@"should get a component of type that is contained by the entity", ^{
+            it(@"should get a component of type by the given components", ^{
                 ESEntity *originalEntity = [entities createEntity];
                 SomeComponent *someComponent = [[SomeComponent alloc] init];
-                [originalEntity addComponent:someComponent];
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity ChangedComponents:nil];
-                [[[changedEntity getComponentOfType:[SomeComponent class]] should] equal:someComponent];
-            });
-
-            it(@"should get a component of type that is contained by the given changed components", ^{
-                ESEntity *originalEntity = [entities createEntity];
-                SomeComponent *someComponent = [[SomeComponent alloc] init];
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity ChangedComponents:[NSArray arrayWithObject:someComponent]];
+                NSDictionary *components = [NSDictionary dictionaryWithObject:someComponent forKey:[SomeComponent class]];
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity Components:components ChangeType:0];
                 [[[changedEntity getComponentOfType:[SomeComponent class]] should] equal:someComponent];
             });
 
