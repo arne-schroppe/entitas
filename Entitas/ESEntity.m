@@ -68,4 +68,12 @@
 {
     return [NSDictionary dictionaryWithDictionary:components];
 }
+
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), [components description]];
+}
+
+
 @end
