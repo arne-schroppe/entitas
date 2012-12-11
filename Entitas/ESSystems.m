@@ -46,4 +46,8 @@
         [system deactivate];
 }
 
+- (void)removeAllSystems
+{
+    [systems removeAllObjects];
+}
 @end
