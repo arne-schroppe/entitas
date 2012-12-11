@@ -2,6 +2,34 @@
 #import "ESSystems.h"
 #import "ESSystem.h"
 
+
+@interface ESTestSystem : NSObject<ESSystem>
+@end
+
+@implementation ESTestSystem
+- (void)execute {
+
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    if (aSelector == @selector(activate) || aSelector == @selector(deactivate)) {
+        return NO;
+    }
+
+    return [super respondsToSelector:aSelector];
+}
+
+- (void)activate {
+
+}
+
+- (void)deactivate {
+
+}
+
+@end
+
+
 SPEC_BEGIN(ESSystemsSpec)
 
         describe(@"ESSystems", ^{
@@ -64,6 +92,30 @@ SPEC_BEGIN(ESSystemsSpec)
                 [systems removeAllSystems];
                 [[theValue([systems containsSystem:systemMock]) should] equal:theValue(NO)];
                 [[theValue([systems containsSystem:otherSystemMock]) should] equal:theValue(NO)];
+            });
+
+            context(@"with a system that does not understand activate or deactivate", ^{
+
+                //It is not possible to stub respondsToSelector:, so we have to use a real object
+                __block ESTestSystem *testSystem;
+
+                beforeEach(^{
+                    testSystem = [[ESTestSystem alloc] init];
+                });
+
+                it(@"should only activate its sub-system if it understands the message", ^{
+                    [[[testSystem shouldNot] receive] activate];
+                    [systems addSystem:testSystem];
+                    [systems activate];
+                });
+
+
+                it(@"should only deactivate its sub-system if it understands the message", ^{
+                    [[[testSystem shouldNot] receive] deactivate];
+                    [systems addSystem:testSystem];
+                    [systems deactivate];
+                });
+
             });
 
         });

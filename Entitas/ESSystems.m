@@ -37,17 +37,25 @@
 - (void)activate
 {
     for (NSObject <ESSystem>* system in systems)
-        [system activate];
+        if ([system respondsToSelector:@selector(activate)])
+            [system activate];
 }
 
 - (void)deactivate
 {
     for (NSObject <ESSystem>* system in systems)
-        [system deactivate];
+        if ([system respondsToSelector:@selector(deactivate)])
+            [system deactivate];
 }
 
 - (void)removeAllSystems
 {
     [systems removeAllObjects];
 }
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@", NSStringFromClass([self class]), [systems description]];
+}
+
 @end
