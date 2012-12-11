@@ -84,6 +84,15 @@ SPEC_BEGIN(ESSystemsSpec)
                 [systems deactivate];
             });
 
+            it(@"should remove all sub-systems", ^
+            {
+                id otherSystemMock = [KWMock mockForProtocol:@protocol(ESSystem)];
+                [systems addSystem:systemMock];
+                [systems addSystem:otherSystemMock];
+                [systems removeAllSystems];
+                [[theValue([systems containsSystem:systemMock]) should] equal:theValue(NO)];
+                [[theValue([systems containsSystem:otherSystemMock]) should] equal:theValue(NO)];
+            });
 
             context(@"with a system that does not understand activate or deactivate", ^{
 

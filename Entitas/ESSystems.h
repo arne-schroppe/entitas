@@ -8,4 +8,6 @@
 - (BOOL)containsSystem:(NSObject <ESSystem> *)system;
 
 - (void)removeSystem:(NSObject <ESSystem> *)system;
+
+- (void)removeAllSystems;
 @end

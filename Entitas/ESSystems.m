@@ -48,11 +48,14 @@
             [system deactivate];
 }
 
+- (void)removeAllSystems
+{
+    [systems removeAllObjects];
+}
 
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ %@", NSStringFromClass([self class]), [systems description]];
 }
-
 
 @end
