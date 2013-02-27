@@ -1,19 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "ESEntity.h"
 
-enum
-{
-    ESEntityAddedToCollection = 1,
-    ESEntityRemovedFromCollection = 2
+typedef NS_ENUM(NSUInteger, ESEntityChange) {
+    ESEntityAddedToCollection,
+    ESEntityRemovedFromCollection
 };
-typedef NSUInteger ESEntityChange;
 
 @interface ESChangedEntity : NSObject
-- (id)initWithOriginalEntity:(ESEntity *)originalEntity Components:(NSDictionary *)components ChangeType:(ESEntityChange)changeType;
-
-- (ESEntity *)getOriginalEntity;
-
-- (NSObject <ESComponent> *)getComponentOfType:(Class)type;
-
+- (id)initWithOriginalEntity:(ESEntity *)originalEntity components:(NSDictionary *)components changeType:(ESEntityChange)changeType;
+- (ESEntity *)originalEntity;
+- (NSObject <ESComponent> *)componentOfType:(Class)type;
 - (ESEntityChange)changeType;
 @end

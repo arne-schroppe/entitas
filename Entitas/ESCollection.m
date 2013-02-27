@@ -1,49 +1,44 @@
 #import "ESCollection.h"
-#import "ESEntity.h"
 #import "ESChangedEntity.h"
 
 @implementation ESCollection {
-    NSSet *types_;
-    NSMutableSet *entities_;
+    NSSet *_types;
+    NSMutableSet *_entities;
 }
 
-extern  NSString * const ESEntityAdded = @"ESEntityAdded";
-extern  NSString * const ESEntityRemoved = @"ESEntityRemoved";
+NSString *const ESEntityAdded = @"ESEntityAdded";
+NSString *const ESEntityRemoved = @"ESEntityRemoved";
 
-- (id)initWithTypes:(NSSet *)types
-{
+- (id)initWithTypes:(NSSet *)types {
     self = [super init];
     if (self) {
-        types_ = types;
-        entities_ = [[NSMutableSet alloc] init];
+        _types = types;
+        _entities = [[NSMutableSet alloc] init];
     }
 
     return self;
 }
 
-- (NSSet *)types
-{
-    return types_;
+- (NSSet *)types {
+    return _types;
 }
 
-- (void)addEntity:(ESEntity *)entity
-{
-    [entities_ addObject:entity];
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity Components:[entity components] ChangeType:ESEntityAddedToCollection];
+- (void)addEntity:(ESEntity *)entity {
+    [_entities addObject:entity];
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAddedToCollection];
     [[NSNotificationCenter defaultCenter] postNotificationName:ESEntityAdded object:self userInfo:[NSDictionary dictionaryWithObject:changedEntity forKey:[ESChangedEntity class]]];
 }
 
-- (NSSet *)entities
-{
-    return [NSSet setWithSet:entities_];
+- (NSSet *)entities {
+    return [_entities copy];
 }
 
-- (void)removeEntity:(ESEntity *)entity becauseOfRemovedComponent:(NSObject <ESComponent> *)removedComponent
-{
-    [entities_ removeObject:entity];
-    NSMutableDictionary *components = [NSMutableDictionary dictionaryWithDictionary:[entity components]];
+- (void)removeEntity:(ESEntity *)entity becauseOfRemovedComponent:(NSObject <ESComponent> *)removedComponent {
+    [_entities removeObject:entity];
+    NSMutableDictionary *components = [[entity components] mutableCopy];
     [components setObject:removedComponent forKey:[removedComponent class]];
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity Components:components ChangeType:ESEntityRemovedFromCollection];
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:components changeType:ESEntityRemovedFromCollection];
     [[NSNotificationCenter defaultCenter] postNotificationName:ESEntityRemoved object:self userInfo:[NSDictionary dictionaryWithObject:changedEntity forKey:[ESChangedEntity class]]];
 }
+
 @end

@@ -1,3 +1,2 @@
 @protocol ESComponent <NSObject>
-
 @end
