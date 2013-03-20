@@ -84,4 +84,8 @@
     return [_collectionsForType objectForKey:type];
 }
 
+- (NSArray *)allEntities
+{
+    return [_entities copy];
+}
 @end

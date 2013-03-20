@@ -42,6 +42,22 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[theValue([entities containsEntity:entity]) should] equal:theValue(NO)];
             });
 
+            it(@"should contain an entity it created in allEntities", ^{
+                ESEntity *entity = [entities createEntity];
+                [[[entities allEntities] should] contain:entity];
+            });
+
+            it(@"should not contain an entity it didn't create in allEntities", ^{
+                ESEntity *entity = [[ESEntity alloc] init];
+                [[[entities allEntities] shouldNot] contain:entity];
+            });
+
+            it(@"should not contain an entity that has been destroyed in allEntities", ^{
+                ESEntity *entity = [entities createEntity];
+                [entities destroyEntity:entity];
+                [[[entities allEntities] shouldNot] contain:entity];
+            });
+
             it(@"should add a reference to itself when creating and entity", ^{
                 ESEntity *entity = [entities createEntity];
                 [[entity.entities should] equal:entities];
