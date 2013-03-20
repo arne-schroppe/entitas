@@ -60,6 +60,8 @@
 }
 
 - (ESCollection *)getCollectionForTypes:(NSSet *)types {
+    if(types.count<1)
+        [NSException raise:@"Empty type set." format:@"A collection for an empty type-set cannot be provided."];
     if (![_collections objectForKey:types]) {
         ESCollection *collection = [[ESCollection alloc] initWithTypes:types];
         [[self getEntitiesWithComponentsOfTypes:types] enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop) {

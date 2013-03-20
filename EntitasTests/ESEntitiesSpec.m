@@ -48,13 +48,13 @@ SPEC_BEGIN(ESEntitiesSpec)
             });
 
             it(@"should return a collection with the given set", ^{
-                NSSet *set = [NSSet set];
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
                 ESCollection *collection = [entities getCollectionForTypes:set];
                 [[[collection types] should] equal:set];
             });
 
             it(@"should return the same instance of collections with the same set", ^{
-                NSSet *set = [NSSet set];
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
                 ESCollection *collectionA = [entities getCollectionForTypes:set];
                 ESCollection *collectionB = [entities getCollectionForTypes:set];
                 [[collectionA should] equal:collectionB];
@@ -113,6 +113,19 @@ SPEC_BEGIN(ESEntitiesSpec)
                     [entity addComponent:[[SomeComponent alloc] init] ];
                     [entities destroyEntity:entity];
                     [[[collection entities] shouldNot] contain:entity];
+                });
+
+            });
+
+            context(@"when requesting a collection with an empty types set", ^
+            {
+
+                it(@"should throw an exception", ^
+                {
+                    [[theBlock(^
+                    {
+                        [entities getCollectionForTypes:[NSSet set]];
+                    }) should] raise];
                 });
 
             });
