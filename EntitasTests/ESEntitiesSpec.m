@@ -65,20 +65,20 @@ SPEC_BEGIN(ESEntitiesSpec)
 
             it(@"should return a collection with the given set", ^{
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
-                ESCollection *collection = [entities getCollectionForTypes:set];
+                ESCollection *collection = [entities collectionForTypes:set];
                 [[[collection types] should] equal:set];
             });
 
             it(@"should return the same instance of collections with the same set", ^{
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
-                ESCollection *collectionA = [entities getCollectionForTypes:set];
-                ESCollection *collectionB = [entities getCollectionForTypes:set];
+                ESCollection *collectionA = [entities collectionForTypes:set];
+                ESCollection *collectionB = [entities collectionForTypes:set];
                 [[collectionA should] equal:collectionB];
             });
 
             it(@"should add an entity to a collection", ^{
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
-                ESCollection *collection = [entities getCollectionForTypes:set];
+                ESCollection *collection = [entities collectionForTypes:set];
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
                 [[[collection entities] should] contain:entity];
@@ -86,7 +86,7 @@ SPEC_BEGIN(ESEntitiesSpec)
 
             it(@"should remove an entity from a collection", ^{
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
-                ESCollection *collection = [entities getCollectionForTypes:set];
+                ESCollection *collection = [entities collectionForTypes:set];
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
                 [entity removeComponentOfType:[SomeComponent class]];
@@ -97,7 +97,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
-                ESCollection *collection = [entities getCollectionForTypes:set];
+                ESCollection *collection = [entities collectionForTypes:set];
                 [[[collection entities] should] contain:entity];
             });
 
@@ -105,7 +105,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
-                ESCollection *collection = [entities getCollectionForTypes:set];
+                ESCollection *collection = [entities collectionForTypes:set];
                 [[[collection shouldNot] receive] addEntity:entity];
 
                 [entity addComponent:[[SomeOtherComponent alloc] init] ];
@@ -115,7 +115,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 NSSet *set = [NSSet setWithObject:[SomeOtherComponent class]];
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
-                ESCollection *collection = [entities getCollectionForTypes:set];
+                ESCollection *collection = [entities collectionForTypes:set];
                 [[[collection shouldNot] receive] removeEntity:entity becauseOfRemovedComponent:nil];
                 [entity removeComponentOfType:[SomeComponent class]];
             });
@@ -124,7 +124,7 @@ SPEC_BEGIN(ESEntitiesSpec)
 
                 it(@"should remove that entity from a collection containing it", ^{
                     NSSet *types = [NSSet setWithObject:[SomeComponent class]];
-                    ESCollection *collection = [entities getCollectionForTypes:types];
+                    ESCollection *collection = [entities collectionForTypes:types];
                     ESEntity *entity = [entities createEntity];
                     [entity addComponent:[[SomeComponent alloc] init] ];
                     [entities destroyEntity:entity];
@@ -140,7 +140,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 {
                     [[theBlock(^
                     {
-                        [entities getCollectionForTypes:[NSSet set]];
+                        [entities collectionForTypes:[NSSet set]];
                     }) should] raise];
                 });
 

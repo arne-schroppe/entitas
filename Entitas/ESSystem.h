@@ -3,5 +3,6 @@
 
 @optional
 - (void)activate;
+
 - (void)deactivate;
 @end

@@ -87,7 +87,7 @@ SPEC_BEGIN(ESCollectionSpec)
             ESEntity *e2 = [entities createEntity];
             [e1 addComponent:[SomeComponent new]];
             [e2 addComponent:[SomeComponent new]];
-            ESCollection *collection = [entities getCollectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+            ESCollection *collection = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
             
             it(@"should be possible to remove components on entities during the loop. There for return a copy of entities set.", ^{
                 

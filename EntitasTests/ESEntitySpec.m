@@ -67,7 +67,7 @@ SPEC_BEGIN(ESEntitySpec)
 
             it(@"should get a component by its type", ^{
                 [entity addComponent:component];
-                [[[entity getComponentOfType:[SomeComponent class]] should] equal:component];
+                [[[entity componentOfType:[SomeComponent class]] should] equal:component];
             });
 
             it(@"should raise an exception when adding a component of the same type twice", ^{
