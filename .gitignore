@@ -4,3 +4,5 @@
 # Let's try and keep the Pods out of the repo
 Entitas.xcworkspace
 Pods
+DerivedData
+xcuserdata

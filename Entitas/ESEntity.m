@@ -2,78 +2,64 @@
 #import "ESEntities.h"
 
 @implementation ESEntity {
-    NSMutableSet *componentTypes;
-    NSMutableDictionary *components;
+    NSMutableSet *_componentTypes;
+    NSMutableDictionary *_components;
 }
-
-@synthesize entities;
 
 - (id)init {
     self = [super init];
     if (self) {
-        components = [NSMutableDictionary dictionary];
-        componentTypes = [NSMutableSet set];
+        _components = [NSMutableDictionary dictionary];
+        _componentTypes = [NSMutableSet set];
     }
 
     return self;
 }
 
-- (void)addComponent:(NSObject <ESComponent> *)component
-{
+- (void)addComponent:(NSObject <ESComponent> *)component {
     if ([self hasComponentOfType:[component class]])
         [NSException raise:@"An entity cannot contain multiple components of the same type." format:@""];
 
-    [componentTypes addObject:[component class]];
-    [components setObject:component forKey:[component class]];
-    [entities component:component ofType:[component class] hasBeenAddedToEntity:self];
+    [_componentTypes addObject:[component class]];
+    [_components setObject:component forKey:[component class]];
+    [_entities component:component ofType:[component class] hasBeenAddedToEntity:self];
 }
 
-- (BOOL)containsComponent:(NSObject <ESComponent> *)component
-{
-    return !![components objectForKey:[component class]];
+- (BOOL)containsComponent:(NSObject <ESComponent> *)component {
+    return [_components objectForKey:[component class]] != nil;
 }
 
-- (BOOL)hasComponentOfType:(Class)type
-{
-    return [componentTypes containsObject:type];
+- (BOOL)hasComponentOfType:(Class)type {
+    return [_componentTypes containsObject:type];
 }
 
-- (void)removeComponentOfType:(Class)type
-{
-    if([self hasComponentOfType:type])
-    {
-        NSObject <ESComponent> *component = [components objectForKey:type];
-        [components removeObjectForKey:type];
-        [componentTypes removeObject:type];
-        [entities component:component ofType:type hasBeenRemovedFromEntity:self];
+- (void)removeComponentOfType:(Class)type {
+    if ([self hasComponentOfType:type]) {
+        NSObject <ESComponent> *component = [_components objectForKey:type];
+        [_components removeObjectForKey:type];
+        [_componentTypes removeObject:type];
+        [_entities component:component ofType:type hasBeenRemovedFromEntity:self];
     }
 }
 
-- (NSObject <ESComponent> *)getComponentOfType:(Class)type
-{
-    return [components objectForKey:type];
+- (NSObject <ESComponent> *)getComponentOfType:(Class)type {
+    return [_components objectForKey:type];
 }
 
-- (BOOL)hasComponentsOfTypes:(NSSet *)types
-{
-    return [types isSubsetOfSet:componentTypes];
+- (BOOL)hasComponentsOfTypes:(NSSet *)types {
+    return [types isSubsetOfSet:_componentTypes];
 }
 
-- (NSSet *)componentTypes
-{
-    return componentTypes;
+- (NSSet *)componentTypes {
+    return _componentTypes;
 }
 
-- (NSDictionary *)components
-{
-    return [NSDictionary dictionaryWithDictionary:components];
+- (NSDictionary *)components {
+    return [NSDictionary dictionaryWithDictionary:_components];
 }
 
-
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), [components description]];
+- (NSString *)description {
+    return [NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), [_components description]];
 }
-
 
 @end

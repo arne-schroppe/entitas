@@ -65,7 +65,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                     [collection addEntity:entity];
                     [[[history changes] should] have:1];
                     ESChangedEntity *changedEntity = [[history changes] objectAtIndex:0];
-                    [[[changedEntity getOriginalEntity] should] equal:entity];
+                    [[[changedEntity originalEntity] should] equal:entity];
                 });
 
                 it(@"should contain a changedentity when an entity is removed from the collection", ^{
@@ -74,7 +74,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                     [collection removeEntity:entity becauseOfRemovedComponent:[KWMock mockForProtocol:@protocol(ESComponent)]];
                     [[[history changes] should] have:2];
                     ESChangedEntity *changedEntity = [[history changes] objectAtIndex:1];
-                    [[[changedEntity getOriginalEntity] should] equal:entity];
+                    [[[changedEntity originalEntity] should] equal:entity];
                 });
 
                 it(@"should not contain previous changes when the history was cleared", ^{

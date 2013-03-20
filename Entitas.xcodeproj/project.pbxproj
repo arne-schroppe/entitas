@@ -219,18 +219,10 @@
 				B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */,
 				B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */,
 				B06B0C2E82BE7C568D784D50 /* ESChangedEntitySpec.m */,
-				B06B089C9E10B90499975E84 /* SpecHelpers */,
 				B06B0BEE6CE61D753F35A876 /* Matchers */,
 				B06B029DD99D7B62F5413BF6 /* ESCollectionHistorySpec.m */,
 			);
 			path = EntitasTests;
-			sourceTree = "<group>";
-		};
-		B06B089C9E10B90499975E84 /* SpecHelpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SpecHelpers;
 			sourceTree = "<group>";
 		};
 		B06B0BEE6CE61D753F35A876 /* Matchers */ = {

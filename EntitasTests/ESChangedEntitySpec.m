@@ -24,22 +24,22 @@ SPEC_BEGIN(ESChangedEntitySpec)
 
             it(@"should contain the change type it was initialized with", ^{
                 ESEntityChange changeType = ESEntityAddedToCollection;
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:nil Components:nil ChangeType:changeType];
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:nil components:nil changeType:changeType];
                 [[theValue([changedEntity changeType]) should] equal:theValue(changeType)];
             });
 
             it(@"should contain a reference to the original component", ^{
                 ESEntity *originalEntity = [entities createEntity];
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity Components:nil ChangeType:0];
-                [[[changedEntity getOriginalEntity] should] equal:originalEntity];
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity components:nil changeType:0];
+                [[[changedEntity originalEntity] should] equal:originalEntity];
             });
 
             it(@"should get a component of type by the given components", ^{
                 ESEntity *originalEntity = [entities createEntity];
                 SomeComponent *someComponent = [[SomeComponent alloc] init];
                 NSDictionary *components = [NSDictionary dictionaryWithObject:someComponent forKey:[SomeComponent class]];
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity Components:components ChangeType:0];
-                [[[changedEntity getComponentOfType:[SomeComponent class]] should] equal:someComponent];
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity components:components changeType:0];
+                [[[changedEntity componentOfType:[SomeComponent class]] should] equal:someComponent];
             });
 
         });
