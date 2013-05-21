@@ -1,6 +1,13 @@
 Entitas Ideas
 ====
 
+Performance optimizations
+
+- object-pool ESChangedEntity and use single instance for multiple collections (ESCollection#addEntity & ESCollection#removeEntity)
+- swap to something more performant than NSNotificationCenter for collection updates (one-to-many)
+- remove NSDictionary copy in ESEntity#components
+- create a substitute-component method to not trigger removal/addition into collections and dispatch update event instead
+
 Unsorted list of ideas for Entitas, we need to find a place to discuss them.
 
 - Enity should have an ID
