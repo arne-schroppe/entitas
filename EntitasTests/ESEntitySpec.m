@@ -105,11 +105,6 @@ SPEC_BEGIN(ESEntitySpec)
                 [[theValue([entity hasComponentOfType:[component class]]) should] equal:theValue(NO)];
             });
 
-            it(@"should provide an immutable copy of its components dictionary", ^{
-                [[[entity components] should] beKindOfClass:[NSDictionary class]];
-                [[[entity components] shouldNot] beKindOfClass:[NSMutableDictionary class]];
-            });
-
         });
 
 SPEC_END

@@ -67,7 +67,7 @@
 
 - (NSDictionary *)components
 {
-    return [NSDictionary dictionaryWithDictionary:_components];
+    return _components;
 }
 
 - (NSString *)description
