@@ -44,31 +44,31 @@
 - (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types
 {
     NSMutableArray *matchingEntities = [NSMutableArray array];
-    [_entities enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop)
+    for(ESEntity *entity in _entities)
     {
         if ([entity hasComponentsOfTypes:types])
             [matchingEntities addObject:entity];
-    }];
+    };
 
     return matchingEntities;
 }
 
 - (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
 {
-    [[self collectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop)
+    for(ESCollection *collection in [self collectionsForType:type])
     {
         if ([[collection types] isSubsetOfSet:[entity componentTypes]])
             [collection addEntity:entity];
-    }];
+    };
 }
 
 - (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
-    [[self collectionsForType:type] enumerateObjectsUsingBlock:^(ESCollection *collection, BOOL *stop)
+    for(ESCollection *collection in [self collectionsForType:type])
     {
         if (![[collection types] isSubsetOfSet:[entity componentTypes]])
             [collection removeEntity:entity becauseOfRemovedComponent:component];
-    }];
+    };
 }
 
 - (ESCollection *)collectionForTypes:(NSSet *)types
@@ -78,17 +78,18 @@
     if (![_collections objectForKey:types])
     {
         ESCollection *collection = [[ESCollection alloc] initWithTypes:types];
-        [[self getEntitiesWithComponentsOfTypes:types] enumerateObjectsUsingBlock:^(ESEntity *entity, NSUInteger idx, BOOL *stop)
+
+        for(ESEntity *entity in [self getEntitiesWithComponentsOfTypes:types])
         {
             [collection addEntity:entity];
-        }];
+        };
 
         [_collections setObject:collection forKey:types];
 
-        [types enumerateObjectsUsingBlock:^(id type, BOOL *stop_types)
+        for (id type in types)
         {
             [[self collectionsForType:type] addObject:collection];
-        }];
+        };
     }
     return [_collections objectForKey:types];
 }
@@ -105,4 +106,5 @@
 {
     return [_entities copy];
 }
+
 @end
