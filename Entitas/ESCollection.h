@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "ESEntity.h"
 
+@class ESChangedEntity;
+
 extern NSString *const ESEntityAdded;
 extern NSString *const ESEntityRemoved;
 
@@ -9,9 +11,9 @@ extern NSString *const ESEntityRemoved;
 
 - (NSSet *)types;
 
-- (void)addEntity:(ESEntity *)entity;
+- (void)addEntity:(ESChangedEntity *)changedEntity;
 
 - (NSSet *)entities;
 
-- (void)removeEntity:(ESEntity *)entity becauseOfRemovedComponent:(NSObject <ESComponent> *)removedComponent;
+- (void)removeEntity:(ESChangedEntity *)changedEntity;
 @end

@@ -106,7 +106,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
                 ESCollection *collection = [entities collectionForTypes:set];
-                [[[collection shouldNot] receive] addEntity:entity];
+                [[[collection shouldNot] receive] addEntity:any() ];
 
                 [entity addComponent:[[SomeOtherComponent alloc] init] ];
             });
@@ -116,7 +116,7 @@ SPEC_BEGIN(ESEntitiesSpec)
                 ESEntity *entity = [entities createEntity];
                 [entity addComponent:[[SomeComponent alloc] init] ];
                 ESCollection *collection = [entities collectionForTypes:set];
-                [[[collection shouldNot] receive] removeEntity:entity becauseOfRemovedComponent:nil];
+                [[[collection shouldNot] receive] removeEntity:any() ];
                 [entity removeComponentOfType:[SomeComponent class]];
             });
 

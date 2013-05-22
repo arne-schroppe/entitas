@@ -1,4 +1,5 @@
 #import "ESEntities.h"
+#import "ESChangedEntity.h"
 
 @implementation ESEntities
 {
@@ -55,19 +56,24 @@
 
 - (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
 {
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAddedToCollection];
     for(ESCollection *collection in [self collectionsForType:type])
     {
         if ([[collection types] isSubsetOfSet:[entity componentTypes]])
-            [collection addEntity:entity];
+            [collection addEntity:changedEntity];
     };
 }
 
 - (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
+    NSMutableDictionary *components = [[entity components] mutableCopy];
+    [components setObject:component forKey:[component class]];
+    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:components changeType:ESEntityRemovedFromCollection];
+
     for(ESCollection *collection in [self collectionsForType:type])
     {
         if (![[collection types] isSubsetOfSet:[entity componentTypes]])
-            [collection removeEntity:entity becauseOfRemovedComponent:component];
+            [collection removeEntity:changedEntity];
     };
 }
 
@@ -81,7 +87,8 @@
 
         for(ESEntity *entity in [self getEntitiesWithComponentsOfTypes:types])
         {
-            [collection addEntity:entity];
+            ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAddedToCollection];
+            [collection addEntity:changedEntity];
         };
 
         [_collections setObject:collection forKey:types];

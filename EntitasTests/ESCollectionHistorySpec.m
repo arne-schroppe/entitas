@@ -32,8 +32,8 @@ SPEC_BEGIN(ESCollectionHistorySpec)
             context(@"when recording was not started", ^{
 
                 it(@"should not record a change when an entity is added to the collection", ^{
-                    ESEntity *entity = [[ESEntity alloc] init];
-                    [collection addEntity:entity];
+                    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] init];
+                    [collection addEntity:changedEntity];
                     [[[history changes] should] beEmpty];
                 });
 
@@ -47,8 +47,8 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 });
 
                 it(@"should not record a change when an entity is added to the collection", ^{
-                    ESEntity *entity = [[ESEntity alloc] init];
-                    [collection addEntity:entity];
+                    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] init];
+                    [collection addEntity:changedEntity];
                     [[[history changes] should] beEmpty];
                 });
 
@@ -60,27 +60,27 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                     [history startRecording];
                 });
 
-                it(@"should contain a changedentity when an entity is added to the collection", ^{
-                    ESEntity *entity = [[ESEntity alloc] init];
-                    [collection addEntity:entity];
+                it(@"should store a changedentity when an entity is added to the collection", ^{
+                    ESChangedEntity *originalChangedEntity = [[ESChangedEntity alloc] init];
+                    [collection addEntity:originalChangedEntity];
                     [[[history changes] should] have:1];
-                    ESChangedEntity *changedEntity = [[history changes] objectAtIndex:0];
-                    [[[changedEntity originalEntity] should] equal:entity];
+                    ESChangedEntity *storedChangedEntity = [[history changes] objectAtIndex:0];
+                    [[storedChangedEntity should] beIdenticalTo:originalChangedEntity];
                 });
 
                 it(@"should contain a changedentity when an entity is removed from the collection", ^{
-                    ESEntity *entity = [[ESEntity alloc] init];
-                    [collection addEntity:entity];
-                    [collection removeEntity:entity becauseOfRemovedComponent:[KWMock mockForProtocol:@protocol(ESComponent)]];
+                    ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] init];
+                    ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] init];
+                    [collection addEntity:changedEntity1];
+                    [collection removeEntity:changedEntity2];
                     [[[history changes] should] have:2];
-                    ESChangedEntity *changedEntity = [[history changes] objectAtIndex:1];
-                    [[[changedEntity originalEntity] should] equal:entity];
+                    ESChangedEntity *storedChangedEntity = [[history changes] objectAtIndex:1];
+                    [[storedChangedEntity should] beIdenticalTo:changedEntity2];
                 });
 
                 it(@"should not contain previous changes when the history was cleared", ^{
-                    ESEntity *entity = [[ESEntity alloc] init];
-                    [collection addEntity:entity];
-                    [collection removeEntity:entity becauseOfRemovedComponent:[KWMock mockForProtocol:@protocol(ESComponent)]];
+                    [collection addEntity:[[ESChangedEntity alloc] init]];
+                    [collection removeEntity:[[ESChangedEntity alloc] init]];
                     [history clearChanges];
                     [[[history changes] should] beEmpty];
                 });
