@@ -53,10 +53,10 @@ SPEC_BEGIN(ESCollectionSpec)
             [[[collection entities] should] haveCountOf:1];
         });
 
-        it(@"should post a notification when an entity is added", ^{
-            [notificationReceiver stub:@selector(notification)];
-            [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityAdded object:collection];
-            [[notificationReceiver should] receive:@selector(notification) withCount:1];
+        it(@"should notify observers when an entity is added", ^{
+            id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            [collection addObserver:observer forEvent:ESEntityAdded];
+            [[observer should] receive:@selector(entity:changedInCollection:withEvent:) withCount:1 arguments:changedEntity, collection, ESEntityAdded];
             [collection addEntity:changedEntity];
         });
 
@@ -73,10 +73,19 @@ SPEC_BEGIN(ESCollectionSpec)
 //            [collection addEntity:entity becauseOfAddedComponent:nil];
 //        });
 
-        it(@"should post a notification when an entity is removed", ^{
-            [notificationReceiver stub:@selector(notification)];
-            [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityRemoved object:collection];
-            [[notificationReceiver should] receive:@selector(notification) withCount:1];
+        it(@"should notify observers when an entity is removed", ^{
+            id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            [collection addObserver:observer forEvent:ESEntityRemoved];
+            [[observer should] receive:@selector(entity:changedInCollection:withEvent:) withCount:1 arguments:changedEntity, collection, ESEntityRemoved];
+            [collection addEntity:changedEntity];
+            [collection removeEntity:changedEntity];
+        });
+
+        it(@"should not notify observers that have been removed", ^{
+            id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            [collection addObserver:observer forEvent:ESEntityRemoved];
+            [collection removeObserver:observer forEvent:ESEntityRemoved];
+            [[observer shouldNot] receive:@selector(entity:changedInCollection:withEvent:) withCount:1 arguments:changedEntity, collection, ESEntityRemoved];
             [collection addEntity:changedEntity];
             [collection removeEntity:changedEntity];
         });
@@ -101,7 +110,7 @@ SPEC_BEGIN(ESCollectionSpec)
                 [[[collection entities] should] haveCountOf:0];
             });
         });
-        
+
 
     });
 

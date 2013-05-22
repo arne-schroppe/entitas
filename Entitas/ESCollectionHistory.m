@@ -19,12 +19,6 @@
     return self;
 }
 
-- (void)entityChanged:(NSNotification *)notification
-{
-    ESChangedEntity *entity = [[notification userInfo] objectForKey:[ESChangedEntity class]];
-    [_changes addObject:entity];
-}
-
 - (ESCollection *)collection
 {
     return _collection;
@@ -42,14 +36,19 @@
 
 - (void)startRecording
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entityChanged:) name:ESEntityAdded object:_collection];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entityChanged:) name:ESEntityRemoved object:_collection];
+    [_collection addObserver:self forEvent:ESEntityAdded];
+    [_collection addObserver:self forEvent:ESEntityRemoved];
 }
 
 - (void)stopRecording
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ESEntityAdded object:_collection];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ESEntityRemoved object:_collection];
+    [_collection removeObserver:self forEvent:ESEntityAdded];
+    [_collection removeObserver:self forEvent:ESEntityRemoved];
 }
+
+- (void)entity:(ESChangedEntity *)changedEntity changedInCollection:(ESCollection *)collection withEvent:(NSString * const)event {
+    [_changes addObject:changedEntity];
+}
+
 
 @end

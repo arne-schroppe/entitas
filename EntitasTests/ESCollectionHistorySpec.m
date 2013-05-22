@@ -9,10 +9,12 @@ SPEC_BEGIN(ESCollectionHistorySpec)
 
             __block ESCollectionHistory *history = nil;
             __block ESCollection *collection = nil;
+            __block ESEntity *entity = nil;
 
             beforeEach(^{
-                collection = [[ESCollection alloc] init];
+                collection = [[ESCollection alloc] initWithTypes:[NSSet new]];
                 history = [[ESCollectionHistory alloc] initWithCollection:collection];
+                entity = [ESEntity new];
             });
 
             it(@"should be instantiated", ^{
@@ -32,7 +34,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
             context(@"when recording was not started", ^{
 
                 it(@"should not record a change when an entity is added to the collection", ^{
-                    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] init];
+                    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAddedToCollection];
                     [collection addEntity:changedEntity];
                     [[[history changes] should] beEmpty];
                 });
@@ -47,7 +49,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 });
 
                 it(@"should not record a change when an entity is added to the collection", ^{
-                    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] init];
+                    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAddedToCollection];
                     [collection addEntity:changedEntity];
                     [[[history changes] should] beEmpty];
                 });
@@ -61,7 +63,7 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 });
 
                 it(@"should store a changedentity when an entity is added to the collection", ^{
-                    ESChangedEntity *originalChangedEntity = [[ESChangedEntity alloc] init];
+                    ESChangedEntity *originalChangedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAddedToCollection];
                     [collection addEntity:originalChangedEntity];
                     [[[history changes] should] have:1];
                     ESChangedEntity *storedChangedEntity = [[history changes] objectAtIndex:0];
@@ -69,8 +71,8 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 });
 
                 it(@"should contain a changedentity when an entity is removed from the collection", ^{
-                    ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] init];
-                    ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] init];
+                    ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAddedToCollection];
+                    ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityRemovedFromCollection];
                     [collection addEntity:changedEntity1];
                     [collection removeEntity:changedEntity2];
                     [[[history changes] should] have:2];
@@ -79,8 +81,8 @@ SPEC_BEGIN(ESCollectionHistorySpec)
                 });
 
                 it(@"should not contain previous changes when the history was cleared", ^{
-                    [collection addEntity:[[ESChangedEntity alloc] init]];
-                    [collection removeEntity:[[ESChangedEntity alloc] init]];
+                    [collection addEntity:[[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAddedToCollection]];
+                    [collection removeEntity:[[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityRemovedFromCollection]];
                     [history clearChanges];
                     [[[history changes] should] beEmpty];
                 });
