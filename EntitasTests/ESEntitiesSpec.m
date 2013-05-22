@@ -120,6 +120,22 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [entity removeComponentOfType:[SomeComponent class]];
             });
 
+            it(@"should add an entity to a collection when exchanging a component", ^{
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
+                ESCollection *collection = [entities collectionForTypes:set];
+                ESEntity *entity = [entities createEntity];
+                [entity exchangeComponent:[[SomeComponent alloc] init] ];
+                [[[collection entities] should] contain:entity];
+            });
+
+            it(@"should exchange an entity in a collection when exchanging a component", ^{
+                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
+                ESCollection *collection = [entities collectionForTypes:set];
+                ESEntity *entity = [entities createEntity];
+                [entity exchangeComponent:[[SomeComponent alloc] init] ];
+                [[[collection entities] should] contain:entity];
+            });
+
             context(@"when destroying an entity", ^{
 
                 it(@"should remove that entity from a collection containing it", ^{

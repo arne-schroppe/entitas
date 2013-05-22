@@ -105,6 +105,28 @@ SPEC_BEGIN(ESEntitySpec)
                 [[theValue([entity hasComponentOfType:[component class]]) should] equal:theValue(NO)];
             });
 
+
+            it(@"should exchange a component", ^{
+                [entity addComponent:component];
+                [entity exchangeComponent:[[SomeComponent alloc] initWithValue:1]];
+
+                SomeComponent *exchangedComponent = (SomeComponent *) [entity componentOfType:[SomeComponent class]];
+                [[theValue(exchangedComponent.value) should] equal:theValue(1)];
+            });
+
+            it(@"should have a component of type when component of that type was exchanged", ^{
+                [entity exchangeComponent:component];
+                [[theValue([entity hasComponentOfType:[SomeComponent class]]) should] equal:theValue(YES)];
+            });
+
+            it(@"should call ESEntities object that a component has been exchanged for this entity", ^{
+                ESEntities *entities = [[ESEntities alloc] init];
+                entity.entities = entities;
+                [[[entities should] receive] component:component ofType:[component class] hasBeenExchangedInEntity:entity];
+                [entity exchangeComponent:component];
+                [entity removeComponentOfType:[component class]];
+            });
+
         });
 
 SPEC_END

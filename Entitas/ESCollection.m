@@ -36,6 +36,17 @@
     }
 }
 
+- (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity {
+
+    if([_entities containsObject:removedEntity.originalEntity]){
+        for (id<ESCollectionObserver> observer in _removeObservers){
+            [observer entity:removedEntity changedInCollection:self];
+        }
+    }
+
+    [self addEntity:addedEntity];
+}
+
 - (NSSet *)entities
 {
     return [_entities copy];

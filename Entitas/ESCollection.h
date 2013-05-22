@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 - (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
 
 - (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
+
+- (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity;
 @end
 
 

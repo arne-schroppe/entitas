@@ -17,6 +17,7 @@
 @property(strong, nonatomic) ESEntities *entities;
 
 - (void)addComponent:(NSObject <ESComponent> *)component;
+- (void)exchangeComponent:(NSObject <ESComponent> *)component;
 
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component;
 

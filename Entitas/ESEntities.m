@@ -64,6 +64,17 @@
     };
 }
 
+- (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenExchangedInEntity:(ESEntity *)entity {
+    ESChangedEntity *addedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
+    ESChangedEntity *removedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityRemoved];
+    for(ESCollection *collection in [self collectionsForType:type])
+    {
+        if ([[collection types] isSubsetOfSet:[entity componentTypes]])
+            [collection remove:removedEntity andAddEntity:addedEntity];
+    };
+}
+
+
 - (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
     NSMutableDictionary *components = [[entity components] mutableCopy];

@@ -2,4 +2,5 @@
 #import "ESComponent.h"
 
 @interface SomeOtherComponent : NSObject <ESComponent>
+
 @end

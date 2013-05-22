@@ -29,6 +29,14 @@
     [_entities component:component ofType:[component class] hasBeenAddedToEntity:self];
 }
 
+
+- (void)exchangeComponent:(NSObject <ESComponent> *)component {
+    [_componentTypes addObject:[component class]];
+    [_components setObject:component forKey:[component class]];
+    [_entities component:component ofType:[component class] hasBeenExchangedInEntity:self];
+}
+
+
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component
 {
     return [_components objectForKey:[component class]] != nil;

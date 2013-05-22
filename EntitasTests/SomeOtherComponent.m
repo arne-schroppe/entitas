@@ -3,6 +3,8 @@
 
 @implementation SomeOtherComponent {
 
+
+
 }
 
 @end

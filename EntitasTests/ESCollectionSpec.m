@@ -89,6 +89,33 @@ SPEC_BEGIN(ESCollectionSpec)
             [collection addEntity:changedEntity];
             [collection removeEntity:changedEntity];
         });
+
+        it(@"should notify observers when an entity is removed and added", ^{
+            [collection addEntity:changedEntity];
+            ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityRemoved];
+            ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
+            id observer1 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            id observer2 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            [collection addObserver:observer1 forEvent:ESEntityRemoved];
+            [collection addObserver:observer2 forEvent:ESEntityAdded];
+            [[observer1 should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity1, collection];
+            [[observer2 should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity2, collection];
+            [collection remove:changedEntity1 andAddEntity:changedEntity2];
+        });
+
+
+
+        it(@"should only notify observers of an added entity if the exchanged entity was not part of the collection before", ^{
+            ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityRemoved];
+            ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
+            id observer1 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            id observer2 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
+            [collection addObserver:observer1 forEvent:ESEntityRemoved];
+            [collection addObserver:observer2 forEvent:ESEntityAdded];
+            [[observer1 shouldNot] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity1, collection];
+            [[observer2 should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity2, collection];
+            [collection remove:changedEntity1 andAddEntity:changedEntity2];
+        });
         
         context(@"Collection is provided by Entities", ^{
             //Given
