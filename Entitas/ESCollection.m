@@ -9,8 +9,6 @@
     NSMutableSet *_removeObservers;
 }
 
-NSString *const ESEntityAdded = @"ESEntityAdded";
-NSString *const ESEntityRemoved = @"ESEntityRemoved";
 
 - (id)initWithTypes:(NSSet *)types
 {
@@ -34,7 +32,7 @@ NSString *const ESEntityRemoved = @"ESEntityRemoved";
 - (void)addEntity:(ESChangedEntity *)changedEntity {
     [_entities addObject:changedEntity.originalEntity];
     for (id<ESCollectionObserver> observer in _addObservers){
-        [observer entity:changedEntity changedInCollection:self withEvent:ESEntityAdded];
+        [observer entity:changedEntity changedInCollection:self];
     }
 }
 
@@ -46,22 +44,22 @@ NSString *const ESEntityRemoved = @"ESEntityRemoved";
 - (void)removeEntity:(ESChangedEntity *)changedEntity {
     [_entities removeObject:changedEntity.originalEntity];
     for (id<ESCollectionObserver> observer in _removeObservers){
-        [observer entity:changedEntity changedInCollection:self withEvent:ESEntityRemoved];
+        [observer entity:changedEntity changedInCollection:self];
     }
 }
 
-- (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(NSString * const)event {
-    if([event isEqualToString:ESEntityAdded]){
+- (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event {
+    if(event == ESEntityAdded){
         [_addObservers addObject:observer];
-    } else if ([event isEqualToString:ESEntityRemoved]) {
+    } else if (event == ESEntityRemoved) {
         [_removeObservers addObject:observer];
     }
 }
 
-- (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(NSString * const)event {
-    if([event isEqualToString:ESEntityAdded]){
+- (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event {
+    if(event == ESEntityAdded){
         [_addObservers removeObject:observer];
-    } else if ([event isEqualToString:ESEntityRemoved]) {
+    } else if (event == ESEntityRemoved) {
         [_removeObservers removeObject:observer];
     }
 }

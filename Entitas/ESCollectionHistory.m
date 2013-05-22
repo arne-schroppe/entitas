@@ -46,7 +46,7 @@
     [_collection removeObserver:self forEvent:ESEntityRemoved];
 }
 
-- (void)entity:(ESChangedEntity *)changedEntity changedInCollection:(ESCollection *)collection withEvent:(NSString * const)event {
+- (void)entity:(ESChangedEntity *)changedEntity changedInCollection:(ESCollection *)collection {
     [_changes addObject:changedEntity];
 }
 

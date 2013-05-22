@@ -22,7 +22,7 @@ SPEC_BEGIN(ESCollectionSpec)
             set = [NSSet set];
             collection = [[ESCollection alloc] initWithTypes:set];
             entity = [[ESEntity alloc] init];
-            changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAddedToCollection];
+            changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
             notificationReceiver = [KWMock mock];
         });
 
@@ -56,7 +56,7 @@ SPEC_BEGIN(ESCollectionSpec)
         it(@"should notify observers when an entity is added", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityAdded];
-            [[observer should] receive:@selector(entity:changedInCollection:withEvent:) withCount:1 arguments:changedEntity, collection, ESEntityAdded];
+            [[observer should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
             [collection addEntity:changedEntity];
         });
 
@@ -76,7 +76,7 @@ SPEC_BEGIN(ESCollectionSpec)
         it(@"should notify observers when an entity is removed", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityRemoved];
-            [[observer should] receive:@selector(entity:changedInCollection:withEvent:) withCount:1 arguments:changedEntity, collection, ESEntityRemoved];
+            [[observer should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
             [collection addEntity:changedEntity];
             [collection removeEntity:changedEntity];
         });
@@ -85,7 +85,7 @@ SPEC_BEGIN(ESCollectionSpec)
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityRemoved];
             [collection removeObserver:observer forEvent:ESEntityRemoved];
-            [[observer shouldNot] receive:@selector(entity:changedInCollection:withEvent:) withCount:1 arguments:changedEntity, collection, ESEntityRemoved];
+            [[observer shouldNot] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
             [collection addEntity:changedEntity];
             [collection removeEntity:changedEntity];
         });

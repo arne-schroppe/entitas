@@ -1,4 +1,5 @@
 #import "ESChangedEntity.h"
+#import "ESCollection.h"
 
 @implementation ESChangedEntity
 {

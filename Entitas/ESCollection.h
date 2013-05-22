@@ -4,8 +4,11 @@
 @class ESChangedEntity;
 @protocol ESCollectionObserver;
 
-extern NSString *const ESEntityAdded;
-extern NSString *const ESEntityRemoved;
+typedef NS_ENUM(NSUInteger, ESEntityChange)
+{
+    ESEntityAdded,
+    ESEntityRemoved
+};
 
 @interface ESCollection : NSObject
 - (id)initWithTypes:(NSSet *)types;
@@ -18,14 +21,14 @@ extern NSString *const ESEntityRemoved;
 
 - (void)removeEntity:(ESChangedEntity *)changedEntity;
 
-- (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(NSString * const)event;
+- (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
 
-- (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(NSString * const)event;
+- (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
 @end
 
 
 @protocol ESCollectionObserver
 
-- (void)entity:(ESChangedEntity *)changedEntity changedInCollection:(ESCollection *)collection withEvent:(NSString * const)event;
+- (void)entity:(ESChangedEntity *)changedEntity changedInCollection:(ESCollection *)collection;
 
 @end

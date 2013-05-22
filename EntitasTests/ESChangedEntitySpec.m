@@ -23,7 +23,7 @@ SPEC_BEGIN(ESChangedEntitySpec)
             });
 
             it(@"should contain the change type it was initialized with", ^{
-                ESEntityChange changeType = ESEntityAddedToCollection;
+                ESEntityChange changeType = ESEntityAdded;
                 ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:nil components:nil changeType:changeType];
                 [[theValue([changedEntity changeType]) should] equal:theValue(changeType)];
             });
