@@ -23,6 +23,7 @@
 		60266B7A28294BD4648903D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
+		85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A40B54895A0164D8768 /* SomeThirdComponent.m */; };
 		B06B0140FFD2853D8BF55BBA /* ESCollectionHistorySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B029DD99D7B62F5413BF6 /* ESCollectionHistorySpec.m */; };
 		B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
 		B06B026185A32A74264CC44B /* NSNotificationMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B000845879007114E2DBC /* NSNotificationMatcher.m */; };
@@ -95,6 +96,8 @@
 		60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSystemsSpec.m; sourceTree = "<group>"; };
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
+		85D85A40B54895A0164D8768 /* SomeThirdComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeThirdComponent.m; sourceTree = "<group>"; };
 		B06B000845879007114E2DBC /* NSNotificationMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNotificationMatcher.m; sourceTree = "<group>"; };
 		B06B003BC9B7BF20962E1E90 /* ESEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntities.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				602664F5ECFD7036D547B890 /* SomeComponent.h */,
 				B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */,
 				B06B01E58C73C158BF02110B /* SomeOtherComponent.h */,
+				85D85A40B54895A0164D8768 /* SomeThirdComponent.m */,
+				85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				B06B026185A32A74264CC44B /* NSNotificationMatcher.m in Sources */,
 				B06B0140FFD2853D8BF55BBA /* ESCollectionHistorySpec.m in Sources */,
 				B06B0D3671CB81ABCAED6211 /* ESCollectionHistory.m in Sources */,
+				85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,6 +4,7 @@
 #import "SomeComponent.h"
 #import "ESCollection.h"
 #import "SomeOtherComponent.h"
+#import "SomeThirdComponent.h"
 
 SPEC_BEGIN(ESEntitiesSpec)
 
@@ -119,6 +120,17 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[[collection shouldNot] receive] removeEntity:any() ];
                 [entity removeComponentOfType:[SomeComponent class]];
             });
+
+            it(@"should not attempt to remove an entity from an unrelated collection that shares some components", ^{
+                NSSet *set = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[[SomeComponent alloc] init] ];
+                [entity addComponent:[[SomeThirdComponent alloc] init] ];
+                ESCollection *collection = [entities collectionForTypes:set];
+                [[[collection shouldNot] receive] removeEntity:any() ];
+                [entity removeComponentOfType:[SomeComponent class]];
+            });
+
 
             it(@"should add an entity to a collection when exchanging a component", ^{
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];
