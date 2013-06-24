@@ -81,9 +81,12 @@
     [components setObject:component forKey:[component class]];
     ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:components changeType:ESEntityRemoved];
 
+    NSMutableSet *originalComponentTypes = [[entity componentTypes] mutableCopy];
+    [originalComponentTypes addObject:type];
+
     for(ESCollection *collection in [self collectionsForType:type])
     {
-        if (![[collection types] isSubsetOfSet:[entity componentTypes]])
+        if ([[collection types] isSubsetOfSet:originalComponentTypes] && ![[collection types] isSubsetOfSet:[entity componentTypes]])
             [collection removeEntity:changedEntity];
     };
 }
