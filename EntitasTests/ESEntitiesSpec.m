@@ -112,6 +112,15 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [entity addComponent:[[SomeOtherComponent alloc] init] ];
             });
 
+            it(@"should not attempt to add an entity to an unrelated collection that shares some components", ^{
+                NSSet *set = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[[SomeThirdComponent alloc] init] ];
+                ESCollection *collection = [entities collectionForTypes:set];
+                [[[collection shouldNot] receive] addEntity:any() ];
+                [entity addComponent:[[SomeComponent alloc] init] ];
+            });
+
             it(@"should not attempt to remove an entity from a collection that doesn't contain it", ^{
                 NSSet *set = [NSSet setWithObject:[SomeOtherComponent class]];
                 ESEntity *entity = [entities createEntity];
