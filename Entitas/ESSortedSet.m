@@ -6,14 +6,19 @@
     NSMutableArray *_data;
 }
 
-- (id) init {
+- (id) initWithData:(NSMutableArray *)data {
     self = [super init];
     if (self) {
-        _data = [[NSMutableArray alloc] init];
+        _data = data;
     }
 
     return self;
 }
+
+- (id)init {
+    return [self initWithData:[[NSMutableArray alloc] init]];
+}
+
 
 NSComparisonResult (^idComparator)(ESEntity *, ESEntity *) = ^NSComparisonResult(ESEntity *entity1, ESEntity *entity2) {
     NSNumber *id1 = @(entity1.id);
@@ -37,6 +42,9 @@ NSComparisonResult (^idComparator)(ESEntity *, ESEntity *) = ^NSComparisonResult
 }
 
 - (id) anyObject {
+    if(_data.count < 1) {
+        return nil;
+    }
     return _data[0];
 }
 
@@ -45,7 +53,7 @@ NSComparisonResult (^idComparator)(ESEntity *, ESEntity *) = ^NSComparisonResult
 }
 
 - (id)copy {
-    return [_data copy];
+    return [[ESSortedSet alloc] initWithData:[_data mutableCopy]];
 }
 
 - (NSUInteger) countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len {
