@@ -7,16 +7,21 @@
     NSMutableDictionary *_components;
 }
 
-- (id)init
+- (id)initWithId:(ESId)id
 {
     self = [super init];
     if (self)
     {
         _components = [NSMutableDictionary dictionary];
         _componentTypes = [NSMutableSet set];
+        _id = id;
     }
 
     return self;
+}
+
+- (id)init {
+    return [self initWithId:0];
 }
 
 - (void)addComponent:(NSObject <ESComponent> *)component

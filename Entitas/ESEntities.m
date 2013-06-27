@@ -6,6 +6,7 @@
     NSMutableArray *_entities;
     NSMutableDictionary *_collections;
     NSMutableDictionary *_collectionsForType;
+    ESId _idCounter;
 }
 
 - (id)init
@@ -16,6 +17,7 @@
         _entities = [NSMutableArray array];
         _collections = [NSMutableDictionary dictionary];
         _collectionsForType = [NSMutableDictionary dictionary];
+        _idCounter = 0;
     }
 
     return self;
@@ -23,7 +25,8 @@
 
 - (ESEntity *)createEntity
 {
-    ESEntity *entity = [[ESEntity alloc] init];
+    ++_idCounter;
+    ESEntity *entity = [[ESEntity alloc] initWithId:_idCounter];
     entity.entities = self;
     [_entities addObject:entity];
     return entity;
