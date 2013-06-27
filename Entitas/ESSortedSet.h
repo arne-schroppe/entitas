@@ -1,0 +1,2 @@
+@interface ESSortedSet : NSMutableSet
+@end

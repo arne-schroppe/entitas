@@ -1,12 +1,13 @@
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
+#import "ESSortedSet.h"
 
 @implementation ESCollection
 {
     NSSet *_types;
     NSMutableSet *_entities;
-    NSMutableSet *_addObservers;
-    NSMutableSet *_removeObservers;
+    NSMutableArray *_addObservers;
+    NSMutableArray *_removeObservers;
 }
 
 
@@ -16,9 +17,9 @@
     if (self)
     {
         _types = types;
-        _entities = [[NSMutableSet alloc] init];
-        _addObservers = [NSMutableSet set];
-        _removeObservers = [NSMutableSet set];
+        _entities = [[ESSortedSet alloc] init];
+        _addObservers = [NSMutableArray array];
+        _removeObservers = [NSMutableArray array];
     }
 
     return self;
@@ -61,9 +62,13 @@
 
 - (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event {
     if(event == ESEntityAdded){
-        [_addObservers addObject:observer];
+        if(![_addObservers containsObject:observer]) {
+            [_addObservers addObject:observer];
+        }
     } else if (event == ESEntityRemoved) {
-        [_removeObservers addObject:observer];
+        if(![_removeObservers containsObject:observer]) {
+            [_removeObservers addObject:observer];
+        }
     }
 }
 
