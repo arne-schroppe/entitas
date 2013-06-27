@@ -85,7 +85,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), [_components description]];
+    return [NSString stringWithFormat:@"[%@ %lu %@]", NSStringFromClass([self class]), _id, [_components description]];
 }
 
 @end
