@@ -64,5 +64,15 @@ NSComparisonResult (^idComparator)(ESEntity *, ESEntity *) = ^NSComparisonResult
     return [_data count];
 }
 
+- (void) removeAllObjects {
+    [_data removeAllObjects];
+}
+
+- (NSSet *) filteredSetUsingPredicate:(NSPredicate *)predicate {
+    return [[ESSortedSet alloc] initWithData:[[_data filteredArrayUsingPredicate:predicate] mutableCopy]];
+}
+
+
+
 
 @end
