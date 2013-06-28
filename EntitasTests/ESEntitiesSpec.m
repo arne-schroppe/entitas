@@ -157,17 +157,6 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[[collection entities] should] contain:entity];
             });
 
-            it(@"should add ids to new entities", ^{
-
-                ESEntity *entity1 = [entities createEntity];
-                ESEntity *entity2 = [entities createEntity];
-                ESEntity *entity3 = [entities createEntity];
-
-                [[theValue(entity1.id) should] equal:theValue(1)];
-                [[theValue(entity2.id) should] equal:theValue(2)];
-                [[theValue(entity3.id) should] equal:theValue(3)];
-            });
-
             context(@"when destroying an entity", ^{
 
                 it(@"should remove that entity from a collection containing it", ^{

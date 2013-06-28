@@ -7,21 +7,16 @@
     NSMutableDictionary *_components;
 }
 
-- (id)initWithId:(ESId)id
+- (id)init
 {
     self = [super init];
     if (self)
     {
         _components = [NSMutableDictionary dictionary];
         _componentTypes = [NSMutableSet set];
-        _id = id;
     }
 
     return self;
-}
-
-- (id)init {
-    return [self initWithId:0];
 }
 
 - (void)addComponent:(NSObject <ESComponent> *)component
@@ -85,7 +80,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"[%@ %lu %@]", NSStringFromClass([self class]), _id, [_components description]];
+    return [NSString stringWithFormat:@"[%@ %@]", NSStringFromClass([self class]), [_components description]];
 }
 
 @end

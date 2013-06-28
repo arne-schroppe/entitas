@@ -11,16 +11,11 @@
 // Transforms to: PositionComponent *pos = (PositionComponent*)[e componentOfType:[PositionComponent class]]
 #define defineComponent(name, entity, ComponentType) ComponentType * name = (ComponentType *)[entity componentOfType:[ComponentType class]]
 
-typedef signed long ESId;
-
 @class ESEntities;
 
 @interface ESEntity : NSObject
 
 @property(strong, nonatomic) ESEntities *entities;
-@property(readonly) ESId id;
-
-- (id) initWithId:(ESId)id1;
 
 - (void)addComponent:(NSObject <ESComponent> *)component;
 - (void)exchangeComponent:(NSObject <ESComponent> *)component;
