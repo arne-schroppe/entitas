@@ -53,6 +53,26 @@ SPEC_BEGIN(ESCollectionSpec)
             [[[collection entities] should] haveCountOf:1];
         });
 
+        it(@"should preserve the order of entities", ^{
+
+            ESEntity *entity1 = [[ESEntity alloc] init];
+            ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity1 components:nil changeType:ESEntityAdded];
+            [collection addEntity:changedEntity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] init];
+            ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity2 components:nil changeType:ESEntityAdded];
+            [collection addEntity:changedEntity2];
+
+            ESEntity *entity3 = [[ESEntity alloc] init];
+            ESChangedEntity *changedEntity3 = [[ESChangedEntity alloc] initWithOriginalEntity:entity3 components:nil changeType:ESEntityAdded];
+            [collection addEntity:changedEntity3];
+
+            [[[collection entities] should] haveCountOf:3];
+            [[[collection entities][0] should] beIdenticalTo:entity1];
+            [[[collection entities][1] should] beIdenticalTo:entity2];
+            [[[collection entities][2] should] beIdenticalTo:entity3];
+        });
+
         it(@"should notify observers when an entity is added", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityAdded];

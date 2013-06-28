@@ -1,11 +1,10 @@
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
-#import "ESSortedSet.h"
 
 @implementation ESCollection
 {
     NSSet *_types;
-    NSMutableSet *_entities;
+    NSMutableOrderedSet *_entities;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
 }
@@ -17,7 +16,7 @@
     if (self)
     {
         _types = types;
-        _entities = [[ESSortedSet alloc] init];
+        _entities = [[NSMutableOrderedSet alloc] init];
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
     }
@@ -48,7 +47,7 @@
     [self addEntity:addedEntity];
 }
 
-- (NSSet *)entities
+- (NSOrderedSet *)entities
 {
     return [_entities copy];
 }
