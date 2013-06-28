@@ -78,7 +78,7 @@
 - (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
 {
     NSMutableDictionary *components = [[entity components] mutableCopy];
-    [components setObject:component forKey:[component class]];
+    [components setObject:component forKey:(id <NSCopying>) [component class]];
     ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:components changeType:ESEntityRemoved];
 
     NSMutableSet *originalComponentTypes = [[entity componentTypes] mutableCopy];
@@ -118,7 +118,7 @@
 - (NSMutableSet *)collectionsForType:(Class)type
 {
     if (![_collectionsForType objectForKey:type])
-        [_collectionsForType setObject:[NSMutableSet set] forKey:type];
+        [_collectionsForType setObject:[NSMutableSet set] forKey:(id <NSCopying>) type];
 
     return [_collectionsForType objectForKey:type];
 }

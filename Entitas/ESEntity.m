@@ -25,14 +25,14 @@
         [NSException raise:@"An entity cannot contain multiple components of the same type." format:@""];
 
     [_componentTypes addObject:[component class]];
-    [_components setObject:component forKey:[component class]];
+    [_components setObject:component forKey:(id <NSCopying>) [component class]];
     [_entities component:component ofType:[component class] hasBeenAddedToEntity:self];
 }
 
 
 - (void)exchangeComponent:(NSObject <ESComponent> *)component {
     [_componentTypes addObject:[component class]];
-    [_components setObject:component forKey:[component class]];
+    [_components setObject:component forKey:(id <NSCopying>) [component class]];
     [_entities component:component ofType:[component class] hasBeenExchangedInEntity:self];
 }
 

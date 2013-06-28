@@ -37,7 +37,7 @@ SPEC_BEGIN(ESChangedEntitySpec)
             it(@"should get a component of type by the given components", ^{
                 ESEntity *originalEntity = [entities createEntity];
                 SomeComponent *someComponent = [[SomeComponent alloc] init];
-                NSDictionary *components = [NSDictionary dictionaryWithObject:someComponent forKey:[SomeComponent class]];
+                NSDictionary *components = [NSDictionary dictionaryWithObject:someComponent forKey:(id <NSCopying>) [SomeComponent class]];
                 ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:originalEntity components:components changeType:0];
                 [[[changedEntity componentOfType:[SomeComponent class]] should] equal:someComponent];
             });
