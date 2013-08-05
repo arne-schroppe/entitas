@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 
 - (void)addEntity:(ESChangedEntity *)changedEntity;
 
-- (NSOrderedSet *)entities;
+- (NSArray *)entities;
 
 - (void)removeEntity:(ESChangedEntity *)changedEntity;
 

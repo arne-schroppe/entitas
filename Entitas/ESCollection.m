@@ -4,7 +4,7 @@
 @implementation ESCollection
 {
     NSSet *_types;
-    NSMutableOrderedSet *_entities;
+    NSMutableArray *_entities;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
 }
@@ -16,7 +16,7 @@
     if (self)
     {
         _types = types;
-        _entities = [[NSMutableOrderedSet alloc] init];
+        _entities = [NSMutableArray array];
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
     }
@@ -30,7 +30,11 @@
 }
 
 - (void)addEntity:(ESChangedEntity *)changedEntity {
-    [_entities addObject:changedEntity.originalEntity];
+
+    if(![_entities containsObject:changedEntity.originalEntity]){
+        [_entities addObject:changedEntity.originalEntity];
+    }
+
     for (id<ESCollectionObserver> observer in _addObservers){
         [observer entity:changedEntity changedInCollection:self];
     }
@@ -47,7 +51,7 @@
     [self addEntity:addedEntity];
 }
 
-- (NSOrderedSet *)entities
+- (NSArray *)entities
 {
     return [_entities copy];
 }
