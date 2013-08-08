@@ -8,5 +8,9 @@
     return [self.componentTypes isSubsetOfSet:componentTypes];
 }
 
+- (NSUInteger)hash {
+    return (NSUInteger)self.class + [self.componentTypes hash];
+}
+
 
 @end

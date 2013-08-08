@@ -1,5 +1,6 @@
 #import "ESAbstractComponentMatcher.h"
 #import "ESEntity.h"
+#import "ESCollection.h"
 
 
 @implementation ESAbstractComponentMatcher {
@@ -59,5 +60,10 @@
     @throw [NSException exceptionWithName:NSGenericException reason:@"Must to be implemented in subclass" userInfo:nil];
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    id copy = [[[self class] alloc] initWithTypes:[_componentTypes copyWithZone:zone]];
+    return copy;
+}
 
 @end

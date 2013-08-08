@@ -1,6 +1,7 @@
 #import "ESEntities.h"
 #import "ESChangedEntity.h"
 #import "ESComponentMatcher.h"
+#import "ESAllComponentTypes.h"
 
 @implementation ESEntities
 {
@@ -92,29 +93,35 @@
     };
 }
 
-- (ESCollection *)collectionForTypes:(NSSet *)types
-{
-    if (types.count < 1)
-        [NSException raise:@"Empty type set." format:@"A collection for an empty type-set cannot be provided."];
-    if (![_collections objectForKey:types])
+- (ESCollection *)collectionForMatcher:(NSObject <ESComponentMatcher> *)matcher {
+    if (![_collections objectForKey:matcher])
     {
-        ESCollection *collection = [[ESCollection alloc] initWithTypes:types];
+        ESCollection *collection = [[ESCollection alloc] initWithMatcher:matcher];
 
-        for(ESEntity *entity in [self getEntitiesWithComponentsOfTypes:types])
+        for(ESEntity *entity in [self getEntitiesWithComponentsOfTypes:[matcher componentTypes]])
         {
-            ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
-            [collection addEntity:changedEntity];
+            if([collection.typeMatcher areComponentsMatching:[entity componentTypes]]) {
+                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
+                [collection addEntity:changedEntity];
+            }
         };
 
-        [_collections setObject:collection forKey:types];
+        [_collections setObject:collection forKey:matcher];
 
-        for (id type in types)
+        for (id type in matcher.componentTypes)
         {
             [[self collectionsForType:type] addObject:collection];
         };
     }
-    return [_collections objectForKey:types];
+    return [_collections objectForKey:matcher];
 }
+
+
+
+- (ESCollection *)collectionForTypes:(NSSet *)types {
+    return [self collectionForMatcher:[[ESAllComponentTypes alloc] initWithTypes:types]];
+}
+
 
 - (NSMutableSet *)collectionsForType:(Class)type
 {
@@ -123,6 +130,8 @@
 
     return [_collectionsForType objectForKey:type];
 }
+
+
 
 - (NSArray *)allEntities
 {

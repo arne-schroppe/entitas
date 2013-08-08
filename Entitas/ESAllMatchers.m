@@ -1,4 +1,5 @@
 #import "ESAllMatchers.h"
+#import "ESCollection.h"
 
 
 @implementation ESAllMatchers {
@@ -21,5 +22,22 @@
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes {
     return [_matcher1 areComponentsMatching:componentTypes] && [_matcher2 areComponentsMatching:componentTypes];
 }
+
+- (NSSet *)componentTypes {
+    return [_matcher1.componentTypes setByAddingObjectsFromSet:_matcher2.componentTypes];
+}
+
+
+- (NSUInteger)hash {
+    return (NSUInteger)self.class + [_matcher1 hash] + [_matcher2 hash];
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    id copy = [[[self class] alloc] initWithMatcher:[_matcher1 copyWithZone:zone] and:[_matcher2 copyWithZone:zone]];
+    return copy;
+}
+
+
 
 @end

@@ -3,9 +3,10 @@
 @class ESEntities;
 @class ESEntity;
 
-@protocol ESComponentMatcher <NSObject>
+@protocol ESComponentMatcher <NSObject, NSCopying>
 
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes;
+- (NSSet *)componentTypes;
 //- (NSArray *)matchingEntities:(NSArray*)entities;
 
 @end

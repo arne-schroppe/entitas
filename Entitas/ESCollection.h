@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 
 @interface ESCollection : NSObject
 - (id)initWithTypes:(NSSet *)types;
+- (id)initWithMatcher:(NSObject<ESComponentMatcher> *)matcher;
 
 - (NSObject<ESComponentMatcher> *)typeMatcher;
 
