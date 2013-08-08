@@ -3,6 +3,6 @@
 #import "ESAbstractMatcherCombinator.h"
 
 
-@interface ESAnyMatcher : ESAbstractMatcherCombinator
+@interface ESAllMatcher : ESAbstractMatcherCombinator
 
 @end

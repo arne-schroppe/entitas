@@ -1,7 +1,6 @@
 #import <Entitas/ESEntities.h>
 #import "Kiwi.h"
 #import "ESAllComponentTypes.h"
-
 #import "ESAnyComponentTypes.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
