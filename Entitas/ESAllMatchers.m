@@ -28,9 +28,33 @@
 }
 
 
-- (NSUInteger)hash {
-    return (NSUInteger)self.class + [_matcher1 hash] + [_matcher2 hash];
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![[other class] isEqual:[self class]])
+        return NO;
+
+    return [self isEqualToMatchers:other];
 }
+
+- (BOOL)isEqualToMatchers:(ESAllMatchers *)matchers {
+    if (self == matchers)
+        return YES;
+    if (matchers == nil)
+        return NO;
+    if (_matcher1 != matchers->_matcher1 && ![_matcher1 isEqual:matchers->_matcher1])
+        return NO;
+    if (_matcher2 != matchers->_matcher2 && ![_matcher2 isEqual:matchers->_matcher2])
+        return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger hash = [_matcher1 hash];
+    hash = hash * 31u + [_matcher2 hash];
+    return hash;
+}
+
 
 - (id)copyWithZone:(NSZone *)zone
 {
