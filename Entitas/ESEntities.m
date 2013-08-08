@@ -1,5 +1,6 @@
 #import "ESEntities.h"
 #import "ESChangedEntity.h"
+#import "ESComponentMatcher.h"
 
 @implementation ESEntities
 {
@@ -59,7 +60,7 @@
     ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
     for(ESCollection *collection in [self collectionsForType:type])
     {
-        if ([[collection types] isSubsetOfSet:[entity componentTypes]])
+        if ([[collection typeMatcher] isEntityMatching:entity])
             [collection addEntity:changedEntity];
     };
 }
@@ -69,7 +70,7 @@
     ESChangedEntity *removedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityRemoved];
     for(ESCollection *collection in [self collectionsForType:type])
     {
-        if ([[collection types] isSubsetOfSet:[entity componentTypes]])
+        if ([[collection typeMatcher] isEntityMatching:entity])
             [collection remove:removedEntity andAddEntity:addedEntity];
     };
 }
@@ -86,7 +87,7 @@
 
     for(ESCollection *collection in [self collectionsForType:type])
     {
-        if ([[collection types] isSubsetOfSet:originalComponentTypes] && ![[collection types] isSubsetOfSet:[entity componentTypes]])
+        if ([[collection typeMatcher] areComponentsMatching:originalComponentTypes] && ![[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
             [collection removeEntity:changedEntity];
     };
 }

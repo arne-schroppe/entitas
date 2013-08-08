@@ -64,11 +64,11 @@ SPEC_BEGIN(ESEntitiesSpec)
                 [[entity.entities should] equal:entities];
             });
 
-            it(@"should return a collection with the given set", ^{
-                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
-                ESCollection *collection = [entities collectionForTypes:set];
-                [[[collection types] should] equal:set];
-            });
+//            it(@"should return a collection with the given set", ^{
+//                NSSet *set = [NSSet setWithObject:[SomeComponent class]];
+//                ESCollection *collection = [entities collectionForTypes:set];
+//                [[[collection types] should] equal:set];
+//            });
 
             it(@"should return the same instance of collections with the same set", ^{
                 NSSet *set = [NSSet setWithObject:[SomeComponent class]];

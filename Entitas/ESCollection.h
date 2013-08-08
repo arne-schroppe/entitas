@@ -3,6 +3,7 @@
 
 @class ESChangedEntity;
 @protocol ESCollectionObserver;
+@protocol ESComponentMatcher;
 
 typedef NS_ENUM(NSUInteger, ESEntityChange)
 {
@@ -13,7 +14,7 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 @interface ESCollection : NSObject
 - (id)initWithTypes:(NSSet *)types;
 
-- (NSSet *)types;
+- (NSObject<ESComponentMatcher> *)typeMatcher;
 
 - (void)addEntity:(ESChangedEntity *)changedEntity;
 

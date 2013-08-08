@@ -31,9 +31,9 @@ SPEC_BEGIN(ESCollectionSpec)
             [[collection should] beKindOfClass:[ESCollection class]];
         });
 
-        it(@"should be initialized with a Set", ^{
-            [[[collection types] should] equal:set];
-        });
+//        it(@"should be initialized with a Set", ^{
+//            [[[collection types] should] equal:set];
+//        });
 
         it(@"should add an entity", ^{
             [collection addEntity:changedEntity];
