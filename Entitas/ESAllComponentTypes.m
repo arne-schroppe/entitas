@@ -2,11 +2,7 @@
 #import "ESAllComponentTypes.h"
 
 
-@implementation ESAllComponentTypes {
-
-}
-
-
+@implementation ESAllComponentTypes
 
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes {
     return [self.componentTypes isSubsetOfSet:componentTypes];

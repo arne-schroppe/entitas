@@ -4,5 +4,5 @@
 
 #define anyComponentsOfTypes(...) ([[GXAnyComponentType alloc] initWithClasses: __VA_ARGS__ ])
 
-@interface ESAnyComponentType : ESAbstractComponentMatcher
+@interface ESAnyComponentTypes : ESAbstractComponentMatcher
 @end

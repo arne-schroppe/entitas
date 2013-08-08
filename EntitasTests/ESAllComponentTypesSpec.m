@@ -2,7 +2,7 @@
 #import "Kiwi.h"
 #import "ESAllComponentTypes.h"
 
-#import "ESAnyComponentType.h"
+#import "ESAnyComponentTypes.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 
@@ -29,7 +29,7 @@ describe(@"ESAllComponentTypes", ^{
         [entity addComponent:[SomeOtherComponent new]];
 
         // when
-        BOOL isMatching = [allComponentTypes isEntityMatching:entity];
+        BOOL isMatching = [allComponentTypes areComponentsMatching:[entity componentTypes]];
 
         // then
         [[theValue(isMatching) should] beYes];
@@ -45,7 +45,7 @@ describe(@"ESAllComponentTypes", ^{
         [entity addComponent:[SomeComponent new]];
 
         // when
-        BOOL isMatching = [allComponentTypes isEntityMatching:entity];
+        BOOL isMatching = [allComponentTypes areComponentsMatching:[entity componentTypes]];
 
         // then
         [[theValue(isMatching) should] beNo];
@@ -67,7 +67,7 @@ describe(@"ESAllComponentTypes", ^{
 
         // given
         allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
-        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentType alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
+        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
 
         // then
         [[theValue([allComponentTypes isEqual:otherMatcher]) should] beNo];

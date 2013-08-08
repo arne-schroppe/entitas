@@ -1,16 +1,16 @@
 #import <Entitas/ESEntities.h>
 #import "Kiwi.h"
-#import "ESAnyComponentType.h"
+#import "ESAnyComponentTypes.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "ESAllComponentTypes.h"
 #import "SomeThirdComponent.h"
 
-SPEC_BEGIN(ESAnyComponentTypeSpec)
+SPEC_BEGIN(ESAnyComponentTypesSpec)
 
-describe(@"ESAnyComponentType", ^{
+describe(@"ESAnyComponentTypes", ^{
 
-    __block ESAnyComponentType *anyComponentType;
+    __block ESAnyComponentTypes *anyComponentType;
     __block ESEntities *entities;
 
     beforeEach(^{
@@ -22,13 +22,13 @@ describe(@"ESAnyComponentType", ^{
     it(@"should return YES if any of the components are present", ^{
 
         // given
-        anyComponentType = [[ESAnyComponentType alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
+        anyComponentType = [[ESAnyComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
 
         ESEntity *entity = [entities createEntity];
         [entity addComponent:[SomeComponent new]];
 
         // when
-        BOOL isMatching = [anyComponentType isEntityMatching:entity];
+        BOOL isMatching = [anyComponentType areComponentsMatching:[entity componentTypes]];
 
         // then
         [[theValue(isMatching) should] beYes];
@@ -39,13 +39,13 @@ describe(@"ESAnyComponentType", ^{
     it(@"should return NO if none of the components are present", ^{
 
         // given
-        anyComponentType = [[ESAnyComponentType alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
+        anyComponentType = [[ESAnyComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
 
         ESEntity *entity = [entities createEntity];
         [entity addComponent:[SomeThirdComponent new]];
 
         // when
-        BOOL isMatching = [anyComponentType isEntityMatching:entity];
+        BOOL isMatching = [anyComponentType areComponentsMatching:[entity componentTypes]];
 
         // then
         [[theValue(isMatching) should] beNo];
@@ -58,8 +58,8 @@ describe(@"ESAnyComponentType", ^{
     it(@"should be equal to another matcher of the same type with the same components", ^{
 
         // given
-        anyComponentType = [[ESAnyComponentType alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
-        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentType alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
+        anyComponentType = [[ESAnyComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
+        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
 
         // then
         [[theValue([anyComponentType isEqual:otherMatcher]) should] beYes];
@@ -69,7 +69,7 @@ describe(@"ESAnyComponentType", ^{
     it(@"should not be equal to another matcher if the type is different", ^{
 
         // given
-        anyComponentType = [[ESAnyComponentType alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
+        anyComponentType = [[ESAnyComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
         NSObject<ESComponentMatcher> *otherMatcher = [[ESAllComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
 
         // then
@@ -80,8 +80,8 @@ describe(@"ESAnyComponentType", ^{
     it(@"should not be equal to another matcher if components are different", ^{
 
         // given
-        anyComponentType = [[ESAnyComponentType alloc] initWithClasses:[SomeComponent class], nil];
-        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentType alloc] initWithClasses:[SomeOtherComponent class], nil];
+        anyComponentType = [[ESAnyComponentTypes alloc] initWithClasses:[SomeComponent class], nil];
+        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentTypes alloc] initWithClasses:[SomeOtherComponent class], nil];
 
         // then
         [[theValue([anyComponentType isEqual:otherMatcher]) should] beNo];

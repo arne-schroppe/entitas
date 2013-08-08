@@ -1,8 +1,8 @@
 #import <Entitas/ESEntity.h>
-#import "ESAnyComponentType.h"
+#import "ESAnyComponentTypes.h"
 
 
-@implementation ESAnyComponentType
+@implementation ESAnyComponentTypes
 
 
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes {

@@ -1,7 +1,7 @@
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
 #import "ESComponentMatcher.h"
-#import "ESAnyComponentType.h"
+#import "ESAnyComponentTypes.h"
 #import "ESAllComponentTypes.h"
 
 @implementation ESCollection
@@ -17,8 +17,6 @@
 {
     return [self initWithMatcher:[[ESAllComponentTypes alloc] initWithTypes:types] ];
 }
-
-
 
 - (id)initWithMatcher:(NSObject<ESComponentMatcher> *)types
 {
@@ -50,7 +48,8 @@
     }
 }
 
-- (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity {
+- (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity
+{
 
     if([_entities containsObject:removedEntity.originalEntity]){
         for (id<ESCollectionObserver> observer in _removeObservers){

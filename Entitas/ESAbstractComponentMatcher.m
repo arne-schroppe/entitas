@@ -53,9 +53,7 @@
     return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), [_componentTypes description]];
 }
 
-- (BOOL)isEntityMatching:(ESEntity *)entity {
-    return [self areComponentsMatching:entity.componentTypes];
-}
+
 
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes {
     @throw [NSException exceptionWithName:NSGenericException reason:@"Must to be implemented in subclass" userInfo:nil];

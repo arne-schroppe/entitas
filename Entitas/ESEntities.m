@@ -60,7 +60,7 @@
     ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
     for(ESCollection *collection in [self collectionsForType:type])
     {
-        if ([[collection typeMatcher] isEntityMatching:entity])
+        if ([[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
             [collection addEntity:changedEntity];
     };
 }
@@ -70,7 +70,7 @@
     ESChangedEntity *removedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityRemoved];
     for(ESCollection *collection in [self collectionsForType:type])
     {
-        if ([[collection typeMatcher] isEntityMatching:entity])
+        if ([[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
             [collection remove:removedEntity andAddEntity:addedEntity];
     };
 }
