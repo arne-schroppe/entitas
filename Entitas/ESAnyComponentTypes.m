@@ -1,4 +1,3 @@
-#import <Entitas/ESEntity.h>
 #import "ESAnyComponentTypes.h"
 
 

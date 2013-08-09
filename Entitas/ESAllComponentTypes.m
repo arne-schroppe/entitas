@@ -28,7 +28,8 @@
 }
 
 - (NSUInteger)hash {
-    return [self.class hash] + 31 * [self.componentTypes hash];
+    NSUInteger otherHash = [self.componentTypes hash];
+    return [self.class hash] + 31 * otherHash;
 }
 
 

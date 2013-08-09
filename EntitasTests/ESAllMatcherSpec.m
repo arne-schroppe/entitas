@@ -21,7 +21,7 @@ describe(@"ESAllMatcher", ^{
         subMatcher2 = (id) [KWMock mockWithName:@"sub matcher 2" forProtocol:@protocol(ESComponentMatcher)];
         subMatcher3 = (id) [KWMock mockWithName:@"sub matcher 3" forProtocol:@protocol(ESComponentMatcher)];
 
-        allMatcher = allMatchers(subMatcher1, subMatcher2, subMatcher3, nil);
+        allMatcher = combineWithAND(subMatcher1, subMatcher2, subMatcher3, nil);
 
     });
 

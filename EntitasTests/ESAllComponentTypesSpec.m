@@ -51,36 +51,44 @@ describe(@"ESAllComponentTypes", ^{
     });
 
 
-    it(@"should be equal to another matcher of the same type with the same components", ^{
-
-        // given
-        allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
-        NSObject<ESComponentMatcher> *otherMatcher = [[ESAllComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
-
-        // then
-        [[theValue([allComponentTypes isEqual:otherMatcher]) should] beYes];
-    });
+    context(@"when testing equality", ^{
 
 
-    it(@"should not be equal to another matcher if the type is different", ^{
+        it(@"should be equal to another matcher of the same type with the same components", ^{
 
-        // given
-        allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
-        NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
+            // given
+            allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
+            NSObject<ESComponentMatcher> *otherMatcher = [[ESAllComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
 
-        // then
-        [[theValue([allComponentTypes isEqual:otherMatcher]) should] beNo];
-    });
+            // then
+            [[theValue([allComponentTypes isEqual:otherMatcher]) should] beYes];
+            [[theValue(allComponentTypes.hash) should] equal:theValue(otherMatcher.hash)];
+        });
 
 
-    it(@"should not be equal to another matcher if components are different", ^{
+        it(@"should not be equal to another matcher if the type is different", ^{
 
-        // given
-        allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], nil];
-        NSObject<ESComponentMatcher> *otherMatcher = [[ESAllComponentTypes alloc] initWithClasses:[SomeOtherComponent class], nil];
+            // given
+            allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], [SomeOtherComponent class], nil];
+            NSObject<ESComponentMatcher> *otherMatcher = [[ESAnyComponentTypes alloc] initWithClasses:[SomeOtherComponent class], [SomeComponent class], nil];
 
-        // then
-        [[theValue([allComponentTypes isEqual:otherMatcher]) should] beNo];
+            // then
+            [[theValue([allComponentTypes isEqual:otherMatcher]) should] beNo];
+            [[theValue(allComponentTypes.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+        });
+
+
+        it(@"should not be equal to another matcher if components are different", ^{
+
+            // given
+            allComponentTypes = [[ESAllComponentTypes alloc] initWithClasses:[SomeComponent class], nil];
+            NSObject<ESComponentMatcher> *otherMatcher = [[ESAllComponentTypes alloc] initWithClasses:[SomeOtherComponent class], nil];
+
+            // then
+            [[theValue([allComponentTypes isEqual:otherMatcher]) should] beNo];
+            //[[theValue(allComponentTypes.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+
+        });
 
     });
 

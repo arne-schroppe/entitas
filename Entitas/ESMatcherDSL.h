@@ -1,6 +1,11 @@
+#import "ESAllMatcher.h"
+#import "ESAnyMatcher.h"
+#import "ESAllComponentTypes.h"
+#import "ESAnyComponentTypes.h"
 
-#define anyTypes(...) ([[ESAnyComponentTypes alloc] initWithClasses: __VA_ARGS__ ])
-#define allTypes(...) ([[ESAllComponentTypes alloc] initWithClasses: __VA_ARGS__ ])
+#define matchAnyOf(...) ([[ESAnyComponentTypes alloc] initWithClasses: __VA_ARGS__, nil ])
+#define matchAllOf(...) ([[ESAllComponentTypes alloc] initWithClasses: __VA_ARGS__, nil ])
 
-#define anyMatchers(...) ([[ESAnyMatcher alloc] initWithMatchers: __VA_ARGS__ ])
-#define allMatchers(...) ([[ESAllMatcher alloc] initWithMatchers: __VA_ARGS__ ])
+#define combineWithOR(...) ([[ESAnyMatcher alloc] initWithMatchers: __VA_ARGS__, nil ])
+#define combineWithAND(...) ([[ESAllMatcher alloc] initWithMatchers: __VA_ARGS__, nil ])
+#define doNotMatch(subMatcher) ([[ESNotMatcher alloc] initWithMatcher: subMatcher ])
