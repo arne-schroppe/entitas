@@ -16,7 +16,7 @@ describe(@"ESNotMatcher", ^{
         componentTypes = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
 
         subMatcher = (id) [KWMock mockWithName:@"sub matcher" forProtocol:@protocol(ESComponentMatcher)];
-        notMatcher = doNotMatch(subMatcher);
+        notMatcher = invertMatch(subMatcher);
     });
 
     it(@"should match if its sub-matcher doesn't", ^{
