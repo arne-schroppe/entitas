@@ -7,7 +7,7 @@
 
 
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes {
-    for(NSObject<ESComponentMatcher> *matcher in self.matchers) {
+    for(ESMatcher *matcher in self.matchers) {
         if(![matcher areComponentsMatching:componentTypes]) {
             return NO;
         }

@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
-#import "ESComponentMatcher.h"
+#import "ESMatcher.h"
 
 
-@interface ESAbstractMatcherCombinator : NSObject<ESComponentMatcher>
+@interface ESAbstractMatcherCombinator : ESMatcher
 
 
-- (id)initWithMatchers:(NSObject <ESComponentMatcher> *)firstMatcher, ...;
+- (id)initWithMatchers:(ESMatcher *)firstMatcher, ...;
 - (id)initWithSetOfMatchers:(NSSet *)matchers;
 
 - (NSSet *)matchers;

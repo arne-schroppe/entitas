@@ -1,7 +1,7 @@
 #import "ESEntities.h"
 #import "ESChangedEntity.h"
-#import "ESComponentMatcher.h"
-#import "ESAllComponentTypes.h"
+#import "ESMatcher.h"
+
 
 @implementation ESEntities
 {
@@ -93,7 +93,7 @@
     };
 }
 
-- (ESCollection *)collectionForMatcher:(NSObject <ESComponentMatcher> *)matcher {
+- (ESCollection *)collectionForMatcher:(ESMatcher *)matcher {
     if (![_collections objectForKey:matcher])
     {
         ESCollection *collection = [[ESCollection alloc] initWithMatcher:matcher];
@@ -121,7 +121,7 @@
 - (ESCollection *)collectionForTypes:(NSSet *)types {
     if (types.count < 1)
         [NSException raise:@"Empty type set." format:@"A collection for an empty type-set cannot be provided."];
-    return [self collectionForMatcher:[[ESAllComponentTypes alloc] initWithTypes:types]];
+    return [self collectionForMatcher:[ESMatcher allOfSet:types]];
 }
 
 

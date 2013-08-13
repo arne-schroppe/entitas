@@ -2,8 +2,8 @@
 #import "ESEntity.h"
 
 @class ESChangedEntity;
+@class ESMatcher;
 @protocol ESCollectionObserver;
-@protocol ESComponentMatcher;
 
 typedef NS_ENUM(NSUInteger, ESEntityChange)
 {
@@ -13,9 +13,9 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 
 @interface ESCollection : NSObject
 - (id)initWithTypes:(NSSet *)types;
-- (id)initWithMatcher:(NSObject<ESComponentMatcher> *)matcher;
+- (id)initWithMatcher:(ESMatcher *)matcher;
 
-- (NSObject<ESComponentMatcher> *)typeMatcher;
+- (ESMatcher *)typeMatcher;
 
 - (void)addEntity:(ESChangedEntity *)changedEntity;
 

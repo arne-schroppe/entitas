@@ -2,7 +2,6 @@
 #import "ESAllMatcher.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
-#import "ESMatcherDSL.h"
 
 SPEC_BEGIN(ESAllMatcherSpec)
 
@@ -10,18 +9,18 @@ describe(@"ESAllMatcher", ^{
 
     __block ESAllMatcher *allMatcher;
     __block NSSet *componentTypes;
-    __block NSObject <ESComponentMatcher> *subMatcher1;
-    __block NSObject <ESComponentMatcher> *subMatcher2;
-    __block NSObject <ESComponentMatcher> *subMatcher3;
+    __block ESMatcher *subMatcher1;
+    __block ESMatcher *subMatcher2;
+    __block ESMatcher *subMatcher3;
 
     beforeEach(^{
         componentTypes = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
 
-        subMatcher1 = (id) [KWMock mockWithName:@"sub matcher 1" forProtocol:@protocol(ESComponentMatcher)];
-        subMatcher2 = (id) [KWMock mockWithName:@"sub matcher 2" forProtocol:@protocol(ESComponentMatcher)];
-        subMatcher3 = (id) [KWMock mockWithName:@"sub matcher 3" forProtocol:@protocol(ESComponentMatcher)];
+        subMatcher1 = [ESMatcher mockWithName:@"sub matcher 1"];
+        subMatcher2 = [ESMatcher mockWithName:@"sub matcher 2"];
+        subMatcher3 = [ESMatcher mockWithName:@"sub matcher 3"];
 
-        allMatcher = combineWithAND(subMatcher1, subMatcher2, subMatcher3, nil);
+        //allMatcher = combineWithAND(subMatcher1, subMatcher2, subMatcher3, nil);
 
     });
 

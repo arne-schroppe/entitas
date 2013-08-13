@@ -1,6 +1,5 @@
 #import "Kiwi.h"
 #import "ESNotMatcher.h"
-#import "ESMatcherDSL.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 
@@ -10,13 +9,13 @@ describe(@"ESNotMatcher", ^{
 
     __block ESNotMatcher *notMatcher;
     __block NSSet *componentTypes;
-    __block NSObject <ESComponentMatcher> *subMatcher;
+    __block ESMatcher *subMatcher;
 
     beforeEach(^{
         componentTypes = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
 
-        subMatcher = (id) [KWMock mockWithName:@"sub matcher" forProtocol:@protocol(ESComponentMatcher)];
-        notMatcher = invertMatch(subMatcher);
+        subMatcher = [ESMatcher mockWithName:@"sub matcher"];
+        //notMatcher = invertMatch(subMatcher);
     });
 
     it(@"should match if its sub-matcher doesn't", ^{

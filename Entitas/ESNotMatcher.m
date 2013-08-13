@@ -4,11 +4,11 @@
 
 
 @implementation ESNotMatcher {
-    NSObject<ESComponentMatcher> *_matcher;
+	ESMatcher *_matcher;
 }
 
 
-- (id)initWithMatcher:(NSObject <ESComponentMatcher> *)matcher {
+- (id)initWithMatcher:(ESMatcher *)matcher {
     self = [super init];
     if (self) {
         _matcher = matcher;

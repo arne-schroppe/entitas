@@ -7,11 +7,11 @@
 
 
 
-- (id)initWithMatchers:(NSObject <ESComponentMatcher> *)firstMatcher, ... {
+- (id)initWithMatchers:(ESMatcher *)firstMatcher, ... {
     va_list args;
     va_start(args, firstMatcher);
     NSMutableSet *matchers = [NSMutableSet new];
-    for (NSObject <ESComponentMatcher> * arg = firstMatcher; arg != nil; arg = va_arg(args, id)) {
+    for (ESMatcher *arg = firstMatcher; arg != nil; arg = va_arg(args, id)) {
         [matchers addObject:arg];
     }
     va_end(args);
@@ -38,7 +38,7 @@
 
 - (NSSet *)componentTypes {
     NSSet *combined = [NSSet set];
-    for(NSObject<ESComponentMatcher> *matcher in self.matchers) {
+    for(ESMatcher *matcher in self.matchers) {
         combined = [combined setByAddingObjectsFromSet:[matcher componentTypes] ];
     }
 

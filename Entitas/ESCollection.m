@@ -1,12 +1,11 @@
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
-#import "ESComponentMatcher.h"
-#import "ESAnyComponentTypes.h"
-#import "ESAllComponentTypes.h"
+#import "ESMatcher.h"
+
 
 @implementation ESCollection
 {
-    NSObject<ESComponentMatcher> *_typeMatcher;
+	ESMatcher *_typeMatcher;
     NSMutableArray *_entities;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
@@ -15,10 +14,10 @@
 
 - (id)initWithTypes:(NSSet *)types
 {
-    return [self initWithMatcher:[[ESAllComponentTypes alloc] initWithTypes:types] ];
+    return [self initWithMatcher:[ESMatcher allOfSet:types] ];
 }
 
-- (id)initWithMatcher:(NSObject<ESComponentMatcher> *)types
+- (id)initWithMatcher:(ESMatcher *)types
 {
     self = [super init];
     if (self)
@@ -32,7 +31,7 @@
     return self;
 }
 
-- (NSObject<ESComponentMatcher> *)typeMatcher
+- (ESMatcher *)typeMatcher
 {
     return _typeMatcher;
 }

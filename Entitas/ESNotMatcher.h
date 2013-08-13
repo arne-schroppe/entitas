@@ -1,9 +1,9 @@
 #import <Foundation/Foundation.h>
-#import "ESComponentMatcher.h"
+#import "ESMatcher.h"
 
 
-@interface ESNotMatcher : NSObject<ESComponentMatcher>
-- (id)initWithMatcher:(NSObject <ESComponentMatcher> *)matcher;
+@interface ESNotMatcher : ESMatcher
+- (id)initWithMatcher:(ESMatcher *)matcher;
 
 
 @end
