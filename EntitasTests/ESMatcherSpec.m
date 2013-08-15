@@ -138,8 +138,6 @@ SPEC_BEGIN(ESMatcherSpec)
 			});
 
 
-
-
 			it(@"should be equal to another matcher of the same type with the same components", ^{
 
 				// given
@@ -170,6 +168,44 @@ SPEC_BEGIN(ESMatcherSpec)
 
 				// then
 				[[theValue([matcher isEqual:otherMatcher]) should] beNo];
+
+			});
+
+		});
+
+
+		context(@"for none of the component types", ^{
+
+			it(@"should return NO if any of the components are present", ^{
+
+				// given
+				matcher = [ESMatcher noneOf:[SomeComponent class], [SomeOtherComponent class], nil];
+
+				ESEntity *entity = [entities createEntity];
+				[entity addComponent:[SomeComponent new]];
+
+				// when
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+				// then
+				[[theValue(isMatching) should] beNo];
+
+			});
+
+
+			it(@"should return YES if none of the components are present", ^{
+
+				// given
+				matcher = [ESMatcher noneOf:[SomeComponent class], [SomeOtherComponent class], nil];
+
+				ESEntity *entity = [entities createEntity];
+				[entity addComponent:[SomeThirdComponent new]];
+
+				// when
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+				// then
+				[[theValue(isMatching) should] beYes];
 
 			});
 

@@ -70,6 +70,24 @@
 }
 
 
++ (ESMatcher *)noneOf:(id)firstClass, ... {
+	va_list args;
+	va_start(args, firstClass);
+	NSMutableSet *componentTypes = [NSMutableSet new];
+	for (Class arg = firstClass; arg != nil; arg = va_arg(args, id)) {
+		[componentTypes addObject:arg];
+	}
+	va_end(args);
+
+	return [[[ESAnyComponentTypes alloc] initWithTypes:componentTypes] not];
+}
+
+
++ (ESMatcher *)noneOfSet:(NSSet *)componentTypes {
+	return [[[ESAnyComponentTypes alloc] initWithTypes:componentTypes] not];
+}
+
+
 
 - (ESMatcher *)and:(ESMatcher *)other {
 	return [[ESAndMatcher alloc] initWithMatcher:self andOtherMatcher:other];

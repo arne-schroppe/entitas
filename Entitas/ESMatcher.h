@@ -9,6 +9,10 @@
 + (ESMatcher *)anyOf:(id)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
 + (ESMatcher *)anyOfSet:(NSSet *)componentTypes;
 
++ (ESMatcher *)noneOf:(id)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
++ (ESMatcher *)noneOfSet:(NSSet *)componentTypes;
+
+
 - (ESMatcher *)and:(ESMatcher *)other;
 - (ESMatcher *)or:(ESMatcher *)other;
 - (ESMatcher *)not;
