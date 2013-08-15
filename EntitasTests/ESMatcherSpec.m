@@ -278,6 +278,30 @@ SPEC_BEGIN(ESMatcherSpec)
 
             });
 
+
+			context(@"for NOT-matcher", ^{
+
+				it(@"should match if its sub-matcher doesn't", ^{
+
+					combinedMatcher = [nonMatchingMatcher not];
+
+					BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+					[[theValue(isMatching) should] beYes];
+				});
+
+
+				it(@"should not match if its sub-matcher does", ^{
+
+					combinedMatcher = [matchingMatcher not];
+
+					BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+					[[theValue(isMatching) should] beNo];
+				});
+
+			});
+
         });
 
 	});
