@@ -23,22 +23,14 @@
 		60266B7A28294BD4648903D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
-		85D8502A98E68BD500D74F55 /* ESAbstractMatcherCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85DA7931C2A70D1840591 /* ESAbstractMatcherCombinator.m */; };
 		85D850A2A8230AF68A6B7899 /* ESNotMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D856A590F1035438149796 /* ESNotMatcher.m */; };
 		85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A40B54895A0164D8768 /* SomeThirdComponent.m */; };
 		85D852FE551A15FE3B969585 /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D858ABABF03C122249F4E2 /* ESMatcher.m */; };
-		85D853A3DA44EFE977FE3AFC /* ESAllMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D855EE41FB61D399843C9C /* ESAllMatcher.m */; };
-		85D853A7132E96D6E7976953 /* ESAbstractMatcherCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85DA7931C2A70D1840591 /* ESAbstractMatcherCombinator.m */; };
 		85D858DFEA1686285CC00D0D /* ESMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8568D40980EC160644686 /* ESMatcherSpec.m */; };
 		85D8590414B1332B1B5E6C5B /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D858ABABF03C122249F4E2 /* ESMatcher.m */; };
-		85D859639F3D0D96D85D9E7D /* ESAnyMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85351EFD4F6343146E146 /* ESAnyMatcher.m */; };
 		85D85A616DDF343ECAE82A0D /* ESNotMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A2BD93E365AC95CE79F /* ESNotMatcherSpec.m */; };
-		85D85B5896A18B9FB4A51317 /* ESAnyMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85B6B2CB57E8F54255C12 /* ESAnyMatcherSpec.m */; };
 		85D85C296C039D0367D8A05D /* ESComponentMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85D34E426AD781618730D /* ESComponentMatcherSpec.m */; };
-		85D85C9169885B1E2D9BE6F9 /* ESAnyMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85351EFD4F6343146E146 /* ESAnyMatcher.m */; };
-		85D85CAADB2DEA17E4D608F5 /* ESAllMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D855EE41FB61D399843C9C /* ESAllMatcher.m */; };
 		85D85CF476C1851B8572FF41 /* ESNotMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D856A590F1035438149796 /* ESNotMatcher.m */; };
-		85D85F9FD58B0096F0B656C0 /* ESAllMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85294C36276D2FF70151C /* ESAllMatcherSpec.m */; };
 		B06B0140FFD2853D8BF55BBA /* ESCollectionHistorySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B029DD99D7B62F5413BF6 /* ESCollectionHistorySpec.m */; };
 		B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
 		B06B026185A32A74264CC44B /* NSNotificationMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B000845879007114E2DBC /* NSNotificationMatcher.m */; };
@@ -112,22 +104,14 @@
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		85D85017D77C9CA93B749105 /* ESMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESMatcher.h; sourceTree = "<group>"; };
-		85D8520618620F33377784D2 /* ESAbstractMatcherCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESAbstractMatcherCombinator.h; sourceTree = "<group>"; };
-		85D8523694B4D3894B8CCB39 /* ESAllMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESAllMatcher.h; sourceTree = "<group>"; };
-		85D85294C36276D2FF70151C /* ESAllMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESAllMatcherSpec.m; sourceTree = "<group>"; };
 		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
-		85D85351EFD4F6343146E146 /* ESAnyMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESAnyMatcher.m; sourceTree = "<group>"; };
-		85D855EE41FB61D399843C9C /* ESAllMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESAllMatcher.m; sourceTree = "<group>"; };
 		85D8568D40980EC160644686 /* ESMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ESMatcherSpec.m; path = Entitas/ESMatcherSpec.m; sourceTree = SOURCE_ROOT; };
 		85D856A590F1035438149796 /* ESNotMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESNotMatcher.m; sourceTree = "<group>"; };
 		85D858ABABF03C122249F4E2 /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
 		85D85A2BD93E365AC95CE79F /* ESNotMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESNotMatcherSpec.m; sourceTree = "<group>"; };
 		85D85A40B54895A0164D8768 /* SomeThirdComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeThirdComponent.m; sourceTree = "<group>"; };
 		85D85AA741C2D47287D5604D /* ESNotMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESNotMatcher.h; sourceTree = "<group>"; };
-		85D85B6B2CB57E8F54255C12 /* ESAnyMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESAnyMatcherSpec.m; sourceTree = "<group>"; };
 		85D85D34E426AD781618730D /* ESComponentMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESComponentMatcherSpec.m; sourceTree = "<group>"; };
-		85D85DA7931C2A70D1840591 /* ESAbstractMatcherCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESAbstractMatcherCombinator.m; sourceTree = "<group>"; };
-		85D85E36F4F29EA1E827FC3C /* ESAnyMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESAnyMatcher.h; sourceTree = "<group>"; };
 		B06B000845879007114E2DBC /* NSNotificationMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNotificationMatcher.m; sourceTree = "<group>"; };
 		B06B003BC9B7BF20962E1E90 /* ESEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntities.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
@@ -265,8 +249,6 @@
 		85D8527190AE2B480B309384 /* Component Matchers */ = {
 			isa = PBXGroup;
 			children = (
-				85D85294C36276D2FF70151C /* ESAllMatcherSpec.m */,
-				85D85B6B2CB57E8F54255C12 /* ESAnyMatcherSpec.m */,
 				85D85D34E426AD781618730D /* ESComponentMatcherSpec.m */,
 				85D85A2BD93E365AC95CE79F /* ESNotMatcherSpec.m */,
 				85D8568D40980EC160644686 /* ESMatcherSpec.m */,
@@ -277,12 +259,6 @@
 		85D85639987CE91D390E15B0 /* Matcher Combinator */ = {
 			isa = PBXGroup;
 			children = (
-				85D855EE41FB61D399843C9C /* ESAllMatcher.m */,
-				85D85E36F4F29EA1E827FC3C /* ESAnyMatcher.h */,
-				85D8523694B4D3894B8CCB39 /* ESAllMatcher.h */,
-				85D85351EFD4F6343146E146 /* ESAnyMatcher.m */,
-				85D85DA7931C2A70D1840591 /* ESAbstractMatcherCombinator.m */,
-				85D8520618620F33377784D2 /* ESAbstractMatcherCombinator.h */,
 				85D856A590F1035438149796 /* ESNotMatcher.m */,
 				85D85AA741C2D47287D5604D /* ESNotMatcher.h */,
 			);
@@ -433,11 +409,6 @@
 				B06B0140FFD2853D8BF55BBA /* ESCollectionHistorySpec.m in Sources */,
 				B06B0D3671CB81ABCAED6211 /* ESCollectionHistory.m in Sources */,
 				85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */,
-				85D85CAADB2DEA17E4D608F5 /* ESAllMatcher.m in Sources */,
-				85D85C9169885B1E2D9BE6F9 /* ESAnyMatcher.m in Sources */,
-				85D853A7132E96D6E7976953 /* ESAbstractMatcherCombinator.m in Sources */,
-				85D85F9FD58B0096F0B656C0 /* ESAllMatcherSpec.m in Sources */,
-				85D85B5896A18B9FB4A51317 /* ESAnyMatcherSpec.m in Sources */,
 				85D85C296C039D0367D8A05D /* ESComponentMatcherSpec.m in Sources */,
 				85D85CF476C1851B8572FF41 /* ESNotMatcher.m in Sources */,
 				85D85A616DDF343ECAE82A0D /* ESNotMatcherSpec.m in Sources */,
@@ -456,9 +427,6 @@
 				B06B091F1F944550AD2CF038 /* ESCollection.m in Sources */,
 				B06B0DBE30F4B10526FFEE60 /* ESChangedEntity.m in Sources */,
 				B06B0AC3DA2841842B1C0BFB /* ESCollectionHistory.m in Sources */,
-				85D853A3DA44EFE977FE3AFC /* ESAllMatcher.m in Sources */,
-				85D859639F3D0D96D85D9E7D /* ESAnyMatcher.m in Sources */,
-				85D8502A98E68BD500D74F55 /* ESAbstractMatcherCombinator.m in Sources */,
 				85D850A2A8230AF68A6B7899 /* ESNotMatcher.m in Sources */,
 				85D852FE551A15FE3B969585 /* ESMatcher.m in Sources */,
 			);

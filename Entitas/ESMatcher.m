@@ -2,22 +2,33 @@
 #import "ESCollection.h"
 
 
-@interface ESAllComponentTypes : ESMatcher
-- (BOOL)isEqual:(id)other;
-- (BOOL)isEqualToTypes:(ESAllComponentTypes *)types;
+
+@interface ESAbstractMatcherCombinator : ESMatcher
+- (id)initWithMatcher:(ESMatcher *)matcher andOtherMatcher:(ESMatcher *)otherMatcher;
+- (ESMatcher *)matcher;
+- (ESMatcher *)otherMatcher;
+@end
+
+@interface ESAndMatcher : ESAbstractMatcherCombinator
+@end
+
+@interface ESOrMatcher : ESAbstractMatcherCombinator
 @end
 
 
-@interface ESAnyComponentTypes : ESMatcher
-- (id)initWithClasses:(Class)pClass, ...;
-- (BOOL)isEqualToTypes:(ESAnyComponentTypes *)types;
+@interface ESSimpleMatcher : ESMatcher
+- (id)initWithTypes:(NSSet *)types;
+@end
+
+@interface ESAllComponentTypes : ESSimpleMatcher
+@end
+
+@interface ESAnyComponentTypes : ESSimpleMatcher
 @end
 
 
 
-@implementation ESMatcher {
-	NSSet *_componentTypes;
-}
+@implementation ESMatcher
 
 + (ESMatcher *)allOf:(id)firstClass, ... {
 	va_list args;
@@ -57,12 +68,12 @@
 
 
 - (ESMatcher *)and:(ESMatcher *)other {
-	return nil;
+	return [[ESAndMatcher alloc] initWithMatcher:self andOtherMatcher:other];
 }
 
 
 - (ESMatcher *)or:(ESMatcher *)other {
-	return nil;
+	return [[ESOrMatcher alloc] initWithMatcher:self andOtherMatcher:other];
 }
 
 
@@ -72,49 +83,71 @@
 
 
 
-- (id)initWithTypes:(NSSet *)types {
-	self = [super init];
-	if (self) {
-		_componentTypes = types;
-	}
-	return self;
-}
-
-- (BOOL)isEqual:(id)other {
-	if (other == self) {
-		return YES;
-	}
-
-	if (!other || ![[other class] isEqual:[self class]]) {
-		return NO;
-	}
-
-	return [_componentTypes isEqual:[other componentTypes]];
-}
-
 - (NSSet *)componentTypes {
-	return _componentTypes;
+	return nil;
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), [_componentTypes description]];
+	return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), [self.componentTypes description]];
 }
 
 - (BOOL)areComponentsMatching:(NSSet *)componentTypes {
 	@throw [NSException exceptionWithName:NSGenericException reason:@"Must to be implemented in subclass" userInfo:nil];
 }
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	id copy = [[[self class] alloc] initWithTypes:[_componentTypes copyWithZone:zone]];
-	return copy;
-}
 
+- (id)copyWithZone:(NSZone *)zone {
+    id copy = [[[self class] alloc] init];
+    return copy;
+}
 
 
 @end
 
 
+
+
+
+@implementation ESSimpleMatcher {
+    NSSet *_componentTypes;
+}
+
+
+- (BOOL)isEqual:(id)other {
+    if (other == self) {
+        return YES;
+    }
+
+    if (!other || ![[other class] isEqual:[self class]]) {
+        return NO;
+    }
+
+    return [_componentTypes isEqual:[other componentTypes]];
+}
+
+
+- (id)initWithTypes:(NSSet *)types {
+    self = [super init];
+    if (self) {
+        _componentTypes = types;
+    }
+    return self;
+}
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    id copy = [[[self class] alloc] initWithTypes:[_componentTypes copyWithZone:zone]];
+    return copy;
+}
+
+
+- (NSSet *)componentTypes {
+    return _componentTypes;
+}
+
+
+@end
 
 
 @implementation ESAllComponentTypes
@@ -161,10 +194,6 @@
 	return [self.componentTypes intersectsSet:componentTypes];
 }
 
-- (id)initWithClasses:(Class)pClass, ... {
-	return  nil;
-}
-
 
 - (BOOL)isEqual:(id)other {
 	if (other == self)
@@ -190,4 +219,107 @@
 }
 
 
+@end
+
+
+
+
+
+
+@implementation ESAbstractMatcherCombinator  {
+    ESMatcher *_matcher;
+    ESMatcher *_otherMatcher;
+}
+
+
+- (id)initWithMatcher:(ESMatcher *)matcher andOtherMatcher:(ESMatcher *)otherMatcher {
+    self = [super init];
+    if (self) {
+        _matcher = matcher;
+        _otherMatcher = otherMatcher;
+    }
+
+    return self;
+}
+
+- (ESMatcher *)matcher {
+    return _matcher;
+}
+
+- (ESMatcher *)otherMatcher {
+    return _otherMatcher;
+}
+
+
+- (NSSet *)componentTypes {
+    NSSet *combined = [NSSet set];
+    [combined setByAddingObjectsFromSet:[self.otherMatcher componentTypes] ];
+
+    return combined;
+}
+
+
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![[other class] isEqual:[self class]])
+        return NO;
+
+    return [self isEqualToCombinator:other];
+}
+
+- (BOOL)isEqualToCombinator:(ESAbstractMatcherCombinator *)combinator {
+    if (self == combinator)
+        return YES;
+    if (combinator == nil)
+        return NO;
+    if (![super isEqual:combinator])
+        return NO;
+    if (_otherMatcher != combinator->_otherMatcher && ![_otherMatcher isEqual:combinator->_otherMatcher])
+        return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    return [self.class hash] + [_otherMatcher hash];
+}
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    id copy = [[[self class] alloc] initWithMatcher:[_matcher copyWithZone:zone] andOtherMatcher:[_otherMatcher copyWithZone:zone]];
+    return copy;
+}
+
+
+- (BOOL)areComponentsMatching:(NSSet *)componentTypes {
+    @throw [NSException exceptionWithName:NSGenericException reason:@"Must to be implemented in subclass" userInfo:nil];
+}
+
+@end
+
+
+
+
+
+@implementation ESAndMatcher
+- (BOOL)areComponentsMatching:(NSSet *)componentTypes {
+    if(![self.matcher areComponentsMatching:componentTypes]) {
+        return NO;
+    }
+
+    return [self.otherMatcher areComponentsMatching:componentTypes];
+}
+@end
+
+
+
+@implementation ESOrMatcher
+- (BOOL)areComponentsMatching:(NSSet *)componentTypes {
+    if([self.matcher areComponentsMatching:componentTypes]) {
+        return YES;
+    }
+
+    return [self.otherMatcher areComponentsMatching:componentTypes];
+}
 @end

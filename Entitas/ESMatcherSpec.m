@@ -92,6 +92,8 @@ SPEC_BEGIN(ESMatcherSpec)
 
 				});
 
+                //TODO (asc 15/8/13) Also test hash and equality of combined matchers!
+
 			});
 
 
@@ -173,6 +175,110 @@ SPEC_BEGIN(ESMatcherSpec)
 
 		});
 
+
+        context(@"for matcher combinators", ^{
+
+            __block ESMatcher *combinedMatcher;
+            __block NSSet *componentTypes;
+            __block ESMatcher *matchingMatcher;
+            __block ESMatcher *nonMatchingMatcher;
+
+            beforeEach(^{
+                componentTypes = [NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil];
+
+                matchingMatcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
+                nonMatchingMatcher = [ESMatcher allOf:[SomeThirdComponent class], nil];
+            });
+
+
+            context(@"for AND combined matchers", ^{
+
+                it(@"should match if all sub-matchers match", ^{
+
+                    combinedMatcher = [matchingMatcher and:matchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beYes];
+                });
+
+
+                it(@"should not match if first sub-matcher does not match", ^{
+
+                    combinedMatcher = [nonMatchingMatcher and:matchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beNo];
+                });
+
+
+                it(@"should not match if second sub-matcher does not match", ^{
+
+                    combinedMatcher = [matchingMatcher and:nonMatchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beNo];
+                });
+
+
+                it(@"should not match if no sub-matcher matches", ^{
+
+                    combinedMatcher = [nonMatchingMatcher and:nonMatchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beNo];
+                });
+
+            });
+
+
+            context(@"for OR-combined matchers", ^{
+
+
+                it(@"should match if all sub-matchers match", ^{
+
+                    combinedMatcher = [matchingMatcher or:matchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beYes];
+                });
+
+
+                it(@"should match if first sub-matcher does not match", ^{
+
+                    combinedMatcher = [nonMatchingMatcher or:matchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beYes];
+                });
+
+                it(@"should match if second sub-matcher does not match", ^{
+
+                    combinedMatcher = [matchingMatcher or:nonMatchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beYes];
+                });
+
+
+                it(@"should not match if no sub-matcher matches", ^{
+
+                    combinedMatcher = [nonMatchingMatcher or:nonMatchingMatcher];
+
+                    BOOL isMatching = [combinedMatcher areComponentsMatching:componentTypes];
+
+                    [[theValue(isMatching) should] beNo];
+                });
+
+            });
+
+        });
 
 	});
 
