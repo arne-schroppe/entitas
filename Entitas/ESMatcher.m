@@ -273,9 +273,8 @@
 
 
 - (NSSet *)componentTypes {
-    NSSet *combined = [NSSet set];
-    [combined setByAddingObjectsFromSet:[self.otherMatcher componentTypes] ];
-
+    NSSet *combined = [_matcher componentTypes];
+    combined = [combined setByAddingObjectsFromSet:[_otherMatcher componentTypes] ];
     return combined;
 }
 
