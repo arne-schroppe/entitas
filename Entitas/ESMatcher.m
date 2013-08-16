@@ -7,16 +7,16 @@
 - (id)initWithMatcher:(ESMatcher *)matcher;
 @end
 
-@interface ESAbstractMatcherCombinator : ESMatcher
+@interface ESAbstractBinaryCombinator : ESMatcher
 - (id)initWithMatcher:(ESMatcher *)matcher andOtherMatcher:(ESMatcher *)otherMatcher;
 - (ESMatcher *)matcher;
 - (ESMatcher *)otherMatcher;
 @end
 
-@interface ESAndMatcher : ESAbstractMatcherCombinator
+@interface ESAndMatcher : ESAbstractBinaryCombinator
 @end
 
-@interface ESOrMatcher : ESAbstractMatcherCombinator
+@interface ESOrMatcher : ESAbstractBinaryCombinator
 @end
 
 
@@ -200,8 +200,7 @@
 }
 
 - (NSUInteger)hash {
-	NSUInteger otherHash = [self.componentTypes hash];
-	return [self.class hash] + 31 * otherHash;
+	return [self.class hash] + 31 * [self.componentTypes hash];
 }
 
 
@@ -248,7 +247,7 @@
 
 
 
-@implementation ESAbstractMatcherCombinator  {
+@implementation ESAbstractBinaryCombinator {
     ESMatcher *_matcher;
     ESMatcher *_otherMatcher;
 }
@@ -282,28 +281,32 @@
 
 
 - (BOOL)isEqual:(id)other {
-    if (other == self)
+    if (other == self) {
         return YES;
-    if (!other || ![[other class] isEqual:[self class]])
+    }
+    if (!other || ![[other class] isEqual:[self class]]) {
         return NO;
+    }
 
     return [self isEqualToCombinator:other];
 }
 
-- (BOOL)isEqualToCombinator:(ESAbstractMatcherCombinator *)combinator {
-    if (self == combinator)
+- (BOOL)isEqualToCombinator:(ESAbstractBinaryCombinator *)combinator {
+    if (self == combinator) {
         return YES;
-    if (combinator == nil)
+    }
+    if (combinator == nil) {
         return NO;
-    if (![super isEqual:combinator])
+    }
+    if (!([_matcher isEqual:combinator->_matcher] && [_otherMatcher isEqual:combinator->_otherMatcher]) &&
+        !([_matcher isEqual:combinator->_otherMatcher] && [_otherMatcher isEqual:combinator->_matcher])) {
         return NO;
-    if (_otherMatcher != combinator->_otherMatcher && ![_otherMatcher isEqual:combinator->_otherMatcher])
-        return NO;
+    }
     return YES;
 }
 
 - (NSUInteger)hash {
-    return [self.class hash] + [_otherMatcher hash];
+    return [self.class hash] + [_matcher hash] + [_otherMatcher hash];
 }
 
 
@@ -382,7 +385,7 @@
 }
 
 - (NSUInteger)hash {
-	return [_matcher hash];
+	return [self.class hash] + [_matcher hash];
 }
 
 

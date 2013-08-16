@@ -53,49 +53,41 @@ SPEC_BEGIN(ESMatcherSpec)
 			});
 
 
-			context(@"when testing equality", ^{
+            it(@"should be equal to another matcher of the same type with the same components", ^{
+
+                // given
+                matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
+                ESMatcher *otherMatcher = [ESMatcher allOf:[SomeOtherComponent class], [SomeComponent class], nil];
+
+                // then
+                [[theValue([matcher isEqual:otherMatcher]) should] beYes];
+                [[theValue(matcher.hash) should] equal:theValue(otherMatcher.hash)];
+            });
 
 
-				it(@"should be equal to another matcher of the same type with the same components", ^{
+            it(@"should not be equal to another matcher if the type is different", ^{
 
-					// given
-					matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
-					ESMatcher *otherMatcher = [ESMatcher allOf:[SomeOtherComponent class], [SomeComponent class], nil];
+                // given
+                matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
+                ESMatcher *otherMatcher = [ESMatcher anyOf:[SomeOtherComponent class], [SomeComponent class], nil];
 
-					// then
-					[[theValue([matcher isEqual:otherMatcher]) should] beYes];
-					[[theValue(matcher.hash) should] equal:theValue(otherMatcher.hash)];
-				});
-
-
-				it(@"should not be equal to another matcher if the type is different", ^{
-
-					// given
-					matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
-					ESMatcher *otherMatcher = [ESMatcher anyOf:[SomeOtherComponent class], [SomeComponent class], nil];
-
-					// then
-					[[theValue([matcher isEqual:otherMatcher]) should] beNo];
-					[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
-				});
+                // then
+                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                [[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+            });
 
 
-				it(@"should not be equal to another matcher if components are different", ^{
+            it(@"should not be equal to another matcher if components are different", ^{
 
-					// given
-					matcher = [ESMatcher allOf:[SomeComponent class], nil];
-					ESMatcher *otherMatcher = [ESMatcher allOf:[SomeOtherComponent class], nil];
+                // given
+                matcher = [ESMatcher allOf:[SomeComponent class], nil];
+                ESMatcher *otherMatcher = [ESMatcher allOf:[SomeOtherComponent class], nil];
 
-					// then
-					[[theValue([matcher isEqual:otherMatcher]) should] beNo];
-					//[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+                // then
+                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
 
-				});
-
-                //TODO (asc 15/8/13) Also test hash and equality of combined matchers!
-
-			});
-
+            });
 
 		});
 
@@ -209,6 +201,48 @@ SPEC_BEGIN(ESMatcherSpec)
 
 			});
 
+
+
+
+            it(@"should be equal to another matcher of the same type with the same components", ^{
+
+                // given
+                matcher = [ESMatcher noneOf:[SomeComponent class], [SomeOtherComponent class], nil];
+                ESMatcher *otherMatcher = [ESMatcher noneOf:[SomeOtherComponent class], [SomeComponent class], nil];
+
+                // then
+                [[theValue([matcher isEqual:otherMatcher]) should] beYes];
+                [[theValue(matcher.hash) should] equal:theValue(otherMatcher.hash)];
+            });
+
+
+            it(@"should not be equal to another matcher if the type is different", ^{
+
+                // given
+                matcher = [ESMatcher noneOf:[SomeComponent class], [SomeOtherComponent class], nil];
+                ESMatcher *otherMatcher = [ESMatcher anyOf:[SomeOtherComponent class], [SomeComponent class], nil];
+
+                // then
+                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                [[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+            });
+
+
+            it(@"should not be equal to another matcher if components are different", ^{
+
+                // given
+                matcher = [ESMatcher noneOf:[SomeComponent class], nil];
+                ESMatcher *otherMatcher = [ESMatcher noneOf:[SomeOtherComponent class], nil];
+
+                // then
+                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+
+            });
+
+
+
+
 		});
 
 
@@ -268,6 +302,46 @@ SPEC_BEGIN(ESMatcherSpec)
                     [[theValue(isMatching) should] beNo];
                 });
 
+
+
+
+                it(@"should be equal to another matcher of the same type with the same components", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] and:[ESMatcher allOf:[SomeOtherComponent class], nil]];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], nil] and:[ESMatcher allOf:[SomeComponent class], nil]];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beYes];
+                    [[theValue(matcher.hash) should] equal:theValue(otherMatcher.hash)];
+                });
+
+
+                it(@"should not be equal to another matcher if the combination is different", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] and:[ESMatcher allOf:[SomeOtherComponent class], nil]];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], nil] or:[ESMatcher allOf:[SomeComponent class], nil]];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                    [[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+                });
+
+
+                it(@"should not be equal to another matcher if components are different", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] and:[ESMatcher allOf:[SomeOtherComponent class], nil]];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeThirdComponent class], nil] and:[ESMatcher allOf:[SomeComponent class], nil]];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                    //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+
+                });
+
+
             });
 
 
@@ -312,6 +386,45 @@ SPEC_BEGIN(ESMatcherSpec)
                     [[theValue(isMatching) should] beNo];
                 });
 
+
+
+
+                it(@"should be equal to another matcher of the same type with the same components", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] or:[ESMatcher allOf:[SomeOtherComponent class], nil]];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], nil] or:[ESMatcher allOf:[SomeComponent class], nil]];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beYes];
+                    [[theValue(matcher.hash) should] equal:theValue(otherMatcher.hash)];
+                });
+
+
+                it(@"should not be equal to another matcher if the combination is different", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] or:[ESMatcher allOf:[SomeOtherComponent class], nil]];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], nil] and:[ESMatcher allOf:[SomeComponent class], nil]];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                    [[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+                });
+
+
+                it(@"should not be equal to another matcher if components are different", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] or:[ESMatcher allOf:[SomeOtherComponent class], nil]];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeThirdComponent class], nil] or:[ESMatcher allOf:[SomeComponent class], nil]];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                    //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+
+                });
+
             });
 
 
@@ -335,6 +448,44 @@ SPEC_BEGIN(ESMatcherSpec)
 
 					[[theValue(isMatching) should] beNo];
 				});
+
+
+
+                it(@"should be equal to another matcher of the same type with the same components", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil] not];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], [SomeComponent class], nil] not];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beYes];
+                    [[theValue(matcher.hash) should] equal:theValue(otherMatcher.hash)];
+                });
+
+
+                it(@"should not be equal to another matcher if the type is different", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil] not];
+                    ESMatcher *otherMatcher = [[ESMatcher anyOf:[SomeOtherComponent class], [SomeComponent class], nil] not];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                    [[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+                });
+
+
+                it(@"should not be equal to another matcher if components are different", ^{
+
+                    // given
+                    matcher = [[ESMatcher allOf:[SomeComponent class], nil] not];
+                    ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], nil] not];
+
+                    // then
+                    [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+                    //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
+
+                });
 
 			});
 
