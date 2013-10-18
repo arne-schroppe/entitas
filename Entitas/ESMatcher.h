@@ -3,14 +3,16 @@
 
 @interface ESMatcher : NSObject <NSCopying>
 
-+ (ESMatcher *)allOf:(id)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
++ (ESMatcher *)allOf:(Class)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
 + (ESMatcher *)allOfSet:(NSSet *)componentTypes;
 
-+ (ESMatcher *)anyOf:(id)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
++ (ESMatcher *)anyOf:(Class)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
 + (ESMatcher *)anyOfSet:(NSSet *)componentTypes;
 
-+ (ESMatcher *)noneOf:(id)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
++ (ESMatcher *)noneOf:(Class)firstClass, ... NS_REQUIRES_NIL_TERMINATION;
 + (ESMatcher *)noneOfSet:(NSSet *)componentTypes;
+
++ (ESMatcher *)just:(Class)someClass;
 
 
 - (ESMatcher *)and:(ESMatcher *)other;

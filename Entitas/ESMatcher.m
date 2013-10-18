@@ -2,7 +2,6 @@
 #import "ESCollection.h"
 
 
-
 @interface ESNotMatcher : ESMatcher
 - (id)initWithMatcher:(ESMatcher *)matcher;
 @end
@@ -34,7 +33,9 @@
 
 @implementation ESMatcher
 
-+ (ESMatcher *)allOf:(id)firstClass, ... {
+
+
++ (ESMatcher *)allOf:(Class)firstClass, ... {
 	va_list args;
 	va_start(args, firstClass);
 	NSMutableSet *componentTypes = [NSMutableSet new];
@@ -52,7 +53,7 @@
 }
 
 
-+ (ESMatcher *)anyOf:(id)firstClass, ... {
++ (ESMatcher *)anyOf:(Class)firstClass, ... {
 	va_list args;
 	va_start(args, firstClass);
 	NSMutableSet *componentTypes = [NSMutableSet new];
@@ -70,7 +71,7 @@
 }
 
 
-+ (ESMatcher *)noneOf:(id)firstClass, ... {
++ (ESMatcher *)noneOf:(Class)firstClass, ... {
 	va_list args;
 	va_start(args, firstClass);
 	NSMutableSet *componentTypes = [NSMutableSet new];
@@ -88,6 +89,10 @@
 }
 
 
++ (ESMatcher *)just:(Class)someClass {
+    return [[ESAllComponentTypes alloc] initWithTypes:[NSSet setWithObject:someClass]];
+}
+
 
 - (ESMatcher *)and:(ESMatcher *)other {
 	return [[ESAndMatcher alloc] initWithMatcher:self andOtherMatcher:other];
@@ -102,6 +107,7 @@
 - (ESMatcher *)not {
 	return [[ESNotMatcher alloc] initWithMatcher:self];
 }
+
 
 
 
@@ -122,6 +128,7 @@
     id copy = [[[self class] alloc] init];
     return copy;
 }
+
 
 
 @end

@@ -2,7 +2,6 @@
 #import "Kiwi.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
-#import "ESMatcher.h"
 #import "SomeThirdComponent.h"
 
 SPEC_BEGIN(ESMatcherSpec)
@@ -158,6 +157,72 @@ SPEC_BEGIN(ESMatcherSpec)
 			});
 
 		});
+
+
+
+
+
+        context(@"for just one component type", ^{
+
+            it(@"should return YES if the component is present", ^{
+
+
+                matcher = [ESMatcher just:[SomeComponent class]];
+
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[SomeComponent new]];
+                [entity addComponent:[SomeOtherComponent new]];
+
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+                [[theValue(isMatching) should] beYes];
+
+            });
+
+
+            it(@"should return NO if the components is not present", ^{
+
+                matcher = [ESMatcher just:[SomeComponent class]];
+
+                ESEntity *entity = [entities createEntity];
+                [entity addComponent:[SomeOtherComponent new]];
+
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+                [[theValue(isMatching) should] beNo];
+            });
+
+
+            it(@"should be equal to another matcher of the same type with the same components", ^{
+
+                matcher = [ESMatcher just:[SomeComponent class]];
+                ESMatcher *otherMatcher = [ESMatcher just:[SomeComponent class]];
+
+                [[theValue([matcher isEqual:otherMatcher]) should] beYes];
+            });
+
+//
+//            it(@"should not be equal to another matcher if the type is different", ^{
+//
+//                matcher = [ESMatcher just:[SomeComponent class]];
+//                ESMatcher *otherMatcher = [ESMatcher just:[SomeOtherComponent class]];
+//
+//                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+//            });
+
+
+            it(@"should not be equal to another matcher if components are different", ^{
+
+                matcher = [ESMatcher just:[SomeComponent class]];
+                ESMatcher *otherMatcher = [ESMatcher just:[SomeOtherComponent class]];
+
+                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
+
+            });
+
+        });
+
+
 
 
 		context(@"for none of the component types", ^{
