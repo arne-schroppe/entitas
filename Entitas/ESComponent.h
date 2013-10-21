@@ -1,5 +1,5 @@
-#ifndef __ESMATCHER__INCLUDED
-#define __ESMATCHER__INCLUDED
+#ifndef __ESCOMPONENT__INCLUDED
+#define __ESCOMPONENT__INCLUDED
 
 #import "ESMatcher.h"
 
