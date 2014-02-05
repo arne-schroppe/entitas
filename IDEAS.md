@@ -1,17 +1,23 @@
-Entitas Ideas
+Roadmap
 ====
+
+### 0.0.5
 
 Performance optimizations
 
-- get rid of ESChangedEntity
+- Write Tests to measure performance
+- Switch to C++ datastructures
 
-Unsorted list of ideas for Entitas, we need to find a place to discuss them.
+### 0.1.0
 
-- Enity should have an ID (object id is enough)
+Improve usability:
 - Rename defineComponent Macro to defineLocalVariableComponent or delete it completely
 - Entities should be renamed to EntityRepository after DDD concepts
-- Add the singleton Macro so you can reuse (Tag) Components
-- Create ES.h file witch contains all public .h files
+- Rename Component to Attribute
+- Make (Tag) Attributes Singletons
 - Create internal folder witch will contain all +Internal Categories
+- get rid of ESCollection
+- get rid of ESChangedEntity
 - Move internal API to internal Categories
-- EntityRepository could reuse deleted Entities.
+- introduce sharedRepository or repositoryByName:(NSString*)
+- Create ES.h file witch contains all public .h files
