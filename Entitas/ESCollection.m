@@ -6,7 +6,7 @@
 @implementation ESCollection
 {
 	ESMatcher *_typeMatcher;
-    NSMutableArray *_entities;
+    NSMutableOrderedSet *_entities;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
 }
@@ -23,7 +23,7 @@
     if (self)
     {
         _typeMatcher = types;
-        _entities = [NSMutableArray array];
+        _entities = [NSMutableOrderedSet new];
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
     }

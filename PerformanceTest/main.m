@@ -15,7 +15,7 @@ void test1(){
     
     MGBenchStart(@"Test");
     
-    for (int j = 0; j < 100000; j++) {
+    for (int j = 0; j < 1000000; j++) {
         ESEntity *entity = [entities createEntity];
         if (j%25 == 0){
             [entity addComponent:[SomeComponent new]];

@@ -5,9 +5,9 @@
 
 @implementation ESEntities
 {
-    NSMutableArray *_entities;
-    NSMutableDictionary *_collections;
-    NSMutableDictionary *_collectionsForType;
+    NSMutableOrderedSet *_entities;
+    NSMutableDictionary *_collections; // matcher -> collection
+    NSMutableDictionary *_collectionsForType; // componentType -> Set[collection]
 }
 
 - (id)init
@@ -15,7 +15,7 @@
     self = [super init];
     if (self)
     {
-        _entities = [NSMutableArray array];
+        _entities = [NSMutableOrderedSet new];
         _collections = [NSMutableDictionary dictionary];
         _collectionsForType = [NSMutableDictionary dictionary];
     }
@@ -137,7 +137,7 @@
 
 - (NSArray *)allEntities
 {
-    return [_entities copy];
+    return [_entities array];
 }
 
 @end
