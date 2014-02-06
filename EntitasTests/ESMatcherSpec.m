@@ -1,4 +1,4 @@
-#import <Entitas/ESEntities.h>
+#import "ESEntities.h"
 #import "Kiwi.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
@@ -78,7 +78,6 @@ SPEC_BEGIN(ESMatcherSpec)
 
                 
                 [[theValue([matcher isEqual:otherMatcher]) should] beNo];
-                //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
 
             });
 
@@ -201,15 +200,6 @@ SPEC_BEGIN(ESMatcherSpec)
                 [[theValue([matcher isEqual:otherMatcher]) should] beYes];
             });
 
-//
-//            it(@"should not be equal to another matcher if the type is different", ^{
-//
-//                matcher = [ESMatcher just:[SomeComponent class]];
-//                ESMatcher *otherMatcher = [ESMatcher just:[SomeOtherComponent class]];
-//
-//                [[theValue([matcher isEqual:otherMatcher]) should] beNo];
-//            });
-
 
             it(@"should not be equal to another matcher if components are different", ^{
 
@@ -295,7 +285,6 @@ SPEC_BEGIN(ESMatcherSpec)
 
                 
                 [[theValue([matcher isEqual:otherMatcher]) should] beNo];
-                //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
 
             });
 
@@ -390,7 +379,6 @@ SPEC_BEGIN(ESMatcherSpec)
                     ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeThirdComponent class], nil] and:[ESMatcher allOf:[SomeComponent class], nil]];
 
                     [[theValue([matcher isEqual:otherMatcher]) should] beNo];
-                    //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
 
                 });
 
@@ -482,7 +470,6 @@ SPEC_BEGIN(ESMatcherSpec)
                     ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeThirdComponent class], nil] or:[ESMatcher allOf:[SomeComponent class], nil]];
 
                     [[theValue([matcher isEqual:otherMatcher]) should] beNo];
-                    //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
 
                 });
 
@@ -546,7 +533,6 @@ SPEC_BEGIN(ESMatcherSpec)
                     ESMatcher *otherMatcher = [[ESMatcher allOf:[SomeOtherComponent class], nil] not];
 
                     [[theValue([matcher isEqual:otherMatcher]) should] beNo];
-                    //[[theValue(matcher.hash) shouldNot] equal:theValue(otherMatcher.hash)];
 
                 });
 
