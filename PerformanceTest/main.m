@@ -31,20 +31,25 @@ void test1(){
     
     MGBenchStep(@"Test", @"Collection is created");
     
+    collection = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+    MGBenchStep(@"Test", @"Collection is created from cache");
+    
     for (ESEntity *entity in collection.entities) {
         [entity exchangeComponent:[SomeComponent new]];
     }
     
     MGBenchStep(@"Test", @"Exchanged component in all entities of the collection");
     
-    for (ESEntity *entity in collection.entities) {
+    for (ESEntity *entity in entities.allEntities) {
         [entities destroyEntity:entity];
     }
     
     MGBenchStep(@"Test", @"Destroy all entities");
     
+    NSLog(@"Entities Left: %lu", (unsigned long)entities.allEntities.count);
+    
     MGBenchEnd(@"Test");
-    __gcov_flush();
+
 }
 
 

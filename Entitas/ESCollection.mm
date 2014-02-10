@@ -1,14 +1,18 @@
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
 #import "ESMatcher.h"
-
+#import "AvlNode.h"
+#import <map>
 
 @implementation ESCollection
 {
 	ESMatcher *_typeMatcher;
-    NSMutableOrderedSet *_entities;
+    std::map<id, u_long> _lookup;
+    AvlNode *_entities;
+    u_long _index;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
+    EqualityComparer _comparer;
 }
 
 
@@ -23,9 +27,20 @@
     if (self)
     {
         _typeMatcher = types;
-        _entities = [NSMutableOrderedSet new];
+        std::map<id, u_long> weakLookup = _lookup;
+        _comparer =^int(id v1, id v2) {
+            if(_lookup[v1] > _lookup[v2]){
+                return -1;
+            } else if (_lookup[v1] < _lookup[v2]) {
+                return 1;
+            }
+            return 0;
+        };
+        _entities = [AvlNode emptyWithComparer:_comparer];
+
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
+        _index = 0;
     }
 
     return self;
@@ -37,9 +52,15 @@
 }
 
 - (void)addEntity:(ESChangedEntity *)changedEntity {
+    
+    ESEntity *entity = changedEntity.originalEntity;
+    
+    std::map<id,u_long>::iterator it= _lookup.find(entity);
 
-    if(![_entities containsObject:changedEntity.originalEntity]){
-        [_entities addObject:changedEntity.originalEntity];
+    if(it == _lookup.end()){
+        _lookup.insert(std::pair<id,int>(entity,_index));
+        _entities = [_entities newWithValue:entity];
+        _index++;
     }
 
     for (id<ESCollectionObserver> observer in _addObservers){
@@ -50,7 +71,9 @@
 - (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity
 {
 
-    if([_entities containsObject:removedEntity.originalEntity]){
+    std::map<id,u_long>::iterator it= _lookup.find(removedEntity.originalEntity);
+    
+    if(it != _lookup.end()){
         for (id<ESCollectionObserver> observer in _removeObservers){
             [observer entity:removedEntity changedInCollection:self];
         }
@@ -61,11 +84,20 @@
 
 - (NSArray *)entities
 {
-    return [_entities copy];
+    return _entities.enumerator.allObjects;
 }
 
 - (void)removeEntity:(ESChangedEntity *)changedEntity {
-    [_entities removeObject:changedEntity.originalEntity];
+    
+    ESEntity *entity = changedEntity.originalEntity;
+    
+    std::map<id,u_long>::iterator it= _lookup.find(entity);
+    if(it == _lookup.end()){
+        return;
+    }
+    
+    _lookup.erase(it);
+    _entities = [_entities newWithoutValue:entity];
     for (id<ESCollectionObserver> observer in _removeObservers){
         [observer entity:changedEntity changedInCollection:self];
     }
