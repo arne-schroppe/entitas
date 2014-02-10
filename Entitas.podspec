@@ -6,6 +6,6 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "devboy" => "dominic.graefen@gmail.com" }
   s.source       = { :git => "https://github.com/wooga/oc-entitas.git", :tag => "#{s.version}" }
-  s.source_files = 'Entitas/*.{h,m}'
+  s.source_files = 'Entitas/*.{h,m,mm}'
   s.requires_arc =  true
 end
