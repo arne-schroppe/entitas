@@ -1,5 +1,5 @@
-#import <Foundation/Foundation.h>
 #import "ESEntity.h"
+#import "AvlNode.h"
 
 @class ESChangedEntity;
 @class ESMatcher;
@@ -11,8 +11,10 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
     ESEntityRemoved
 };
 
-@interface ESCollection : NSObject
+@interface ESCollection : NSObject <AvlNodeComparatorDelegate>
+
 - (id)initWithTypes:(NSSet *)types;
+
 - (id)initWithMatcher:(ESMatcher *)matcher;
 
 - (ESMatcher *)typeMatcher;
@@ -28,6 +30,7 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 - (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
 
 - (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity;
+
 @end
 
 

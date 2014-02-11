@@ -2,8 +2,6 @@
 
 @class AvlNode;
 
-static EqualityComparer comparer;
-
 @interface NullNode : AvlNode
 @end
 
@@ -13,7 +11,7 @@ static EqualityComparer comparer;
 
 @end
 
-@implementation AvlNode{
+@implementation AvlNode {
     AvlNode *_left;
     AvlNode *_right;
     u_long _count;
@@ -30,9 +28,9 @@ static AvlNode *_empty;
 	}
 }
 
-+ (AvlNode *) emptyWithComparer:(EqualityComparer)comparer
++ (AvlNode *)emptyWithComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
 {
-    _empty.comparer = comparer;
+    _empty.comparatorDelegate = comparatorDelegate;
 	return _empty;
 }
 
@@ -51,59 +49,43 @@ static AvlNode *_empty;
 	return _right;
 }
 
-- (u_long) count
-{
-	return _count;
-}
-
 - (int) balance
 {
 	if ( [self isEmpty] ) return 0;
 	return _left->_depth - _right->_depth;
 }
 
-- (id) initWithComparer:(EqualityComparer)comparer
+- (id)initWithValue:(id)value andComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
+{
+	AvlNode *empty = [AvlNode emptyWithComparator:comparatorDelegate];
+    
+	return [self initWithValue:value left:empty right:empty comparator:comparatorDelegate];
+}
+
+- (id)initWithValue:(id)value
+			   left:(AvlNode *)lt
+			  right:(AvlNode *)gt
+		 comparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
 {
 	if ( ( self = [super init] ) )
 	{
-		_right = [AvlNode emptyWithComparer:comparer];
-		_left = [AvlNode emptyWithComparer:comparer];
+		[self setValue:value left:lt right:gt comparator:comparatorDelegate];
 	}
     
 	return self;
 }
 
-- (id) initWithValue:(id)value andComparer:(EqualityComparer)comparer
-{
-	AvlNode *empty = [AvlNode emptyWithComparer:comparer];
-    
-	return [self initWithValue:value left:empty right:empty comparer:comparer];
-}
-
-- (id) initWithValue:(id)value
-				left:(AvlNode *)lt
-			   right:(AvlNode *)gt
-            comparer:(EqualityComparer)comparer
-{
-	if ( ( self = [super init] ) )
-	{
-		[self setValue:value left:lt right:gt comparer:comparer];
-	}
-    
-	return self;
-}
-
-- (void) setValue:(id)value
-			 left:(AvlNode *)lt
-			right:(AvlNode *)gt
-         comparer:(EqualityComparer)comparer
+- (void)setValue:(id)value
+			left:(AvlNode *)lt
+		   right:(AvlNode *)gt
+	  comparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
 {
 	_value = value;
 	_left = lt;
 	_right = gt;
 	_count = 1 + _left->_count + _right->_count;
 	_depth = 1 + MAX( _left->_depth, _right->_depth );
-    _comparer = comparer;
+    _comparatorDelegate = comparatorDelegate;
 }
 
 - (AvlNode *) fixRootBalance
@@ -159,25 +141,17 @@ static AvlNode *_empty;
 	//In this case we can show: |bal| > 2
 	//if( Math.Abs(bal) > 2 ) {
 	[NSException raise:@"Tree too out of balance" format:@"Tree too out of balance: %d", bal];
-    
+	
 	return nil;
 }
 
-
-
-/// <summary>
-/// Return a new tree with the key-value pair inserted
-/// If the key is already present, it replaces the value
-/// This operation is O(Log N) where N is the number of keys
-/// </summary>
-
 - (AvlNode *)newWithValue:(id)val {
-	if ( [self isEmpty] ) return [[AvlNode alloc] initWithValue:val andComparer:_comparer];
+	if ( [self isEmpty] ) return [[AvlNode alloc] initWithValue:val andComparator:_comparatorDelegate];
     
 	AvlNode *newlt = _left;
 	AvlNode *newgt = _right;
-    
-	int comp = _comparer( _value, val );
+
+	int comp = [_comparatorDelegate compareValue:_value withValue:val];
 	id newv = _value;
     
 	if ( comp < 0 )
@@ -213,22 +187,16 @@ static AvlNode *_empty;
     return [self removeFromNew:value found:&found];
 }
 
-/// <summary>
-/// Try to remove the key, and return the resulting Dict
-/// if the key is not found, old_node is Empty, else old_node is the Dict
-/// with matching Key
-/// </summary>
 - (AvlNode *) removeFromNew:(id)value
 					  found:(BOOL *)found
 {
 	if ( [self isEmpty] )
 	{
 		*found = NO;
-		return [AvlNode emptyWithComparer:_comparer];
+		return [AvlNode emptyWithComparator:_comparatorDelegate];
 	}
-    
-    
-    int comp = _comparer( _value, value );
+
+    int comp = [_comparatorDelegate compareValue:_value withValue:value];
     
 	if ( comp < 0 )
 	{
@@ -270,7 +238,7 @@ static AvlNode *_empty;
 {
 	if ( [self isEmpty] )
 	{
-		AvlNode *empty = [AvlNode emptyWithComparer:_comparer];
+		AvlNode *empty = [AvlNode emptyWithComparator:_comparatorDelegate];
 		*max = empty;
         
 		return empty;
@@ -297,7 +265,7 @@ static AvlNode *_empty;
 {
 	if ( [self isEmpty] )
 	{
-		AvlNode *empty = [AvlNode emptyWithComparer:_comparer];
+		AvlNode *empty = [AvlNode emptyWithComparator:_comparatorDelegate];
 		*min = empty;
         
 		return empty;
@@ -320,9 +288,6 @@ static AvlNode *_empty;
 	}
 }
 
-/// <summary>
-/// Return a new dict with the root key-value pair removed
-/// </summary>
 - (AvlNode *) removeRoot
 {
 	if ( [self isEmpty] )
@@ -360,10 +325,6 @@ static AvlNode *_empty;
 	}
 }
 
-/// <summary>
-/// Move the Root into the GTDict and promote LTDict node up
-/// If LTDict is empty, this operation returns this
-/// </summary>
 - (AvlNode *) rotateToGT
 {
 	if ( [_left isEmpty] || [self isEmpty] )
@@ -378,10 +339,6 @@ static AvlNode *_empty;
 	return [_left newOrMutate:_left.value left:lL right:newRight];
 }
 
-/// <summary>
-/// Move the Root into the LTDict and promote GTDict node up
-/// If GTDict is empty, this operation returns this
-/// </summary>
 - (AvlNode *) rotateToLT
 {
 	if ( [_right isEmpty] || [self isEmpty] )
@@ -406,7 +363,7 @@ static AvlNode *_empty;
 					right:(AvlNode *)newRight
 {
 	
-    return [[AvlNode alloc] initWithValue:newValue left:newLeft right:newRight comparer:_comparer];
+    return [[AvlNode alloc] initWithValue:newValue left:newLeft right:newRight comparator:_comparatorDelegate];
 }
 
 @end
@@ -476,7 +433,8 @@ static AvlNode *_empty;
 					[_toVisit addObject:_this_d.right];
 				}
                 
-				[_toVisit addObject:[[AvlNode alloc] initWithValue:_this_d.value andComparer:_this_d.comparer]];
+				[_toVisit addObject:[[AvlNode alloc]
+											  initWithValue:_this_d.value andComparator:_this_d.comparatorDelegate]];
 				_this_d = _this_d.left;
 				_needsPop = NO;
 			}

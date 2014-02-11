@@ -12,7 +12,6 @@
     u_long _index;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
-    EqualityComparer _comparer;
 }
 
 
@@ -27,16 +26,7 @@
     if (self)
     {
         _typeMatcher = types;
-        std::map<id, u_long> weakLookup = _lookup;
-        _comparer =^int(id v1, id v2) {
-            if(_lookup[v1] > _lookup[v2]){
-                return -1;
-            } else if (_lookup[v1] < _lookup[v2]) {
-                return 1;
-            }
-            return 0;
-        };
-        _entities = [AvlNode emptyWithComparer:_comparer];
+        _entities = [AvlNode emptyWithComparator:self];
 
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
@@ -122,5 +112,16 @@
         [_removeObservers removeObject:observer];
     }
 }
+
+- (int)compareValue:(id)value01 withValue:(id)value02
+{
+	if(_lookup[value01] > _lookup[value02]){
+		return -1;
+	} else if (_lookup[value01] < _lookup[value02]) {
+		return 1;
+	}
+	return 0;
+}
+
 
 @end

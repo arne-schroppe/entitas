@@ -1,22 +1,39 @@
 #import "Kiwi.h"
 #import "AvlNode.h"
 
+
+@interface ComparatorDelegateFake : NSObject <AvlNodeComparatorDelegate>
+@property NSDictionary *lookup;
+@end
+
+@implementation ComparatorDelegateFake
+
+- (int)compareValue:(id)value01 withValue:(id)value02
+{
+	if(_lookup[value01] > _lookup[value02]){
+		return -1;
+	} else if (_lookup[value01] < _lookup[value02]) {
+		return 1;
+	}
+	return 0;
+}
+
+@end
+
+
 SPEC_BEGIN(AvlNodeSpec)
 
 describe(@"AvlNode", ^{
 
     __block AvlNode *node;
-    __block EqualityComparer comparater;
+    __block ComparatorDelegateFake *compareDelegate;
 
     beforeEach(^{
-	
-        NSDictionary *lookup = @{@"a" : @1, @"b" : @2, @"c": @3};
+
+		compareDelegate = [ComparatorDelegateFake new];
+		compareDelegate.lookup = @{@"a" : @1, @"b" : @2, @"c": @3};
         
-        comparater = ^int(id o1, id o2){
-            return [lookup[o2] integerValue] - [lookup[o1] integerValue];
-        };
-        
-        node = [AvlNode emptyWithComparer:comparater];
+        node = [AvlNode emptyWithComparator:compareDelegate];
 
     });
 
