@@ -5,12 +5,6 @@
 @interface NullNode : AvlNode
 @end
 
-@interface AvlNodeEnumerator : NSEnumerator
-
-- (id) initWithNode:(AvlNode *)node;
-
-@end
-
 @implementation AvlNode {
     AvlNode *_left;
     AvlNode *_right;
@@ -18,20 +12,12 @@
     int _depth;
 }
 
-static AvlNode *_empty;
-
-+ (void) initialize
-{
-	if ( [self class] == [AvlNode class] )
-	{
-		_empty = [NullNode new];
-	}
-}
-
 + (AvlNode *)emptyWithComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
 {
-    _empty.comparatorDelegate = comparatorDelegate;
-	return _empty;
+    AvlNode *empty = [NullNode new];
+
+	empty.comparatorDelegate = comparatorDelegate;
+	return empty;
 }
 
 - (BOOL) isEmpty
@@ -171,14 +157,6 @@ static AvlNode *_empty;
 	AvlNode *newroot = [self newOrMutate:newv left:newlt right:newgt];
     
 	return [newroot fixRootBalance];
-}
-
-- (AvlNode *) getNodeAt:(u_long)index
-{
-	if ( index < _left->_count ) return [_left getNodeAt:index];
-	if ( index > _left->_count) return [_right getNodeAt:index - _left->_count - 1];
-    
-	return self;
 }
 
 - (AvlNode *) newWithoutValue:(id)value
@@ -353,17 +331,31 @@ static AvlNode *_empty;
 	return [_right newOrMutate:_right.value left:newLeft right:rR];
 }
 
-- (NSEnumerator *)enumerator
-{
-	return [[AvlNodeEnumerator alloc] initWithNode:self];
-}
-
 - (AvlNode *) newOrMutate:(id)newValue
 					 left:(AvlNode *)newLeft
 					right:(AvlNode *)newRight
 {
 	
     return [[AvlNode alloc] initWithValue:newValue left:newLeft right:newRight comparator:_comparatorDelegate];
+}
+
+- (NSArray *)allObjects
+{
+	NSMutableArray *result = [NSMutableArray new];
+	[self fillArray:result];
+	return result;
+}
+
+-(void)fillArray:(NSMutableArray *)array{
+	if (!_left.isEmpty){
+		[_left fillArray:array];
+	}
+	if(_value){
+		[array addObject:_value];
+	}
+	if (!_right.isEmpty){
+		[_right fillArray:array];
+	}
 }
 
 @end
@@ -374,89 +366,6 @@ static AvlNode *_empty;
 - (BOOL)isEmpty
 {
 	return YES;
-}
-
-@end
-
-@implementation AvlNodeEnumerator
-{
-	NSMutableArray *_toVisit;
-	BOOL _needsPop;
-	AvlNode *_root;
-	AvlNode *_this_d;
-}
-
-- (id) initWithNode:(AvlNode *)root
-{
-	if ( ( self = [super init] ) )
-	{
-		_root = root;
-		_toVisit = [NSMutableArray new];
-		[_toVisit addObject:root];
-        
-		_needsPop = YES;
-	}
-    
-	return self;
-}
-
-- (id) nextObject
-{
-	while ( !_needsPop || [_toVisit count] > 0 )
-	{
-		if ( _needsPop )
-		{
-			_this_d = [_toVisit lastObject];
-			[_toVisit removeLastObject];
-		}
-		else _needsPop = YES;
-        
-		if ( [_this_d isEmpty] )
-		{
-			continue;
-		}
-		else
-		{
-			if ( [_this_d.left isEmpty] )
-			{
-				//This is the next biggest value in the Dict:
-				id value = _this_d.value;
-				_this_d = _this_d.right;
-				_needsPop = NO;
-				return value;
-			}
-			else
-			{
-				//Break it up
-				if ( ![_this_d.right isEmpty] )
-				{
-					[_toVisit addObject:_this_d.right];
-				}
-                
-				[_toVisit addObject:[[AvlNode alloc]
-											  initWithValue:_this_d.value andComparator:_this_d.comparatorDelegate]];
-				_this_d = _this_d.left;
-				_needsPop = NO;
-			}
-		}
-	}
-    
-	return nil;
-}
-
-- (NSArray *)allObjects
-{
-	NSMutableArray *result = [NSMutableArray new];
-	AvlNodeEnumerator *enumerator = [[AvlNodeEnumerator alloc] initWithNode:_root];
-    
-	id item = nil;
-    
-	while ( nil != ( item = [enumerator nextObject] ) )
-	{
-		[result addObject:item];
-	}
-    
-	return result;
 }
 
 @end

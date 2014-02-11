@@ -74,7 +74,7 @@
 
 - (NSArray *)entities
 {
-    return _entities.enumerator.allObjects;
+    return _entities.allObjects;
 }
 
 - (void)removeEntity:(ESChangedEntity *)changedEntity {

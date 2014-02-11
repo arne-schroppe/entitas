@@ -29,9 +29,9 @@
 
 - (AvlNode *) newWithoutValue:(id)index;
 
-- (NSEnumerator *)enumerator;
-
 @property (nonatomic, strong) id value;
+
+- (NSArray *)allObjects;
 
 @property (assign) id <AvlNodeComparatorDelegate> comparatorDelegate;
 

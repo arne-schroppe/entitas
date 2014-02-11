@@ -16,24 +16,18 @@ SPEC_BEGIN(ESCollectionSpec)
         __block NSSet *set;
         __block ESEntity *entity;
         __block ESChangedEntity *changedEntity;
-        __block id notificationReceiver;
 
         beforeEach(^{
             set = [NSSet set];
             collection = [[ESCollection alloc] initWithTypes:set];
             entity = [[ESEntity alloc] init];
             changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
-            notificationReceiver = [KWMock mock];
         });
 
         it(@"should be instantiated", ^{
             [collection shouldNotBeNil];
             [[collection should] beKindOfClass:[ESCollection class]];
         });
-
-//        it(@"should be initialized with a Set", ^{
-//            [[[collection types] should] equal:set];
-//        });
 
         it(@"should add an entity", ^{
             [collection addEntity:changedEntity];
@@ -43,7 +37,8 @@ SPEC_BEGIN(ESCollectionSpec)
         it(@"should remove an entity", ^{
             [collection addEntity:changedEntity];
             [collection removeEntity:changedEntity];
-            [[[collection entities] shouldNot] contain:entity];
+			NSArray *collectedEntities = [collection entities];
+			[[collectedEntities shouldNot] contain:entity];
         });
 
         it(@"should not add an entity more than once", ^{
@@ -79,19 +74,6 @@ SPEC_BEGIN(ESCollectionSpec)
             [[observer should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
             [collection addEntity:changedEntity];
         });
-
-//        it(@"should post a notfication when an entity is added the contains an ESChangedEntity object", ^{
-//            [notificationReceiver stub:@selector(notification) withBlock:(id (^)(NSArray *params)) ^
-//            {
-//                NSNotification *notification = [params objectAtIndex:0];
-//                ESChangedEntity *changedEntity = [notification.userInfo objectForKey:[ESChangedEntity class]];
-//                [[changedEntity shouldNot] beNil];
-//                [[changedEntity should] beKindOfClass:[ESChangedEntity class]];
-//            }];
-//            [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityAdded object:collection];
-//            [[notificationReceiver should] receive:@selector(notification) withCount:1];
-//            [collection addEntity:entity becauseOfAddedComponent:nil];
-//        });
 
         it(@"should notify observers when an entity is removed", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
@@ -144,17 +126,17 @@ SPEC_BEGIN(ESCollectionSpec)
             ESEntity *e2 = [entities createEntity];
             [e1 addComponent:[SomeComponent new]];
             [e2 addComponent:[SomeComponent new]];
-            ESCollection *collection = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+            ESCollection *collection1 = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
             
             it(@"should be possible to remove components on entities during the loop. There for return a copy of entities set.", ^{
                 
-                [[[collection entities] should] haveCountOf:2];
+                [[[collection1 entities] should] haveCountOf:2];
                 
-                for(ESEntity *e in collection.entities){
+                for(ESEntity *e in collection1.entities){
                     [e removeComponentOfType:[SomeComponent class]];
                 }
                 
-                [[[collection entities] should] haveCountOf:0];
+                [[[collection1 entities] should] haveCountOf:0];
             });
         });
 
