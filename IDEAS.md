@@ -15,6 +15,7 @@ Improve usability:
 - Entities should be renamed to EntityRepository after DDD concepts
 - Rename Component to Attribute
 - Make (Tag) Attributes Singletons
+- Reduce public methods and make them private
 - Create internal folder witch will contain all +Internal Categories
 - get rid of ESCollection
 - get rid of ESChangedEntity
