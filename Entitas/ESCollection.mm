@@ -48,7 +48,7 @@
     std::map<id,u_long>::iterator it= _lookup.find(entity);
 
     if(it == _lookup.end()){
-        _lookup.insert(std::pair<id,int>(entity,_index));
+        _lookup.insert(std::pair<id,u_long>(entity,_index));
         _entities = [_entities newWithValue:entity];
         _index++;
     }
@@ -74,6 +74,16 @@
 
 - (NSArray *)entities
 {
+//    std::map<u_long, id> reversedLookup;
+//    for ( std::map<id,u_long>::iterator it = _lookup.begin(); it != _lookup.end(); ++it ){
+//        reversedLookup.insert(std::pair<u_long,id>(it->second, it->first));
+//    }
+//    NSMutableArray *result = [NSMutableArray new];
+//    for ( std::map<u_long,id>::iterator it = reversedLookup.begin(); it != reversedLookup.end(); ++it ){
+//        [result addObject:it->second];
+//    }
+//
+//    return result;
     return _entities.allObjects;
 }
 

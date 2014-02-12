@@ -31,10 +31,14 @@ void test1(){
     
     MGBenchStep(@"Test", @"Collection is created");
     
-    collection = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
-    MGBenchStep(@"Test", @"Collection is created from cache");
+    NSArray *collectedEntities;
+    for (int i = 0; i < 100; i++) {
+        collectedEntities = collection.entities;
+    }
     
-    for (ESEntity *entity in collection.entities) {
+    MGBenchStep(@"Test", @"Getting all entities from collection 100 times");
+    
+    for (ESEntity *entity in collectedEntities) {
         [entity exchangeComponent:[SomeComponent new]];
     }
     
