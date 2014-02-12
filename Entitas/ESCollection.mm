@@ -86,8 +86,8 @@
         return;
     }
     
-    _lookup.erase(it);
     _entities = [_entities newWithoutValue:entity];
+    _lookup.erase(it);
     for (id<ESCollectionObserver> observer in _removeObservers){
         [observer entity:changedEntity changedInCollection:self];
     }
