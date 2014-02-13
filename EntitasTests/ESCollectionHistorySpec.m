@@ -2,6 +2,7 @@
 #import "ESCollectionHistory.h"
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
+#import "ESCollection+Internal.h"
 
 SPEC_BEGIN(ESCollectionHistorySpec)
 

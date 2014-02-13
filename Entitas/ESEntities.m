@@ -1,6 +1,6 @@
 #import "ESEntities.h"
 #import "ESChangedEntity.h"
-#import "ESMatcher.h"
+#import "ESCollection+Internal.h"
 
 
 @implementation ESEntities

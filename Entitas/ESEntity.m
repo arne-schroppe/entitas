@@ -1,5 +1,6 @@
 #import "ESEntity.h"
 #import "ESEntities.h"
+#import "ESEntities+Internal.h"
 
 @implementation ESEntity
 {

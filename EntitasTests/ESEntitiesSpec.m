@@ -5,6 +5,7 @@
 #import "ESCollection.h"
 #import "SomeOtherComponent.h"
 #import "SomeThirdComponent.h"
+#import "ESCollection+Internal.h"
 
 SPEC_BEGIN(ESEntitiesSpec)
 

@@ -5,6 +5,7 @@
 #import "SomeComponent.h"
 #import "NSNotificationMatcher.h"
 #import "ESChangedEntity.h"
+#import "ESCollection+Internal.h"
 
 registerMatcher(Notification)
 

@@ -3,6 +3,7 @@
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "ESEntities.h"
+#import "ESEntities+Internal.h"
 
 registerMatcher(NSNotificationMatcher)
 

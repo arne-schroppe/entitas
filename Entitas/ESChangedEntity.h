@@ -5,10 +5,7 @@
 
 @interface ESChangedEntity : NSObject
 - (id)initWithOriginalEntity:(ESEntity *)originalEntity components:(NSDictionary *)components changeType:(ESEntityChange)changeType;
-
 - (ESEntity *)originalEntity;
-
 - (NSObject <ESComponent> *)componentOfType:(Class)type;
-
 - (ESEntityChange)changeType;
 @end
