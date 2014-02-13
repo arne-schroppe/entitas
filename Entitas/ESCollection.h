@@ -11,7 +11,7 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
     ESEntityRemoved
 };
 
-@interface ESCollection : NSObject <AvlNodeComparatorDelegate>
+@interface ESCollection : NSObject
 
 - (id)initWithTypes:(NSSet *)types;
 

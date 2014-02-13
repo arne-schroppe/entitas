@@ -6,16 +6,9 @@
 //  https://gist.github.com/BobStrogg/8449933
 
 
-@protocol AvlNodeComparatorDelegate
-
-- (int)compareValue:(id)value01 withValue:(id)value02;
-
-@end
-
-
 @interface AvlNode : NSObject
 
-- (id)initWithValue:(id)value andComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate;
+- (id)initWithValue:(id)value andIndex:(u_long)index;
 
 - (AvlNode *) left;
 
@@ -25,14 +18,15 @@
 - (int) count;
 - (int) depth;
 
-- (AvlNode *) newWithValue:(id)val;
+- (AvlNode *)newWithValue:(id)val andIndex:(u_long)newValueIndex;
 
-- (AvlNode *) newWithoutValue:(id)index;
+- (AvlNode *)newWithoutValueOnIndex:(u_long)index;
 
 @property (nonatomic, strong) id value;
 
 - (NSArray *)allObjects;
 
-@property (assign) id <AvlNodeComparatorDelegate> comparatorDelegate;
+//@property (assign) id <AvlNodeComparatorDelegate> comparatorDelegate;
+@property (readonly) u_long index;
 
 @end

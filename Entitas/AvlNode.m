@@ -5,7 +5,7 @@
 @implementation AvlNode {
     AvlNode *_left;
     AvlNode *_right;
-    u_long _count;
+    int _count;
     int _depth;
 }
 
@@ -31,35 +31,35 @@
 	return _left.depth - _right.depth;
 }
 
-- (id)initWithValue:(id)value andComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
+- (id)initWithValue:(id)value andIndex:(u_long)index
 {
-	return [self initWithValue:value left:nil right:nil comparator:comparatorDelegate];
+	return [self initWithValue:value left:nil right:nil index:index];
 }
 
 - (id)initWithValue:(id)value
-			   left:(AvlNode *)lt
-			  right:(AvlNode *)gt
-		 comparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
+               left:(AvlNode *)lt
+              right:(AvlNode *)gt
+              index:(u_long)index
 {
 	if ( ( self = [super init] ) )
 	{
-		[self setValue:value left:lt right:gt comparator:comparatorDelegate];
+        [self setValue:value left:lt right:gt index:index];
 	}
     
 	return self;
 }
 
 - (void)setValue:(id)value
-			left:(AvlNode *)lt
-		   right:(AvlNode *)gt
-	  comparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
+            left:(AvlNode *)lt
+           right:(AvlNode *)gt
+           index:(u_long)index
 {
 	_value = value;
 	_left = lt;
 	_right = gt;
 	_count = 1 + _left.count + _right.count;
 	_depth = 1 + MAX( _left.depth, _right.depth );
-    _comparatorDelegate = comparatorDelegate;
+    _index = index;
 }
 
 - (AvlNode *) fixRootBalance
@@ -82,7 +82,7 @@
 		{
 			//Rotate LTDict:
 			AvlNode *newlt = [_left rotateToLT];
-			AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right];
+			AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right index:0];
             
 			return [newroot rotateToGT];
 		}
@@ -104,7 +104,7 @@
 		{
 			//Rotate GTDict:
 			AvlNode *newgt = [_right rotateToGT];
-			AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt];
+			AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt index:0];
             
 			return [newroot rotateToLT];
 		}
@@ -119,56 +119,56 @@
 	return nil;
 }
 
-- (AvlNode *)newWithValue:(id)val {
+- (AvlNode *)newWithValue:(id)val andIndex:(u_long)newValueIndex {
     
 	AvlNode *newlt = _left;
 	AvlNode *newgt = _right;
 
-	int comp = [_comparatorDelegate compareValue:_value withValue:val];
 	id newv = _value;
-    
-	if ( comp < 0 )
+	u_long newIndex = _index;
+
+	if ( newValueIndex < _index )
 	{
 		if(!_left){
-            newlt = [[AvlNode alloc] initWithValue:val andComparator:_comparatorDelegate];
+            newlt = [[AvlNode alloc] initWithValue:val andIndex:newValueIndex];
         } else {
-            newlt = [_left newWithValue:val];
+            newlt = [_left newWithValue:val andIndex:newValueIndex];
         }
 	}
-	else if ( comp > 0 )
+	else if ( newValueIndex > _index )
 	{
 		if(!_right){
-            newgt = [[AvlNode alloc] initWithValue:val andComparator:_comparatorDelegate];
+            newgt = [[AvlNode alloc] initWithValue:val andIndex:newValueIndex];
         } else{
-            newgt = [_right newWithValue:val];
+            newgt = [_right newWithValue:val andIndex:newValueIndex];
         }
 	}
     
 	else
 	{
 		newv = val;
+        newIndex = newValueIndex;
 	}
     
-	AvlNode *newroot = [self newOrMutate:newv left:newlt right:newgt];
+	AvlNode *newroot = [self newOrMutate:newv left:newlt right:newgt index:newIndex];
     
 	return [newroot fixRootBalance];
 }
 
-- (AvlNode *) newWithoutValue:(id)value
+- (AvlNode *)newWithoutValueOnIndex:(u_long)removedValueIndex
 {
     BOOL found = NO;
-    return [self removeFromNew:value found:&found];
+    return [self removedValueOnIndex:removedValueIndex found:&found];
 }
 
-- (AvlNode *) removeFromNew:(id)value
-					  found:(BOOL *)found
+- (AvlNode *)removedValueOnIndex:(u_long)removedValueIndex
+                           found:(BOOL *)found
 {
 
-    int comp = [_comparatorDelegate compareValue:_value withValue:value];
-    
-	if ( comp < 0 )
+
+	if ( removedValueIndex < _index )
 	{
-		AvlNode *newlt = [_left removeFromNew:value found:found];
+		AvlNode *newlt = [_left removedValueOnIndex:removedValueIndex found:found];
         
 		if ( !*found )
 		{
@@ -176,14 +176,14 @@
 			return self;
 		}
         
-		AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right];
+		AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right index:_index];
         
 		return [newroot fixRootBalance];
 	}
     
-	if ( comp > 0 )
+	if ( removedValueIndex > _index )
 	{
-		AvlNode *newgt = [_right removeFromNew:value found:found];
+		AvlNode *newgt = [_right removedValueOnIndex:removedValueIndex found:found];
         
 		if ( !*found )
 		{
@@ -191,7 +191,7 @@
 			return self;
 		}
         
-		AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt];
+		AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt index:_index];
         
 		return [newroot fixRootBalance];
 	}
@@ -223,7 +223,7 @@
 	{
 		//Go down:
 		AvlNode *newgt = [_right removeMax:max];
-		AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt];
+		AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt index:_index];
         
 		return [newroot fixRootBalance];
 	}
@@ -250,7 +250,7 @@
 	{
 		//Go down:
 		AvlNode *newlt = [_left removeMin:min];
-		AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right];
+		AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right index:_index];
         
 		return [newroot fixRootBalance];
 	}
@@ -276,7 +276,7 @@
 		//LTDict has fewer, so promote from GTDict to minimize depth
 		AvlNode *min;
 		AvlNode *newgt = [_right removeMin:&min];
-		AvlNode *newroot = [self newOrMutate:min.value left:_left right:newgt];
+		AvlNode *newroot = [self newOrMutate:min.value left:_left right:newgt index:min.index];
         
 		return [newroot fixRootBalance];
 	}
@@ -284,7 +284,7 @@
 	{
 		AvlNode *max;
 		AvlNode *newlt = [_left removeMax:&max];
-		AvlNode *newroot = [self newOrMutate:max.value left:newlt right:_right];
+		AvlNode *newroot = [self newOrMutate:max.value left:newlt right:_right index:max.index];
         
 		return [newroot fixRootBalance];
 	}
@@ -299,9 +299,9 @@
     
     AvlNode *lL = _left.left;
 	AvlNode *lR = _left.right;
-	AvlNode *newRight = [self newOrMutate:_value left:lR right:_right];
+	AvlNode *newRight = [self newOrMutate:_value left:lR right:_right index:_index];
     
-	return [_left newOrMutate:_left.value left:lL right:newRight];
+	return [_left newOrMutate:_left.value left:lL right:newRight index:_left.index];
 }
 
 - (AvlNode *) rotateToLT
@@ -313,17 +313,14 @@
     
     AvlNode *rL = _right.left;
 	AvlNode* rR = _right.right;
-	AvlNode *newLeft = [self newOrMutate:_value left:_left right:rL];
+	AvlNode *newLeft = [self newOrMutate:_value left:_left right:rL index:_index];
     
-	return [_right newOrMutate:_right.value left:newLeft right:rR];
+	return [_right newOrMutate:_right.value left:newLeft right:rR index:_right.index];
 }
 
-- (AvlNode *) newOrMutate:(id)newValue
-					 left:(AvlNode *)newLeft
-					right:(AvlNode *)newRight
-{
+- (AvlNode *)newOrMutate:(id)newValue left:(AvlNode *)newLeft right:(AvlNode *)newRight index:(u_long)index {
 	
-    return [[AvlNode alloc] initWithValue:newValue left:newLeft right:newRight comparator:_comparatorDelegate];
+    return [[AvlNode alloc] initWithValue:newValue left:newLeft right:newRight index:index];
 }
 
 - (NSArray *)allObjects

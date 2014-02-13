@@ -51,9 +51,9 @@
     if(it == _lookup.end()){
         _lookup.insert(std::pair<void*,int>(bridgedEntity,_index));
         if(!_entities){
-            _entities = [[AvlNode alloc] initWithValue:entity andComparator:self];
+            _entities = [[AvlNode alloc] initWithValue:entity andIndex:_index];
         } else {
-            _entities = [_entities newWithValue:entity];
+            _entities = [_entities newWithValue:entity andIndex:_index];
         }
         
         _index++;
@@ -98,7 +98,7 @@
         return;
     }
     
-    _entities = [_entities newWithoutValue:entity];
+    _entities = [_entities newWithoutValueOnIndex:it->second];
     _lookup.erase(it);
     for (id<ESCollectionObserver> observer in _removeObservers){
         [observer entity:changedEntity changedInCollection:self];
@@ -123,18 +123,6 @@
     } else if (event == ESEntityRemoved) {
         [_removeObservers removeObject:observer];
     }
-}
-
-- (int)compareValue:(id)value01 withValue:(id)value02
-{
-	void* bridgedEntity1 = (__bridge void*)value01;
-    void* bridgedEntity2 = (__bridge void*)value02;
-	if(_lookup[bridgedEntity1] > _lookup[bridgedEntity2]){
-		return -1;
-	} else if (_lookup[bridgedEntity1] < _lookup[bridgedEntity2]) {
-		return 1;
-	}
-	return 0;
 }
 
 
