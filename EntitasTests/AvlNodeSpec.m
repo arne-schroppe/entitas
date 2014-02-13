@@ -29,7 +29,7 @@ describe(@"AvlNode", ^{
 			[[node1.value should] equal:@"a"];
 			[node1.left.value shouldBeNil];
 			[node1.right.value shouldBeNil];
-
+            [[node1.allObjects should] equal:@[@"a"]];
 		});
 
 		__block AvlNode *node2;
@@ -44,6 +44,7 @@ describe(@"AvlNode", ^{
 			[[node2.value should] equal:@"a"];
 			[node2.left.value shouldBeNil];
 			[[node2.right.value should] equal:@"b"];
+            [[node2.allObjects should] equal:@[@"a", @"b"]];
 		});
 
 
@@ -59,6 +60,7 @@ describe(@"AvlNode", ^{
 			[[node3.value should] equal:@"b"];
 			[[node3.left.value should] equal:@"a"];
 			[[node3.right.value should] equal:@"c"];
+            [[node3.allObjects should] equal:@[@"a", @"b", @"c"]];
 		});
 
 		__block AvlNode *node4;
@@ -74,6 +76,7 @@ describe(@"AvlNode", ^{
 			[[node4.left.value should] equal:@"a"];
 			[[node4.right.value should] equal:@"c"];
 			[[node4.right.right.value should] equal:@"d"];
+            [[node4.allObjects should] equal:@[@"a", @"b", @"c", @"d"]];
 		});
 
 		__block AvlNode *node5;
@@ -91,6 +94,7 @@ describe(@"AvlNode", ^{
 			[[node5.right.value should] equal:@"d"];
 			[[node5.right.left.value should] equal:@"c"];
 			[[node5.right.right.value should] equal:@"e"];
+            [[node5.allObjects should] equal:@[@"a", @"b", @"c", @"d", @"e"]];
 		});
 
 		__block AvlNode *node6;
@@ -108,6 +112,7 @@ describe(@"AvlNode", ^{
 			[[node6.right.value should] equal:@"e"];
 			[node6.right.left.value shouldBeNil];
 			[[node6.right.right.value should] equal:@"f"];
+            [[node6.allObjects should] equal:@[@"a", @"b", @"c", @"d", @"e", @"f"]];
 		});
 
 		__block AvlNode *node7;
@@ -125,6 +130,7 @@ describe(@"AvlNode", ^{
 			[[node7.right.value should] equal:@"e"];
 			[node7.right.left.value shouldBeNil];
 			[[node7.right.right.value should] equal:@"f"];
+            [[node7.allObjects should] equal:@[@"a", @"c", @"d", @"e", @"f"]];
 		});
 
 		__block AvlNode *node8;
@@ -140,6 +146,7 @@ describe(@"AvlNode", ^{
 			[[node8.left.left.value should] equal:@"a"];
 			[[node8.right.value should] equal:@"e"];
 			[[node8.right.right.value should] equal:@"f"];
+            [[node8.allObjects should] equal:@[@"a", @"b", @"c", @"e", @"f"]];
 		});
 
 		__block AvlNode *node9;
@@ -154,6 +161,7 @@ describe(@"AvlNode", ^{
 			[[node9.left.value should] equal:@"a"];
 			[[node9.right.value should] equal:@"e"];
 			[[node9.right.right.value should] equal:@"f"];
+            [[node9.allObjects should] equal:@[@"a", @"b", @"e", @"f"]];
 		});
 
 		__block AvlNode *node10;
@@ -167,7 +175,125 @@ describe(@"AvlNode", ^{
 			[[node10.value should] equal:@"e"];
 			[[node10.left.value should] equal:@"b"];
 			[[node10.right.value should] equal:@"f"];
+            [[node10.allObjects should] equal:@[@"b", @"e", @"f"]];
 		});
+        
+        __block AvlNode *node11;
+        
+		it(@"should invoke compare when removing value d and balance", ^
+           {
+               // when
+               node11 = [node10 newWithoutValueOnIndex:6];
+               
+               // then
+               [[node11.value should] equal:@"e"];
+               [[node11.left.value should] equal:@"b"];
+               [node11.right.value shouldBeNil];
+               [[node11.allObjects should] equal:@[@"b", @"e"]];
+           });
+        
+        it(@"should make a left rotation", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"a" andIndex:1];
+               rootNode = [rootNode newWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               
+               // then
+               [[rootNode.value should] equal:@"b"];
+               [[rootNode.left.value should] equal:@"a"];
+               [[rootNode.right.value should] equal:@"c"];
+               [[rootNode.allObjects should] equal:@[@"a", @"b", @"c"]];
+           });
+        
+        it(@"should make a right rotation", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               rootNode = [rootNode newWithValue:@"a" andIndex:1];
+               
+               // then
+               [[rootNode.value should] equal:@"b"];
+               [[rootNode.left.value should] equal:@"a"];
+               [[rootNode.right.value should] equal:@"c"];
+               [[rootNode.allObjects should] equal:@[@"a", @"b", @"c"]];
+           });
+        
+        it(@"should make a right rotation 2", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithValue:@"a" andIndex:1];
+               rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               
+               // then
+               [[rootNode.value should] equal:@"b"];
+               [[rootNode.left.value should] equal:@"a"];
+               [[rootNode.right.value should] equal:@"c"];
+               [[rootNode.allObjects should] equal:@[@"a", @"b", @"c"]];
+           });
+        
+        it(@"should update the value for same index", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithValue:@"z" andIndex:3];
+               
+               // then
+               [[rootNode.value should] equal:@"z"];
+               [[rootNode.allObjects should] equal:@[@"z"]];
+           });
+        
+        it(@"should not remove element on non existing index (index is smaller than root index)", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithoutValueOnIndex:1];
+               
+               // then
+               [[rootNode.value should] equal:@"c"];
+               [[rootNode.allObjects should] equal:@[@"c"]];
+           });
+        
+        it(@"should not remove element on non existing index (index is bigger than root index)", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithoutValueOnIndex:5];
+               
+               // then
+               [[rootNode.value should] equal:@"c"];
+               [[rootNode.allObjects should] equal:@[@"c"]];
+           });
+        
+        it(@"should remove root with only left child", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               rootNode = [rootNode newWithoutValueOnIndex:3];
+               
+               // then
+               [[rootNode.value should] equal:@"b"];
+               [[rootNode.allObjects should] equal:@[@"b"]];
+           });
+        
+        it(@"should remove where left count is smaller than the right count", ^
+           {
+               // when
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               rootNode = [rootNode newWithValue:@"e" andIndex:5];
+               rootNode = [rootNode newWithValue:@"d" andIndex:4];
+               rootNode = [rootNode newWithoutValueOnIndex:3];
+               
+               // then
+               [[rootNode.value should] equal:@"d"];
+               [[rootNode.left.value should] equal:@"b"];
+               [[rootNode.right.value should] equal:@"e"];
+               [[rootNode.allObjects should] equal:@[@"b", @"d", @"e"]];
+           });
 	});
 
 	it(@"should create an expected tree", ^{
@@ -238,7 +364,29 @@ describe(@"AvlNode", ^{
 		NSArray *allObjects = [node allObjects];
 
 		[[allObjects should] equal:@[@"a", @"b", @"c"]];
+        
 	});
+    
+    it(@"should create 2000 elements and than remove 100 elements randomely", ^{
+        AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"0" andIndex:0];
+        NSMutableArray *indexiesToRemove = [NSMutableArray new];
+        [indexiesToRemove addObject:@"0"];
+        for(int i = 1; i < 2000; i++){
+            rootNode = [rootNode newWithValue:[NSString stringWithFormat:@"%i", i] andIndex:i];
+            [indexiesToRemove addObject:[NSString stringWithFormat:@"%i", i]];
+        }
+        
+        for(int i = 0; i < 100; i++){
+            int randomIndex = arc4random() % indexiesToRemove.count;
+            int index = [indexiesToRemove[randomIndex] intValue];
+            rootNode = [rootNode newWithoutValueOnIndex:index];
+            [indexiesToRemove removeObjectAtIndex:randomIndex];
+        }
+        
+        [[rootNode.allObjects should] equal:indexiesToRemove];
+        NSLog(@"%i ------------ %i", rootNode.allObjects.count, indexiesToRemove.count);
+       
+    });
 
 });
 

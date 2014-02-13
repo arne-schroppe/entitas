@@ -113,7 +113,7 @@ SPEC_BEGIN(ESSystemsSpec)
                 it(@"should only deactivate its sub-system if it understands the message", ^{
                     [[[testSystem shouldNot] receive] deactivate];
                     [systems addSystem:testSystem];
-                    [systems deactivate];
+                    [systems deactivate];                    
                 });
 
             });
