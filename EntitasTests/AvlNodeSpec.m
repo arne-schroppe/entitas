@@ -2,26 +2,7 @@
 #import "AvlNode.h"
 
 
-@interface ComparatorDelegateFake : NSObject <AvlNodeComparatorDelegate>
-@property NSDictionary *lookup;
-@end
 
-@implementation ComparatorDelegateFake
-
-- (int)compareValue:(id)value01 withValue:(id)value02
-{
-	NSLog(@"compare %@ with %@", value01, value02);
-	int n1 = [_lookup[value01] integerValue];
-	int n2 = [_lookup[value02] integerValue];
-	if(n1 > n2){
-		return -1;
-	} else if (n1 < n2) {
-		return 1;
-	}
-	return 0;
-}
-
-@end
 
 
 SPEC_BEGIN(AvlNodeSpec)
@@ -29,9 +10,6 @@ SPEC_BEGIN(AvlNodeSpec)
 describe(@"AvlNode", ^{
 
     __block AvlNode *node;
-    __block ComparatorDelegateFake *compareDelegate;
-	compareDelegate = [ComparatorDelegateFake new];
-	compareDelegate.lookup = @{@"a" : @1, @"b" : @2, @"c": @3, @"d" : @4, @"e" : @5, @"f": @6, @"g" : @7, @"h" : @8, @"i": @9};
 
     beforeEach(^{
 
@@ -41,13 +19,6 @@ describe(@"AvlNode", ^{
 
 	context(@"checking comparator usage", ^
 	{
-
-		__block ComparatorDelegateFake *comp;
-
-		beforeEach(^
-				   {
-					   [comp clearStubs];
-				   });
 
 		__block AvlNode *node1;
 
@@ -259,19 +230,6 @@ describe(@"AvlNode", ^{
         [[avlNode4.allObjects should] equal:@[@"a", @"b", @"c"]];
 
     });
-
-//	it(@"should have different comparators for every new root", ^{
-//		ComparatorDelegateFake *comp1 = [ComparatorDelegateFake new];
-//		comp1.lookup = @{@"a" : @1, @"b" : @2, @"c": @3};
-//		ComparatorDelegateFake *comp2 = [ComparatorDelegateFake new];
-//		comp2.lookup = @{@"a" : @3, @"b" : @2, @"c": @1};
-//
-//		AvlNode *root1 = [[AvlNode alloc] initWithValue:@"a" andIndex:comp1];
-//		AvlNode *root2 = [[AvlNode alloc] initWithValue:@"a" andIndex:comp2];
-//
-//		[[((id)root1.comparatorDelegate) should] beIdenticalTo:comp1];
-//		[[((id)root2.comparatorDelegate) should] beIdenticalTo:comp2];
-//	});
 
 	it(@"should populate the array this values in the right order", ^
 	{
