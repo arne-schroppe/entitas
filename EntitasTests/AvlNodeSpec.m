@@ -192,18 +192,19 @@ describe(@"AvlNode", ^{
                [[node11.allObjects should] equal:@[@"b", @"e"]];
            });
         
-        it(@"should make a left rotation", ^
+        it(@"should make a left rotation and add another elelemnt to it", ^
            {
                // when
                AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"a" andIndex:1];
                rootNode = [rootNode newWithValue:@"c" andIndex:3];
                rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               rootNode = [rootNode newWithValue:@" " andIndex:0];
                
                // then
                [[rootNode.value should] equal:@"b"];
                [[rootNode.left.value should] equal:@"a"];
                [[rootNode.right.value should] equal:@"c"];
-               [[rootNode.allObjects should] equal:@[@"a", @"b", @"c"]];
+               [[rootNode.allObjects should] equal:@[@" ", @"a", @"b", @"c"]];
            });
         
         it(@"should make a right rotation", ^
@@ -223,15 +224,17 @@ describe(@"AvlNode", ^{
         it(@"should make a right rotation 2", ^
            {
                // when
-               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"c" andIndex:3];
+               AvlNode *rootNode = [[AvlNode alloc] initWithValue:@"d" andIndex:4];
                rootNode = [rootNode newWithValue:@"a" andIndex:1];
                rootNode = [rootNode newWithValue:@"b" andIndex:2];
+               rootNode = [rootNode newWithValue:@"c" andIndex:3];
                
                // then
                [[rootNode.value should] equal:@"b"];
                [[rootNode.left.value should] equal:@"a"];
-               [[rootNode.right.value should] equal:@"c"];
-               [[rootNode.allObjects should] equal:@[@"a", @"b", @"c"]];
+               [[rootNode.right.value should] equal:@"d"];
+               [[rootNode.right.left.value should] equal:@"c"];
+               [[rootNode.allObjects should] equal:@[@"a", @"b", @"c", @"d"]];
            });
         
         it(@"should update the value for same index", ^

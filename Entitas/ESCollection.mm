@@ -49,7 +49,7 @@
     std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
 
     if(it == _lookup.end()){
-        _lookup.insert(std::pair<void*,int>(bridgedEntity,_index));
+        _lookup.insert(std::pair<void*,u_long>(bridgedEntity,_index));
         if(!_entities){
             _entities = [[AvlNode alloc] initWithValue:entity andIndex:_index];
         } else {

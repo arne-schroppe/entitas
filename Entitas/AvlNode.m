@@ -82,7 +82,7 @@
 		{
 			//Rotate LTDict:
 			AvlNode *newlt = [_left rotateToLT];
-			AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right index:0];
+			AvlNode *newroot = [self newOrMutate:_value left:newlt right:_right index:_index];
             
 			return [newroot rotateToGT];
 		}
@@ -104,7 +104,7 @@
 		{
 			//Rotate GTDict:
 			AvlNode *newgt = [_right rotateToGT];
-			AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt index:0];
+			AvlNode *newroot = [self newOrMutate:_value left:_left right:newgt index:_index];
             
 			return [newroot rotateToLT];
 		}
