@@ -2,12 +2,12 @@
 #import "ESChangedEntity.h"
 #import "ESMatcher.h"
 #import "AvlNode.h"
-#import <map>
+#import <unordered_map>
 
 @implementation ESCollection
 {
 	ESMatcher *_typeMatcher;
-    std::map<id, u_long> _lookup;
+    std::unordered_map<void*, u_long> _lookup;
     AvlNode *_entities;
     u_long _index;
     NSMutableArray *_addObservers;
@@ -26,7 +26,6 @@
     if (self)
     {
         _typeMatcher = types;
-        _entities = [AvlNode emptyWithComparator:self];
 
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
@@ -45,11 +44,18 @@
     
     ESEntity *entity = changedEntity.originalEntity;
     
-    std::map<id,u_long>::iterator it= _lookup.find(entity);
+    void* bridgedEntity = (__bridge void*)entity;
+    
+    std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
 
     if(it == _lookup.end()){
-        _lookup.insert(std::pair<id,u_long>(entity,_index));
-        _entities = [_entities newWithValue:entity];
+        _lookup.insert(std::pair<void*,int>(bridgedEntity,_index));
+        if(!_entities){
+            _entities = [[AvlNode alloc] initWithValue:entity andComparator:self];
+        } else {
+            _entities = [_entities newWithValue:entity];
+        }
+        
         _index++;
     }
 
@@ -61,7 +67,8 @@
 - (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity
 {
 
-    std::map<id,u_long>::iterator it= _lookup.find(removedEntity.originalEntity);
+    void* bridgedEntity = (__bridge void*)removedEntity.originalEntity;
+    std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
     
     if(it != _lookup.end()){
         for (id<ESCollectionObserver> observer in _removeObservers){
@@ -74,16 +81,9 @@
 
 - (NSArray *)entities
 {
-//    std::map<u_long, id> reversedLookup;
-//    for ( std::map<id,u_long>::iterator it = _lookup.begin(); it != _lookup.end(); ++it ){
-//        reversedLookup.insert(std::pair<u_long,id>(it->second, it->first));
-//    }
-//    NSMutableArray *result = [NSMutableArray new];
-//    for ( std::map<u_long,id>::iterator it = reversedLookup.begin(); it != reversedLookup.end(); ++it ){
-//        [result addObject:it->second];
-//    }
-//
-//    return result;
+    if(!_entities){
+        return @[];
+    }
     return _entities.allObjects;
 }
 
@@ -91,7 +91,9 @@
     
     ESEntity *entity = changedEntity.originalEntity;
     
-    std::map<id,u_long>::iterator it= _lookup.find(entity);
+    void* bridgedEntity = (__bridge void*)entity;
+    
+    std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
     if(it == _lookup.end()){
         return;
     }
@@ -125,9 +127,11 @@
 
 - (int)compareValue:(id)value01 withValue:(id)value02
 {
-	if(_lookup[value01] > _lookup[value02]){
+	void* bridgedEntity1 = (__bridge void*)value01;
+    void* bridgedEntity2 = (__bridge void*)value02;
+	if(_lookup[bridgedEntity1] > _lookup[bridgedEntity2]){
 		return -1;
-	} else if (_lookup[value01] < _lookup[value02]) {
+	} else if (_lookup[bridgedEntity1] < _lookup[bridgedEntity2]) {
 		return 1;
 	}
 	return 0;

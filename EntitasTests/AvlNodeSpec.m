@@ -35,7 +35,7 @@ describe(@"AvlNode", ^{
 
     beforeEach(^{
 
-        node = [AvlNode emptyWithComparator:compareDelegate];
+        node = nil;
 
     });
 
@@ -43,32 +43,18 @@ describe(@"AvlNode", ^{
 	{
 
 		__block ComparatorDelegateFake *comp;
-		__block AvlNode *root;
 
 		beforeEach(^
 				   {
 					   [comp clearStubs];
 				   });
 
-		it(@"should create an expected tree", ^{
-
-			// given
-			comp = [ComparatorDelegateFake mockWithName:@"comp"];
-
-			// expectation
-//			[[[comp shouldNot] receive] compareValue:any() withValue:any()];
-
-			// when
-			root = [AvlNode emptyWithComparator:compareDelegate];
-
-		});
-
 		__block AvlNode *node1;
 
 		it(@"should not invoke comparator when adding value to  empty node", ^
 		{
 
-			node1 = [root newWithValue:@"a"];
+			node1 = [[AvlNode alloc] initWithValue:@"a" andComparator:compareDelegate];
 			[[node1.value should] equal:@"a"];
 			[node1.left.value shouldBeNil];
 			[node1.right.value shouldBeNil];
@@ -216,14 +202,8 @@ describe(@"AvlNode", ^{
 	it(@"should create an expected tree", ^{
 
 		// when
-		AvlNode *root = [AvlNode emptyWithComparator:compareDelegate];
 
-		[root.value shouldBeNil];
-		[root.left.value shouldBeNil];
-		[root.right.value shouldBeNil];
-
-
-		AvlNode *node1 = [root newWithValue:@"a"];
+		AvlNode *node1 = [[AvlNode alloc] initWithValue:@"a" andComparator:compareDelegate];
 		[[node1.value should] equal:@"a"];
 		[node1.left.value shouldBeNil];
 		[node1.right.value shouldBeNil];
@@ -238,7 +218,7 @@ describe(@"AvlNode", ^{
     it(@"should return a sorted array of entered elements", ^{
         // given
 
-        node = [[[node newWithValue:@"a"] newWithValue:@"b"] newWithValue:@"c"];
+        node = [[[[AvlNode alloc] initWithValue:@"a" andComparator:compareDelegate] newWithValue:@"b"] newWithValue:@"c"];
 
         // when
 
@@ -252,11 +232,11 @@ describe(@"AvlNode", ^{
     it(@"should remove added elements", ^{
         // given
 
-        AvlNode *avlNode1 = [node newWithValue:@"a"];
+        AvlNode *avlNode1 = [[AvlNode alloc] initWithValue:@"a" andComparator:compareDelegate];
         AvlNode *avlNode2 = [avlNode1 newWithoutValue:@"a"];
 
         [[avlNode1.allObjects should] equal:@[@"a"]];
-        [[avlNode2.allObjects should] equal:@[]];
+        [avlNode2 shouldBeNil];
 
         AvlNode *avlNode3 = [avlNode1 newWithValue:@"b"];
         [[avlNode3.allObjects should] equal:@[@"a", @"b"]];
@@ -267,7 +247,7 @@ describe(@"AvlNode", ^{
 
         // given
 
-        AvlNode *avlNode1 = [node newWithValue:@"a"];
+        AvlNode *avlNode1 = [[AvlNode alloc] initWithValue:@"a" andComparator:compareDelegate];
         AvlNode *avlNode2 = [avlNode1 newWithValue:@"b"];
         AvlNode *avlNode3 = [avlNode2 newWithValue:@"c"];
         AvlNode *avlNode4 = [avlNode3 newWithoutValue:@"d"];
@@ -286,8 +266,8 @@ describe(@"AvlNode", ^{
 		ComparatorDelegateFake *comp2 = [ComparatorDelegateFake new];
 		comp2.lookup = @{@"a" : @3, @"b" : @2, @"c": @1};
 
-		AvlNode *root1 = [AvlNode emptyWithComparator:comp1];
-		AvlNode *root2 = [AvlNode emptyWithComparator:comp2];
+		AvlNode *root1 = [[AvlNode alloc] initWithValue:@"a" andComparator:comp1];
+		AvlNode *root2 = [[AvlNode alloc] initWithValue:@"a" andComparator:comp2];
 
 		[[((id)root1.comparatorDelegate) should] beIdenticalTo:comp1];
 		[[((id)root2.comparatorDelegate) should] beIdenticalTo:comp2];
@@ -295,7 +275,7 @@ describe(@"AvlNode", ^{
 
 	it(@"should populate the array this values in the right order", ^
 	{
-		node = [[[node newWithValue:@"a"] newWithValue:@"b"] newWithValue:@"c"];
+		node = [[[[AvlNode alloc] initWithValue:@"a" andComparator:compareDelegate] newWithValue:@"b"] newWithValue:@"c"];
 
 		NSArray *allObjects = [node allObjects];
 

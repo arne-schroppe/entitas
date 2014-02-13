@@ -2,27 +2,11 @@
 
 @class AvlNode;
 
-@interface NullNode : AvlNode
-@end
-
 @implementation AvlNode {
     AvlNode *_left;
     AvlNode *_right;
     u_long _count;
     int _depth;
-}
-
-+ (AvlNode *)emptyWithComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
-{
-    AvlNode *empty = [NullNode new];
-
-	empty.comparatorDelegate = comparatorDelegate;
-	return empty;
-}
-
-- (BOOL) isEmpty
-{
-	return NO;
 }
 
 - (AvlNode *) left
@@ -35,17 +19,21 @@
 	return _right;
 }
 
+- (int) count{
+    return _count;
+}
+- (int) depth{
+    return _depth;
+}
+
 - (int) balance
 {
-	if ( [self isEmpty] ) return 0;
-	return _left->_depth - _right->_depth;
+	return _left.depth - _right.depth;
 }
 
 - (id)initWithValue:(id)value andComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate
 {
-	AvlNode *empty = [AvlNode emptyWithComparator:comparatorDelegate];
-    
-	return [self initWithValue:value left:empty right:empty comparator:comparatorDelegate];
+	return [self initWithValue:value left:nil right:nil comparator:comparatorDelegate];
 }
 
 - (id)initWithValue:(id)value
@@ -69,8 +57,8 @@
 	_value = value;
 	_left = lt;
 	_right = gt;
-	_count = 1 + _left->_count + _right->_count;
-	_depth = 1 + MAX( _left->_depth, _right->_depth );
+	_count = 1 + _left.count + _right.count;
+	_depth = 1 + MAX( _left.depth, _right.depth );
     _comparatorDelegate = comparatorDelegate;
 }
 
@@ -132,7 +120,6 @@
 }
 
 - (AvlNode *)newWithValue:(id)val {
-	if ( [self isEmpty] ) return [[AvlNode alloc] initWithValue:val andComparator:_comparatorDelegate];
     
 	AvlNode *newlt = _left;
 	AvlNode *newgt = _right;
@@ -142,11 +129,19 @@
     
 	if ( comp < 0 )
 	{
-		newlt = [_left newWithValue:val];
+		if(!_left){
+            newlt = [[AvlNode alloc] initWithValue:val andComparator:_comparatorDelegate];
+        } else {
+            newlt = [_left newWithValue:val];
+        }
 	}
 	else if ( comp > 0 )
 	{
-		newgt = [_right newWithValue:val];
+		if(!_right){
+            newgt = [[AvlNode alloc] initWithValue:val andComparator:_comparatorDelegate];
+        } else{
+            newgt = [_right newWithValue:val];
+        }
 	}
     
 	else
@@ -168,11 +163,6 @@
 - (AvlNode *) removeFromNew:(id)value
 					  found:(BOOL *)found
 {
-	if ( [self isEmpty] )
-	{
-		*found = NO;
-		return [AvlNode emptyWithComparator:_comparatorDelegate];
-	}
 
     int comp = [_comparatorDelegate compareValue:_value withValue:value];
     
@@ -214,15 +204,15 @@
 
 - (AvlNode *) removeMax:(AvlNode **)max
 {
-	if ( [self isEmpty] )
-	{
-		AvlNode *empty = [AvlNode emptyWithComparator:_comparatorDelegate];
-		*max = empty;
-        
-		return empty;
-	}
+//	if ( [self isEmpty] )
+//	{
+//		AvlNode *empty = [AvlNode emptyWithComparator:_comparatorDelegate];
+//		*max = empty;
+//        
+//		return empty;
+//	}
     
-	if ( [_right isEmpty] )
+	if ( !_right )
 	{
 		//We are the max:
 		*max = self;
@@ -241,15 +231,15 @@
 
 - (AvlNode *) removeMin:(AvlNode **)min
 {
-	if ( [self isEmpty] )
-	{
-		AvlNode *empty = [AvlNode emptyWithComparator:_comparatorDelegate];
-		*min = empty;
-        
-		return empty;
-	}
+//	if ( [self isEmpty] )
+//	{
+//		AvlNode *empty = [AvlNode emptyWithComparator:_comparatorDelegate];
+//		*min = empty;
+//        
+//		return empty;
+//	}
     
-	if ( [_left isEmpty] )
+	if ( !_left )
 	{
 		//We are the minimum:
 		*min = self;
@@ -268,17 +258,14 @@
 
 - (AvlNode *) removeRoot
 {
-	if ( [self isEmpty] )
-	{
-		return self;
-	}
+	
     
-	if ( [_left isEmpty] )
+	if ( !_left )
 	{
 		return _right;
 	}
     
-	if ( [_right isEmpty] )
+	if ( !_right )
 	{
 		return _left;
 	}
@@ -305,10 +292,10 @@
 
 - (AvlNode *) rotateToGT
 {
-	if ( [_left isEmpty] || [self isEmpty] )
-	{
-		return self;
-	}
+//	if ( [_left isEmpty] || [self isEmpty] )
+//	{
+//		return self;
+//	}
     
     AvlNode *lL = _left.left;
 	AvlNode *lR = _left.right;
@@ -319,10 +306,10 @@
 
 - (AvlNode *) rotateToLT
 {
-	if ( [_right isEmpty] || [self isEmpty] )
-	{
-		return self;
-	}
+//	if ( [_right isEmpty] || [self isEmpty] )
+//	{
+//		return self;
+//	}
     
     AvlNode *rL = _right.left;
 	AvlNode* rR = _right.right;
@@ -347,25 +334,15 @@
 }
 
 -(void)fillArray:(NSMutableArray *)array{
-	if (!_left.isEmpty){
+	if (_left){
 		[_left fillArray:array];
 	}
 	if(_value){
 		[array addObject:_value];
 	}
-	if (!_right.isEmpty){
+	if (_right){
 		[_right fillArray:array];
 	}
-}
-
-@end
-
-
-@implementation NullNode
-
-- (BOOL)isEmpty
-{
-	return YES;
 }
 
 @end

@@ -15,15 +15,15 @@
 
 @interface AvlNode : NSObject
 
-+ (AvlNode *)emptyWithComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate;
-
-- (BOOL) isEmpty;
+- (id)initWithValue:(id)value andComparator:(id <AvlNodeComparatorDelegate>)comparatorDelegate;
 
 - (AvlNode *) left;
 
 - (AvlNode *) right;
 
 - (int) balance;
+- (int) count;
+- (int) depth;
 
 - (AvlNode *) newWithValue:(id)val;
 
