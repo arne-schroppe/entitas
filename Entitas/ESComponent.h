@@ -6,17 +6,6 @@
 
 @protocol ESComponent <NSObject>
 
-@optional
-+ (ESMatcher *)matcher;
-
-@end
-
-
-
-@interface ESComponent : NSObject <ESComponent>
-
-+ (ESMatcher *)matcher;
-
 @end
 
 

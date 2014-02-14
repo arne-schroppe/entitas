@@ -23,11 +23,8 @@
 		60266B7A28294BD4648903D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
-		85D8501C3271E1C61757119C /* ESComponentSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D853EDE569895766CFF861 /* ESComponentSpec.m */; };
 		85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A40B54895A0164D8768 /* SomeThirdComponent.m */; };
-		85D853DD13408B405E2EF60D /* ESComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550979D3BDD0E7141C48 /* ESComponent.m */; };
 		85D85A69D294886F5F866282 /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
-		85D85B9708A59B797B1E2D0E /* ESComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550979D3BDD0E7141C48 /* ESComponent.m */; };
 		85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */; };
 		85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
 		B06B0140FFD2853D8BF55BBA /* ESCollectionHistorySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B029DD99D7B62F5413BF6 /* ESCollectionHistorySpec.m */; };
@@ -82,7 +79,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		38591DBF038641D3B9A8355C /* libPods-EntitasTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-EntitasTests.a"; path = "libPods-EntitasTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		38591DBF038641D3B9A8355C /* libPods-EntitasTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EntitasTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		602660DC88A48822B365AACC /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6026612B451F8481D098CDEF /* ESEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntity.m; sourceTree = "<group>"; };
 		602661D19EC1B09C0C7C444C /* EntitasTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "EntitasTests-Info.plist"; sourceTree = "<group>"; };
@@ -92,10 +89,10 @@
 		602665223559809BE1026D0A /* ESComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESComponent.h; sourceTree = "<group>"; };
 		602665E109AC8CE9FE47191E /* ESEntitySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntitySpec.m; sourceTree = "<group>"; };
 		602666AFD5B81735B7375037 /* Entitas-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Entitas-Prefix.pch"; sourceTree = "<group>"; };
-		6026678E2FE43938233FC26B /* libEntitas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libEntitas.a; path = libEntitas.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6026678E2FE43938233FC26B /* libEntitas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEntitas.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		602669907842FE97CDAA2AE2 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		60266A29483978C38551FE07 /* ESSystems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESSystems.h; sourceTree = "<group>"; };
-		60266A672BFD024861B3540E /* EntitasTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = EntitasTests.octest; path = EntitasTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		60266A672BFD024861B3540E /* EntitasTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EntitasTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60266C94291599832FCB9846 /* SomeComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeComponent.m; sourceTree = "<group>"; };
 		60266CFEC85DBE0652DEC43D /* ESEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntity.h; sourceTree = "<group>"; };
 		60266DB5B510EE20C17FA196 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -103,8 +100,6 @@
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
-		85D853EDE569895766CFF861 /* ESComponentSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESComponentSpec.m; sourceTree = "<group>"; };
-		85D8550979D3BDD0E7141C48 /* ESComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESComponent.m; sourceTree = "<group>"; };
 		85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcherSpec.m; sourceTree = "<group>"; };
 		85D85A40B54895A0164D8768 /* SomeThirdComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeThirdComponent.m; sourceTree = "<group>"; };
 		85D85C555490C2019A6FD13C /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
@@ -209,7 +204,6 @@
 				B06B0B399D530A680C8114A2 /* ESCollectionHistory.h */,
 				85D85C8171E09DEB7802B57F /* ESMatcher.h */,
 				85D85C555490C2019A6FD13C /* ESMatcher.m */,
-				85D8550979D3BDD0E7141C48 /* ESComponent.m */,
 				B06B0973DA801374F8277EB3 /* ESCollection+Internal.h */,
 				B06B0BCCD0E03434F2B94F9A /* ESEntities+Internal.h */,
 			);
@@ -245,7 +239,6 @@
 				B06B0BEE6CE61D753F35A876 /* Matchers */,
 				B06B029DD99D7B62F5413BF6 /* ESCollectionHistorySpec.m */,
 				85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */,
-				85D853EDE569895766CFF861 /* ESComponentSpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -304,6 +297,8 @@
 /* Begin PBXProject section */
 		60266BC062836EDDB6AA1D5B /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 6026684F53BD9813D39A98CE /* Build configuration list for PBXProject "Entitas" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -386,8 +381,6 @@
 				85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */,
 				85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */,
 				85D85A69D294886F5F866282 /* ESMatcher.m in Sources */,
-				85D85B9708A59B797B1E2D0E /* ESComponent.m in Sources */,
-				85D8501C3271E1C61757119C /* ESComponentSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,7 +395,6 @@
 				B06B0DBE30F4B10526FFEE60 /* ESChangedEntity.m in Sources */,
 				B06B0AC3DA2841842B1C0BFB /* ESCollectionHistory.m in Sources */,
 				85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */,
-				85D853DD13408B405E2EF60D /* ESComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +533,7 @@
 				6026615B170E03CDEB62B440 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6026684F53BD9813D39A98CE /* Build configuration list for PBXProject "Entitas" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +551,7 @@
 				602664C93579D58EEFA670E3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

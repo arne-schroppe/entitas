@@ -116,12 +116,15 @@
     return [_collections objectForKey:matcher];
 }
 
-
-
 - (ESCollection *)collectionForTypes:(NSSet *)types {
     if (types.count < 1)
         [NSException raise:@"Empty type set." format:@"A collection for an empty type-set cannot be provided."];
     return [self collectionForMatcher:[ESMatcher allOfSet:types]];
+}
+
+- (ESCollection *)collectionForType:(Class)type
+{
+    return [self collectionForMatcher:[ESMatcher just:type]];
 }
 
 

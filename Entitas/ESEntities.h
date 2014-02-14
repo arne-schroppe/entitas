@@ -9,5 +9,8 @@
 - (BOOL)containsEntity:(ESEntity *)entity;
 - (void)destroyEntity:(ESEntity *)entity;
 - (ESCollection *)collectionForTypes:(NSSet *)types;
+- (ESCollection *)collectionForMatcher:(ESMatcher *)matcher;
+- (ESCollection *)collectionForType:(Class)type;
+
 - (NSArray *)allEntities;
 @end
