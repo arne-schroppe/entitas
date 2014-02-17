@@ -1,8 +1,12 @@
 #import "ESEntity.h"
 
-@class ESChangedEntity;
 @class ESMatcher;
-@protocol ESCollectionObserver;
+
+@protocol ESCollectionObserver
+
+- (void)entity:(ESEntity *)changedEntity changedInCollection:(ESCollection *)collection withChangeType:(ESEntityChange)changeType;
+
+@end
 
 typedef NS_ENUM(NSUInteger, ESEntityChange)
 {
@@ -18,23 +22,16 @@ typedef NS_ENUM(NSUInteger, ESEntityChange)
 
 - (ESMatcher *)typeMatcher;
 
-- (void)addEntity:(ESChangedEntity *)changedEntity;
+- (void)addEntity:(ESEntity *)changedEntity;
 
-- (NSArray *)entities;
+- (void)removeEntity:(ESEntity *)entity;
 
-- (void)removeEntity:(ESChangedEntity *)changedEntity;
+- (void)exchangeEntity:(ESEntity *)entity;
 
 - (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
 
 - (void)removeObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event;
 
-- (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity;
-
-@end
-
-
-@protocol ESCollectionObserver
-
-- (void)entity:(ESChangedEntity *)changedEntity changedInCollection:(ESCollection *)collection;
+- (NSArray *)entities;
 
 @end

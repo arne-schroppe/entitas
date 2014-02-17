@@ -1,5 +1,4 @@
 #import "ESCollection.h"
-#import "ESChangedEntity.h"
 #import <map>
 
 @implementation ESCollection
@@ -35,33 +34,29 @@
     return _typeMatcher;
 }
 
-- (void)addEntity:(ESChangedEntity *)changedEntity {
+- (void)addEntity:(ESEntity *)changedEntity {
 
-    ESEntity *entity = changedEntity.originalEntity;
-
-    std::map<u_long, id>::iterator it= _entities.find(entity.creationIndex);
+    std::map<u_long, id>::iterator it= _entities.find(changedEntity.creationIndex);
 
     if(it == _entities.end()){
-        _entities.insert(std::pair<u_long, id>(entity.creationIndex, entity));
+        _entities.insert(std::pair<u_long, id>(changedEntity.creationIndex, changedEntity));
     }
 
     for (id<ESCollectionObserver> observer in _addObservers){
-        [observer entity:changedEntity changedInCollection:self];
+        [observer entity:changedEntity changedInCollection:self withChangeType:(ESEntityAdded)];
     }
 }
 
-- (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity
-{
+- (void)exchangeEntity:(ESEntity *)entity {
 
-
-    std::map<u_long, id>::iterator it= _entities.find(removedEntity.originalEntity.creationIndex);
+    std::map<u_long, id>::iterator it= _entities.find(entity.creationIndex);
     if(it != _entities.end()){
         for (id<ESCollectionObserver> observer in _removeObservers){
-            [observer entity:removedEntity changedInCollection:self];
+            [observer entity:entity changedInCollection:self withChangeType:(ESEntityRemoved)];
         }
     }
 
-    [self addEntity:addedEntity];
+    [self addEntity:entity];
 }
 
 - (NSArray *)entities
@@ -74,9 +69,7 @@
     return result;
 }
 
-- (void)removeEntity:(ESChangedEntity *)changedEntity {
-
-    ESEntity *entity = changedEntity.originalEntity;
+- (void)removeEntity:(ESEntity *)entity {
 
     std::map<u_long, id>::iterator it= _entities.find(entity.creationIndex);
     if(it == _entities.end()){
@@ -85,7 +78,7 @@
 
     _entities.erase(it);
     for (id<ESCollectionObserver> observer in _removeObservers){
-        [observer entity:changedEntity changedInCollection:self];
+        [observer entity:entity changedInCollection:self withChangeType:(ESEntityRemoved)];
     }
 }
 

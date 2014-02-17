@@ -80,14 +80,14 @@ SPEC_BEGIN(ESEntitySpec)
         it(@"should call ESEntities object that a component has been added to this entity", ^{
             ESEntities *entities = [[ESEntities alloc] init];
             entity.entities = entities;
-            [[[entities should] receive] component:component ofType:[component class] hasBeenAddedToEntity:entity];
+            [[[entities should] receive] componentOfType:[component class] hasBeenAddedToEntity:entity];
             [entity addComponent:component];
         });
 
         it(@"should call ESEntities object that a component has been removed from this entity", ^{
             ESEntities *entities = [[ESEntities alloc] init];
             entity.entities = entities;
-            [[[entities should] receive] component:component ofType:[component class] hasBeenRemovedFromEntity:entity];
+            [[[entities should] receive] componentOfType:[component class] hasBeenRemovedFromEntity:entity];
             [entity addComponent:component];
             [entity removeComponentOfType:[component class]];
         });
@@ -95,7 +95,7 @@ SPEC_BEGIN(ESEntitySpec)
         it(@"should not call ESEntities object that a component has been removed from this entity if it didn't contain a component of that type", ^{
             ESEntities *entities = [[ESEntities alloc] init];
             entity.entities = entities;
-            [[[entities shouldNot] receive] component:nil ofType:[component class] hasBeenRemovedFromEntity:entity];
+            [[[entities shouldNot] receive] componentOfType:[component class] hasBeenRemovedFromEntity:entity];
             [entity removeComponentOfType:[component class]];
         });
 
@@ -122,7 +122,7 @@ SPEC_BEGIN(ESEntitySpec)
         it(@"should call ESEntities object that a component has been exchanged for this entity", ^{
             ESEntities *entities = [[ESEntities alloc] init];
             entity.entities = entities;
-            [[[entities should] receive] component:component ofType:[component class] hasBeenExchangedInEntity:entity];
+            [[[entities should] receive] componentOfType:[component class] hasBeenExchangedInEntity:entity];
             [entity exchangeComponent:component];
             [entity removeComponentOfType:[component class]];
         });

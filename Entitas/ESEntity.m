@@ -26,14 +26,14 @@
 
     [_componentTypes addObject:[component class]];
     [_components setObject:component forKey:(id <NSCopying>) [component class]];
-    [_entities component:component ofType:[component class] hasBeenAddedToEntity:self];
+    [_entities componentOfType:[component class] hasBeenAddedToEntity:self];
 }
 
 
 - (void)exchangeComponent:(NSObject <ESComponent> *)component {
     [_componentTypes addObject:[component class]];
     [_components setObject:component forKey:(id <NSCopying>) [component class]];
-    [_entities component:component ofType:[component class] hasBeenExchangedInEntity:self];
+    [_entities componentOfType:[component class] hasBeenExchangedInEntity:self];
 }
 
 
@@ -54,7 +54,7 @@
         NSObject <ESComponent> *component = [_components objectForKey:type];
         [_components removeObjectForKey:type];
         [_componentTypes removeObject:type];
-        [_entities component:component ofType:type hasBeenRemovedFromEntity:self];
+        [_entities componentOfType:type hasBeenRemovedFromEntity:self];
     }
 }
 

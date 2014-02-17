@@ -1,5 +1,4 @@
 #import "ESEntities.h"
-#import "ESChangedEntity.h"
 #import "ESMatcher.h"
 
 
@@ -58,32 +57,24 @@
     return matchingEntities;
 }
 
-- (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity
-{
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
+- (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity {
     for(ESCollection *collection in [self collectionsForType:type])
     {
         if ([[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
-            [collection addEntity:changedEntity];
+            [collection addEntity:entity];
     };
 }
 
-- (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenExchangedInEntity:(ESEntity *)entity {
-    ESChangedEntity *addedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
-    ESChangedEntity *removedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityRemoved];
+- (void)componentOfType:(Class)type hasBeenExchangedInEntity:(ESEntity *)entity {
     for(ESCollection *collection in [self collectionsForType:type])
     {
         if ([[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
-            [collection remove:removedEntity andAddEntity:addedEntity];
+            [collection exchangeEntity:entity];
     };
 }
 
 
-- (void)component:(NSObject <ESComponent> *)component ofType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity
-{
-    NSMutableDictionary *components = [[entity components] mutableCopy];
-    [components setObject:component forKey:(id <NSCopying>) [component class]];
-    ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:components changeType:ESEntityRemoved];
+- (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity {
 
     NSMutableSet *originalComponentTypes = [[entity componentTypes] mutableCopy];
     [originalComponentTypes addObject:type];
@@ -91,7 +82,7 @@
     for(ESCollection *collection in [self collectionsForType:type])
     {
         if ([[collection typeMatcher] areComponentsMatching:originalComponentTypes] && ![[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
-            [collection removeEntity:changedEntity];
+            [collection removeEntity:entity];
     };
 }
 
@@ -103,8 +94,7 @@
         for(ESEntity *entity in [self getEntitiesWithComponentsOfTypes:[matcher componentTypes]])
         {
             if([collection.typeMatcher areComponentsMatching:[entity componentTypes]]) {
-                ESChangedEntity *changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:[entity components] changeType:ESEntityAdded];
-                [collection addEntity:changedEntity];
+                [collection addEntity:entity];
             }
         };
 
