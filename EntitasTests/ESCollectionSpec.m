@@ -50,15 +50,15 @@ SPEC_BEGIN(ESCollectionSpec)
 
         it(@"should preserve the order of entities", ^{
 
-            ESEntity *entity1 = [[ESEntity alloc] init];
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0];
             ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity1 components:nil changeType:ESEntityAdded];
             [collection addEntity:changedEntity1];
 
-            ESEntity *entity2 = [[ESEntity alloc] init];
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1];
             ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity2 components:nil changeType:ESEntityAdded];
             [collection addEntity:changedEntity2];
 
-            ESEntity *entity3 = [[ESEntity alloc] init];
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2];
             ESChangedEntity *changedEntity3 = [[ESChangedEntity alloc] initWithOriginalEntity:entity3 components:nil changeType:ESEntityAdded];
             [collection addEntity:changedEntity3];
 

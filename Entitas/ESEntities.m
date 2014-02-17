@@ -8,6 +8,7 @@
     NSMutableSet *_entities;
     NSMutableDictionary *_collections; // matcher -> collection
     NSMutableDictionary *_collectionsForType; // componentType -> Set[collection]
+    u_long _entityIndex;
 }
 
 - (id)init
@@ -25,9 +26,10 @@
 
 - (ESEntity *)createEntity
 {
-    ESEntity *entity = [[ESEntity alloc] init];
+    ESEntity *entity = [[ESEntity alloc] initWithIndex:_entityIndex];
     entity.entities = self;
     [_entities addObject:entity];
+    _entityIndex++;
     return entity;
 }
 

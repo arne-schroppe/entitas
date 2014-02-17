@@ -33,4 +33,10 @@
 - (NSSet *)componentTypes;
 
 - (NSDictionary *)components;
+
+- (instancetype)initWithIndex:(u_long)creationIndex;
+
+
+@property (readonly) u_long creationIndex;
+
 @end

@@ -1,15 +1,11 @@
 #import "ESCollection.h"
 #import "ESChangedEntity.h"
-#import "ESMatcher.h"
-#import "AvlNode.h"
-#import <unordered_map>
+#import <map>
 
 @implementation ESCollection
 {
-	ESMatcher *_typeMatcher;
-    std::unordered_map<void*, u_long> _lookup;
-    AvlNode *_entities;
-    u_long _index;
+    ESMatcher *_typeMatcher;
+    std::map<u_long, id> _entities;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
 }
@@ -29,7 +25,6 @@
 
         _addObservers = [NSMutableArray array];
         _removeObservers = [NSMutableArray array];
-        _index = 0;
     }
 
     return self;
@@ -41,22 +36,13 @@
 }
 
 - (void)addEntity:(ESChangedEntity *)changedEntity {
-    
-    ESEntity *entity = changedEntity.originalEntity;
-    
-    void* bridgedEntity = (__bridge void*)entity;
-    
-    std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
 
-    if(it == _lookup.end()){
-        _lookup.insert(std::pair<void*,u_long>(bridgedEntity,_index));
-        if(!_entities){
-            _entities = [[AvlNode alloc] initWithValue:entity andIndex:_index];
-        } else {
-            _entities = [_entities newWithValue:entity andIndex:_index];
-        }
-        
-        _index++;
+    ESEntity *entity = changedEntity.originalEntity;
+
+    std::map<u_long, id>::iterator it= _entities.find(entity.creationIndex);
+
+    if(it == _entities.end()){
+        _entities.insert(std::pair<u_long, id>(entity.creationIndex, entity));
     }
 
     for (id<ESCollectionObserver> observer in _addObservers){
@@ -67,10 +53,9 @@
 - (void)remove:(ESChangedEntity *)removedEntity andAddEntity:(ESChangedEntity *)addedEntity
 {
 
-    void* bridgedEntity = (__bridge void*)removedEntity.originalEntity;
-    std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
-    
-    if(it != _lookup.end()){
+
+    std::map<u_long, id>::iterator it= _entities.find(removedEntity.originalEntity.creationIndex);
+    if(it != _entities.end()){
         for (id<ESCollectionObserver> observer in _removeObservers){
             [observer entity:removedEntity changedInCollection:self];
         }
@@ -81,25 +66,24 @@
 
 - (NSArray *)entities
 {
-    if(!_entities){
-        return @[];
+    NSMutableArray *result = [NSMutableArray new];
+    for (std::map<u_long, id>::iterator it= _entities.begin(); it!= _entities.end(); ++it){
+        [result addObject:it->second];
     }
-    return _entities.allObjects;
+
+    return result;
 }
 
 - (void)removeEntity:(ESChangedEntity *)changedEntity {
-    
+
     ESEntity *entity = changedEntity.originalEntity;
-    
-    void* bridgedEntity = (__bridge void*)entity;
-    
-    std::unordered_map<void*,u_long>::iterator it= _lookup.find(bridgedEntity);
-    if(it == _lookup.end()){
+
+    std::map<u_long, id>::iterator it= _entities.find(entity.creationIndex);
+    if(it == _entities.end()){
         return;
     }
-    
-    _entities = [_entities newWithoutValueOnIndex:it->second];
-    _lookup.erase(it);
+
+    _entities.erase(it);
     for (id<ESCollectionObserver> observer in _removeObservers){
         [observer entity:changedEntity changedInCollection:self];
     }

@@ -7,17 +7,17 @@
     NSMutableDictionary *_components;
 }
 
-- (id)init
-{
+- (instancetype)initWithIndex:(u_long)creationIndex {
     self = [super init];
-    if (self)
-    {
+    if (self) {
+        _creationIndex = creationIndex;
         _components = [NSMutableDictionary dictionary];
         _componentTypes = [NSMutableSet set];
     }
 
     return self;
 }
+
 
 - (void)addComponent:(NSObject <ESComponent> *)component
 {

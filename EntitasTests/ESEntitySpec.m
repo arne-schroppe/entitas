@@ -15,7 +15,7 @@ SPEC_BEGIN(ESEntitySpec)
 
 
         beforeEach(^{
-            entity = [[ESEntity alloc] init];
+            entity = [[ESEntity alloc] initWithIndex:0];
             component = [[SomeComponent alloc] init];
         });
 
