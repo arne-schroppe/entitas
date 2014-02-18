@@ -9,10 +9,6 @@
 
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component;
 
-- (BOOL)hasComponentOfType:(Class)type;
-
-- (BOOL)hasComponentsOfTypes:(NSSet *)types;
-
 - (NSSet *)componentTypes;
 
 - (u_long)creationIndex;

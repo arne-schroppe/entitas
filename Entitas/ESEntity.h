@@ -17,4 +17,8 @@
 
 - (NSObject <ESComponent> *)componentOfType:(Class)type;
 
+- (BOOL)hasComponentOfType:(Class)type;
+
+- (BOOL)hasComponentsOfTypes:(NSSet *)types;
+
 @end
