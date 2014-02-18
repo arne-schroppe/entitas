@@ -6,6 +6,6 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "devboy" => "dominic.graefen@gmail.com" }
   s.source       = { :git => "https://github.com/StephanPartzsch/oc-entitas.git" }
-  s.source_files = 'Entitas/*.{h,m,mm}'
+  s.source_files = 'Entitas/*.{h,m,mm}', 'Entitas/Internal/*.h'
   s.requires_arc =  true
 end
