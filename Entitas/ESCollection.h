@@ -1,7 +1,5 @@
 #import "ESEntity.h"
 
-@class ESMatcher;
-
 @protocol ESCollectionObserver;
 
 typedef NS_OPTIONS(NSUInteger, ESEntityChange)

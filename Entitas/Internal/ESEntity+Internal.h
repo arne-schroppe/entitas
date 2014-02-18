@@ -9,8 +9,6 @@
 
 - (BOOL)containsComponent:(NSObject <ESComponent> *)component;
 
-- (NSSet *)componentTypes;
-
 - (u_long)creationIndex;
 
 @end

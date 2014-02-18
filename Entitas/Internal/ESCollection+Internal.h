@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "ESCollection.h"
+#import "ESMatcher.h"
 
 @interface ESCollection (Internal)
 
