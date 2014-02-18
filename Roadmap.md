@@ -8,8 +8,7 @@ Roadmap
 - rename Entities to EntityRepository after DDD concepts
 - ~~restructure public/private api~~
   - ~~Reduce public methods and make them private~~
-    - Pull in Dominic's changes on origin/feature/cleanup
-  - Create Entitas.h file witch contains all public .h files
+  - ~~Create Entitas.h file witch contains all public .h files~~
   - ~~Create internal folder witch will contain all +Internal Categories~~
   - ~~Move internal API to internal Categories~~
 - ~~remove ESComponent class and have only the prototype~~
@@ -17,6 +16,8 @@ Roadmap
 - ESMatcher just: method hasType: or something
 - Fix ESMatcher
 - ~~get rid of ESChangedEntity~~
+ 
+### 0.1.1 Improve usability:
 - add ReactiveSystem
 - make Entitas+Extensions.h and add:
   - a singleton tag component class
