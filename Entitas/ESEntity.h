@@ -15,4 +15,6 @@
 
 - (void)removeComponentOfType:(Class)type;
 
+- (NSObject <ESComponent> *)componentOfType:(Class)type;
+
 @end

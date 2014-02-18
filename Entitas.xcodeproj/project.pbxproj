@@ -115,6 +115,7 @@
 		60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSystemsSpec.m; sourceTree = "<group>"; };
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		638F05EE76CD0AA2FBD86A86 /* ESEntity+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESEntity+Internal.h"; sourceTree = "<group>"; };
+		638F09AFABAA69E5076225DE /* Entitas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entitas.h; sourceTree = "<group>"; };
 		638F0C0856DB0B94EE88842B /* ESEntities+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESEntities+Internal.h"; sourceTree = "<group>"; };
 		638F0C3F3A5D72080F06897E /* ESCollection+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESCollection+Internal.h"; sourceTree = "<group>"; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -240,6 +241,7 @@
 				85D85C8171E09DEB7802B57F /* ESMatcher.h */,
 				85D85C555490C2019A6FD13C /* ESMatcher.m */,
 				638F008900C39156E0C8164E /* Internal */,
+				638F09AFABAA69E5076225DE /* Entitas.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
