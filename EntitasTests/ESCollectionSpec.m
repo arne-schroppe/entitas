@@ -3,6 +3,8 @@
 #import "ESEntity.h"
 #import "ESEntities.h"
 #import "SomeComponent.h"
+#import "SomeOtherComponent.h"
+#import "SomeThirdComponent.h"
 #import "NSNotificationMatcher.h"
 #import "ESChangedEntity.h"
 #import "ESCollection+Internal.h"
@@ -158,7 +160,81 @@ SPEC_BEGIN(ESCollectionSpec)
                 [[[collection entities] should] haveCountOf:0];
             });
         });
+        
+        context(@"Matcher Collections", ^{
 
+            it(@"should properly filter AllOf and remove components inside a loop", ^{
+                //Given
+                ESEntities *entities = [[ESEntities alloc]init];
+                ESEntity *e1 = [entities createEntity];
+                ESEntity *e2 = [entities createEntity];
+                ESEntity *e3 = [entities createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e1 addComponent:[SomeOtherComponent new]];
+                [e2 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                [e3 addComponent:[SomeComponent new]];
+                [e3 addComponent:[SomeThirdComponent new]];
+                ESCollection *collection = [entities collectionForMatcher:[ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil]];
+                
+                [[[collection entities] should] haveCountOf:2];
+                
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeOtherComponent class]];
+                }
+                
+                [[[collection entities] should] haveCountOf:0];
+                [e3 addComponent:[SomeOtherComponent new]];
+                [[[collection entities] should] haveCountOf:1];
+                [e1 addComponent:[SomeOtherComponent new]];
+                [[[collection entities] should] haveCountOf:2];
+            });
+            
+            it(@"should properly filter AnyOf and remove components inside a loop", ^{
+                //Given
+                ESEntities *entities = [[ESEntities alloc]init];
+                ESEntity *e1 = [entities createEntity];
+                ESEntity *e2 = [entities createEntity];
+                ESEntity *e3 = [entities createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                [e3 addComponent:[SomeComponent new]];
+                [e3 addComponent:[SomeThirdComponent new]];
+                ESCollection *collection = [entities collectionForMatcher:[ESMatcher anyOf:[SomeComponent class], [SomeThirdComponent class], nil]];
+                
+                [[[collection entities] should] haveCountOf:2];
+                
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeOtherComponent class]];
+                }
+                
+                [[[collection entities] should] haveCountOf:1];
+                [e2 addComponent:[SomeThirdComponent new]];
+                [[[collection entities] should] haveCountOf:2];
+                [e1 addComponent:[SomeThirdComponent new]];
+                [[[collection entities] should] haveCountOf:3];
+            });
+            
+            it(@"should properly filter NoneOf and remove components inside a loop", ^{
+                //Given
+                ESEntities *entities = [[ESEntities alloc]init];
+                ESEntity *e1 = [entities createEntity];
+                ESEntity *e2 = [entities createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                ESCollection *collection = [entities collectionForMatcher:[ESMatcher noneOf:[SomeComponent class], nil]];
+                
+                [[[collection entities] should] haveCountOf:1];
+                
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeOtherComponent class]];
+                }
+                
+                [[[collection entities] should] haveCountOf:0];
+            });
+            
+            // todo: write similar tests for and, or, and not
+        });
 
     });
 

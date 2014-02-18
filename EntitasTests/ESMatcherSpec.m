@@ -242,7 +242,38 @@ SPEC_BEGIN(ESMatcherSpec)
 				[[theValue(isMatching) should] beNo];
 
 			});
-
+            
+            it(@"should return NO if the only component is present", ^{
+                
+				
+				matcher = [ESMatcher noneOf:[SomeComponent class], nil];
+                
+				ESEntity *entity = [entities createEntity];
+				[entity addComponent:[SomeComponent new]];
+                
+				
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                
+				
+				[[theValue(isMatching) should] beNo];
+                
+			});
+            
+            it(@"should return YES if the only component is not present", ^{
+                
+				
+				matcher = [ESMatcher noneOf:[SomeComponent class], nil];
+                
+				ESEntity *entity = [entities createEntity];
+				[entity addComponent:[SomeOtherComponent new]];
+                
+				
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                
+				
+				[[theValue(isMatching) should] beYes];
+                
+			});
 
 			it(@"should return YES if none of the components are present", ^{
 
@@ -259,9 +290,6 @@ SPEC_BEGIN(ESMatcherSpec)
 				[[theValue(isMatching) should] beYes];
 
 			});
-
-
-
 
             it(@"should be equal to another matcher of the same type with the same components", ^{
 
