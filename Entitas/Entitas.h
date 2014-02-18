@@ -1,4 +1,4 @@
-#import "ESEntities.h"
+#import "ESEntityRepository.h"
 #import "ESCollection.h"
 #import "ESEntity.h"
 #import "ESComponent.h"

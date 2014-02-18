@@ -1,4 +1,4 @@
-#import "ESEntities+Internal.h"
+#import "ESEntityRepository+Internal.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "MGBenchmark.h"
@@ -11,12 +11,12 @@ void test1(){
     
     // given
     
-    ESEntities *entities = [ESEntities new];
+    ESEntityRepository *repo = [ESEntityRepository new];
     
     MGBenchStart(@"Test");
     
     for (int j = 0; j < 1000000; j++) {
-        ESEntity *entity = [entities createEntity];
+        ESEntity *entity = [repo createEntity];
         if (j%25 == 0){
             [entity addComponent:[SomeComponent new]];
         }
@@ -27,7 +27,7 @@ void test1(){
     
     MGBenchStep(@"Test", @"Mio entities are created");
     
-    ESCollection *collection = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+    ESCollection *collection = [repo collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
     
     MGBenchStep(@"Test", @"Collection is created");
     
@@ -44,13 +44,13 @@ void test1(){
     
     MGBenchStep(@"Test", @"Exchanged component in all entities of the collection");
     
-    for (ESEntity *entity in entities.allEntities) {
-        [entities destroyEntity:entity];
+    for (ESEntity *entity in repo.allEntities) {
+        [repo destroyEntity:entity];
     }
     
     MGBenchStep(@"Test", @"Destroy all entities");
     
-    NSLog(@"Entities Left: %lu", (unsigned long)entities.allEntities.count);
+    NSLog(@"Entities Left: %lu", (unsigned long) repo.allEntities.count);
     
     MGBenchEnd(@"Test");
 

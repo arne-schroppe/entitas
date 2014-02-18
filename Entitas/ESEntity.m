@@ -1,15 +1,15 @@
 #import "ESEntity+Internal.h"
-#import "ESEntities+Internal.h"
+#import "ESEntityRepository+Internal.h"
 
 @implementation ESEntity
 {
     NSMutableSet *_componentTypes;
     NSMutableDictionary *_components;
-    ESEntities *_repository;
+    ESEntityRepository *_repository;
     u_long _creationIndex;
 }
 
-- (instancetype)initWithIndex:(u_long)creationIndex inRepository:(ESEntities *)repository {
+- (instancetype)initWithIndex:(u_long)creationIndex inRepository:(ESEntityRepository *)repository {
     self = [super init];
     if (self) {
         _creationIndex = creationIndex;

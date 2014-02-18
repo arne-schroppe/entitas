@@ -1,4 +1,4 @@
-#import "ESEntities.h"
+#import "ESEntityRepository.h"
 #import "Kiwi.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
@@ -12,10 +12,10 @@ SPEC_BEGIN(ESMatcherSpec)
 
 
 		__block ESMatcher *matcher;
-		__block ESEntities *entities;
+		__block ESEntityRepository *repo;
 
 		beforeEach(^{
-			entities = [ESEntities new];
+			repo = [ESEntityRepository new];
 		});
 
 
@@ -26,7 +26,7 @@ SPEC_BEGIN(ESMatcherSpec)
 				
 				matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
-				ESEntity *entity = [entities createEntity];
+				ESEntity *entity = [repo createEntity];
 				[entity addComponent:[SomeComponent new]];
 				[entity addComponent:[SomeOtherComponent new]];
 
@@ -41,7 +41,7 @@ SPEC_BEGIN(ESMatcherSpec)
 				
 				matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
-				ESEntity *entity = [entities createEntity];
+				ESEntity *entity = [repo createEntity];
 				[entity addComponent:[SomeComponent new]];
 
 				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
@@ -95,7 +95,7 @@ SPEC_BEGIN(ESMatcherSpec)
 				
 				matcher = [ESMatcher anyOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
-				ESEntity *entity = [entities createEntity];
+				ESEntity *entity = [repo createEntity];
 				[entity addComponent:[SomeComponent new]];
 
 				
@@ -112,7 +112,7 @@ SPEC_BEGIN(ESMatcherSpec)
 				
 				matcher = [ESMatcher anyOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
-				ESEntity *entity = [entities createEntity];
+				ESEntity *entity = [repo createEntity];
 				[entity addComponent:[SomeThirdComponent new]];
 
 				
@@ -170,7 +170,7 @@ SPEC_BEGIN(ESMatcherSpec)
 
                 matcher = [ESMatcher just:[SomeComponent class]];
 
-                ESEntity *entity = [entities createEntity];
+                ESEntity *entity = [repo createEntity];
                 [entity addComponent:[SomeComponent new]];
                 [entity addComponent:[SomeOtherComponent new]];
 
@@ -185,7 +185,7 @@ SPEC_BEGIN(ESMatcherSpec)
 
                 matcher = [ESMatcher just:[SomeComponent class]];
 
-                ESEntity *entity = [entities createEntity];
+                ESEntity *entity = [repo createEntity];
                 [entity addComponent:[SomeOtherComponent new]];
 
                 BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
@@ -224,7 +224,7 @@ SPEC_BEGIN(ESMatcherSpec)
 				
 				matcher = [ESMatcher noneOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
-				ESEntity *entity = [entities createEntity];
+				ESEntity *entity = [repo createEntity];
 				[entity addComponent:[SomeComponent new]];
 
 				
@@ -241,7 +241,7 @@ SPEC_BEGIN(ESMatcherSpec)
 				
 				matcher = [ESMatcher noneOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
-				ESEntity *entity = [entities createEntity];
+				ESEntity *entity = [repo createEntity];
 				[entity addComponent:[SomeThirdComponent new]];
 
 				

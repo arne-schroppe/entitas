@@ -1,6 +1,6 @@
 #import "Kiwi.h"
 #import "ESCollection.h"
-#import "ESEntities.h"
+#import "ESEntityRepository.h"
 #import "SomeComponent.h"
 #import "ESCollection+Internal.h"
 #import "ESEntity+Internal.h"
@@ -189,12 +189,12 @@ SPEC_BEGIN(ESCollectionSpec)
         
         context(@"Collection is provided by Entities", ^{
             //Given
-            ESEntities *entities = [[ESEntities alloc]init];
-            ESEntity *e1 = [entities createEntity];
-            ESEntity *e2 = [entities createEntity];
+            ESEntityRepository *repo = [[ESEntityRepository alloc]init];
+            ESEntity *e1 = [repo createEntity];
+            ESEntity *e2 = [repo createEntity];
             [e1 addComponent:[SomeComponent new]];
             [e2 addComponent:[SomeComponent new]];
-            ESCollection *collection1 = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+            ESCollection *collection1 = [repo collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
             
             it(@"should be possible to remove components on entities during the loop. There for return a copy of entities set.", ^{
                 

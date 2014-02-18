@@ -5,7 +5,7 @@
 @class ESMatcher;
 
 
-@interface ESEntities : NSObject
+@interface ESEntityRepository : NSObject
 
 - (ESEntity *)createEntity;
 

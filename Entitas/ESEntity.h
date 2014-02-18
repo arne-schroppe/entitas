@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "ESComponent.h"
 
-@class ESEntities;
+@class ESEntityRepository;
 
 // Handy macro to get an component from entity
 // Example: PositionComponent *pos = getComponent(e, PositionComponent);

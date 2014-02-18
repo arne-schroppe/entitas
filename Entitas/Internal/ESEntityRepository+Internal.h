@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "ESEntities.h"
+#import "ESEntityRepository.h"
 
-@interface ESEntities (Internal)
+@interface ESEntityRepository (Internal)
 
 - (BOOL)containsEntity:(ESEntity *)entity;
 

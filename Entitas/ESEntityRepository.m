@@ -1,10 +1,10 @@
-#import "ESEntities+Internal.h"
+#import "ESEntityRepository+Internal.h"
 #import "ESMatcher.h"
 #import "ESEntity+Internal.h"
 #import "ESCollection+Internal.h"
 
 
-@implementation ESEntities
+@implementation ESEntityRepository
 {
     NSMutableSet *_entities;
     NSMutableDictionary *_collections; // matcher -> collection
