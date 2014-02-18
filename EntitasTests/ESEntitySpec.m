@@ -3,6 +3,8 @@
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "ESEntities.h"
+#import "ESEntity+Internal.h"
+#import "ESEntities+Internal.h"
 
 registerMatcher(NSNotificationMatcher)
 
@@ -12,10 +14,12 @@ SPEC_BEGIN(ESEntitySpec)
 
         __block ESEntity *entity = nil;
         __block SomeComponent *component = nil;
+        __block ESEntities *entities;
 
 
         beforeEach(^{
-            entity = [[ESEntity alloc] initWithIndex:0];
+            entities = [[ESEntities alloc] init];
+            entity = [[ESEntity alloc] initWithIndex:0 inRepository:entities];
             component = [[SomeComponent alloc] init];
         });
 
@@ -78,23 +82,18 @@ SPEC_BEGIN(ESEntitySpec)
         });
 
         it(@"should call ESEntities object that a component has been added to this entity", ^{
-            ESEntities *entities = [[ESEntities alloc] init];
-            entity.entities = entities;
+
             [[[entities should] receive] componentOfType:[component class] hasBeenAddedToEntity:entity];
             [entity addComponent:component];
         });
 
         it(@"should call ESEntities object that a component has been removed from this entity", ^{
-            ESEntities *entities = [[ESEntities alloc] init];
-            entity.entities = entities;
             [[[entities should] receive] componentOfType:[component class] hasBeenRemovedFromEntity:entity];
             [entity addComponent:component];
             [entity removeComponentOfType:[component class]];
         });
 
         it(@"should not call ESEntities object that a component has been removed from this entity if it didn't contain a component of that type", ^{
-            ESEntities *entities = [[ESEntities alloc] init];
-            entity.entities = entities;
             [[[entities shouldNot] receive] componentOfType:[component class] hasBeenRemovedFromEntity:entity];
             [entity removeComponentOfType:[component class]];
         });
@@ -120,8 +119,6 @@ SPEC_BEGIN(ESEntitySpec)
         });
 
         it(@"should call ESEntities object that a component has been exchanged for this entity", ^{
-            ESEntities *entities = [[ESEntities alloc] init];
-            entity.entities = entities;
             [[[entities should] receive] componentOfType:[component class] hasBeenExchangedInEntity:entity];
             [entity exchangeComponent:component];
             [entity removeComponentOfType:[component class]];

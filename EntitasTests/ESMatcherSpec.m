@@ -3,6 +3,8 @@
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "SomeThirdComponent.h"
+#import "ESMatcher.h"
+#import "ESEntity+Internal.h"
 
 SPEC_BEGIN(ESMatcherSpec)
 

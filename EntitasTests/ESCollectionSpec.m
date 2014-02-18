@@ -1,9 +1,9 @@
 #import "Kiwi.h"
 #import "ESCollection.h"
-#import "ESEntity.h"
 #import "ESEntities.h"
 #import "SomeComponent.h"
-#import "NSNotificationMatcher.h"
+#import "ESCollection+Internal.h"
+#import "ESEntity+Internal.h"
 
 registerMatcher(Notification)
 
@@ -34,8 +34,8 @@ SPEC_BEGIN(ESCollectionSpec)
         it(@"should remove an entity", ^{
             [collection addEntity:entity];
             [collection removeEntity:entity];
-			NSArray *collectedEntities = [collection entities];
-			[[collectedEntities shouldNot] contain:entity];
+            NSArray *collectedEntities = [collection entities];
+            [[collectedEntities shouldNot] contain:entity];
         });
 
         it(@"should not add an entity more than once", ^{
@@ -47,13 +47,13 @@ SPEC_BEGIN(ESCollectionSpec)
 
         it(@"should preserve the order of entities", ^{
 
-            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0];
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
             [collection addEntity:entity1];
 
-            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1];
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
             [collection addEntity:entity2];
 
-            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2];
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
             [collection addEntity:entity3];
 
             [[[collection entities] should] haveCountOf:3];
@@ -107,6 +107,84 @@ SPEC_BEGIN(ESCollectionSpec)
             [[observer1 shouldNot] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityRemoved)];
             [[observer2 should] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityAdded)];
             [collection exchangeEntity:entity];
+        });
+
+        it(@"should give back cached entities", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection addEntity:entity3];
+
+            NSArray *entityArray = collection.entities;
+
+            [[entityArray should] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should not give back cached entities if new entity is added", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection addEntity:entity3];
+
+            [[entityArray shouldNot] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should not give back cached entities if an entity is removed", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            [collection removeEntity:entity2];
+
+            [[entityArray shouldNot] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should give back cached entities if an entity not in collection is removed", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection removeEntity:entity3];
+
+            [[entityArray should] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should give back cached entities if an entity is exchanged", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            [collection exchangeEntity:entity2];
+
+            [[entityArray should] beIdenticalTo:collection.entities];
+
         });
         
         context(@"Collection is provided by Entities", ^{

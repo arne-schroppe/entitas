@@ -1,16 +1,19 @@
-#import "ESEntity.h"
-#import "ESEntities.h"
+#import "ESEntity+Internal.h"
+#import "ESEntities+Internal.h"
 
 @implementation ESEntity
 {
     NSMutableSet *_componentTypes;
     NSMutableDictionary *_components;
+    ESEntities *_repository;
+    u_long _creationIndex;
 }
 
-- (instancetype)initWithIndex:(u_long)creationIndex {
+- (instancetype)initWithIndex:(u_long)creationIndex inRepository:(ESEntities *)repository {
     self = [super init];
     if (self) {
         _creationIndex = creationIndex;
+        _repository = repository;
         _components = [NSMutableDictionary dictionary];
         _componentTypes = [NSMutableSet set];
     }
@@ -26,14 +29,14 @@
 
     [_componentTypes addObject:[component class]];
     [_components setObject:component forKey:(id <NSCopying>) [component class]];
-    [_entities componentOfType:[component class] hasBeenAddedToEntity:self];
+    [_repository componentOfType:[component class] hasBeenAddedToEntity:self];
 }
 
 
 - (void)exchangeComponent:(NSObject <ESComponent> *)component {
     [_componentTypes addObject:[component class]];
     [_components setObject:component forKey:(id <NSCopying>) [component class]];
-    [_entities componentOfType:[component class] hasBeenExchangedInEntity:self];
+    [_repository componentOfType:[component class] hasBeenExchangedInEntity:self];
 }
 
 
@@ -51,10 +54,9 @@
 {
     if ([self hasComponentOfType:type])
     {
-        NSObject <ESComponent> *component = [_components objectForKey:type];
         [_components removeObjectForKey:type];
         [_componentTypes removeObject:type];
-        [_entities componentOfType:type hasBeenRemovedFromEntity:self];
+        [_repository componentOfType:type hasBeenRemovedFromEntity:self];
     }
 }
 
@@ -73,9 +75,9 @@
     return _componentTypes;
 }
 
-- (NSDictionary *)components
+- (u_long) creationIndex
 {
-    return _components;
+    return _creationIndex;
 }
 
 - (NSString *)description

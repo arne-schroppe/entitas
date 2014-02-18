@@ -1,5 +1,7 @@
-#import "ESEntities.h"
+#import "ESEntities+Internal.h"
 #import "ESMatcher.h"
+#import "ESEntity+Internal.h"
+#import "ESCollection+Internal.h"
 
 
 @implementation ESEntities
@@ -25,8 +27,7 @@
 
 - (ESEntity *)createEntity
 {
-    ESEntity *entity = [[ESEntity alloc] initWithIndex:_entityIndex];
-    entity.entities = self;
+    ESEntity *entity = [[ESEntity alloc] initWithIndex:_entityIndex inRepository:self];
     [_entities addObject:entity];
     _entityIndex++;
     return entity;
@@ -58,7 +59,7 @@
 }
 
 - (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity {
-    for(ESCollection *collection in [self collectionsForType:type])
+    for(ESCollection *collection in [self internalCollectionsForType:type])
     {
         if ([[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
             [collection addEntity:entity];
@@ -66,7 +67,7 @@
 }
 
 - (void)componentOfType:(Class)type hasBeenExchangedInEntity:(ESEntity *)entity {
-    for(ESCollection *collection in [self collectionsForType:type])
+    for(ESCollection *collection in [self internalCollectionsForType:type])
     {
         if ([[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
             [collection exchangeEntity:entity];
@@ -79,7 +80,7 @@
     NSMutableSet *originalComponentTypes = [[entity componentTypes] mutableCopy];
     [originalComponentTypes addObject:type];
 
-    for(ESCollection *collection in [self collectionsForType:type])
+    for(ESCollection *collection in [self internalCollectionsForType:type])
     {
         if ([[collection typeMatcher] areComponentsMatching:originalComponentTypes] && ![[collection typeMatcher] areComponentsMatching:[entity componentTypes]])
             [collection removeEntity:entity];
@@ -102,7 +103,7 @@
 
         for (id type in matcher.componentTypes)
         {
-            [[self collectionsForType:type] addObject:collection];
+            [[self internalCollectionsForType:type] addObject:collection];
         };
     }
     return [_collections objectForKey:matcher];
@@ -116,8 +117,7 @@
     return [self collectionForMatcher:[ESMatcher allOfSet:types]];
 }
 
-
-- (NSMutableSet *)collectionsForType:(Class)type
+- (NSMutableSet *)internalCollectionsForType:(Class)type
 {
     if (![_collectionsForType objectForKey:type])
         [_collectionsForType setObject:[NSMutableSet set] forKey:(id <NSCopying>) type];

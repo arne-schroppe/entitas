@@ -1,4 +1,6 @@
-#import "ESCollection.h"
+#import "ESCollection+Internal.h"
+#import "ESEntity+Internal.h"
+#import "ESMatcher.h"
 #import <map>
 
 @implementation ESCollection
@@ -7,6 +9,7 @@
     std::map<u_long, id> _entities;
     NSMutableArray *_addObservers;
     NSMutableArray *_removeObservers;
+    NSMutableArray *_cachedEntities;
 }
 
 
@@ -36,6 +39,7 @@
 
 - (void)addEntity:(ESEntity *)changedEntity {
 
+    _cachedEntities = nil;
     std::map<u_long, id>::iterator it= _entities.find(changedEntity.creationIndex);
 
     if(it == _entities.end()){
@@ -54,19 +58,26 @@
         for (id<ESCollectionObserver> observer in _removeObservers){
             [observer entity:entity changedInCollection:self withChangeType:(ESEntityRemoved)];
         }
+        for (id<ESCollectionObserver> observer in _addObservers){
+            [observer entity:entity changedInCollection:self withChangeType:(ESEntityAdded)];
+        }
+    } else {
+        [self addEntity:entity];
     }
 
-    [self addEntity:entity];
 }
 
 - (NSArray *)entities
 {
-    NSMutableArray *result = [NSMutableArray new];
+    if(_cachedEntities){
+        return _cachedEntities;
+    }
+    _cachedEntities = [NSMutableArray new];
     for (std::map<u_long, id>::iterator it= _entities.begin(); it!= _entities.end(); ++it){
-        [result addObject:it->second];
+        [_cachedEntities addObject:it->second];
     }
 
-    return result;
+    return _cachedEntities;
 }
 
 - (void)removeEntity:(ESEntity *)entity {
@@ -76,10 +87,13 @@
         return;
     }
 
+    _cachedEntities = nil;
+
     _entities.erase(it);
     for (id<ESCollectionObserver> observer in _removeObservers){
         [observer entity:entity changedInCollection:self withChangeType:(ESEntityRemoved)];
     }
+
 }
 
 - (void)addObserver:(id <ESCollectionObserver>)observer forEvent:(ESEntityChange)event {

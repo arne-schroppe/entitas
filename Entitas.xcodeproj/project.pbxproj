@@ -19,7 +19,6 @@
 		0B1C08D518A3883B00D4F58B /* ESEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6026612B451F8481D098CDEF /* ESEntity.m */; };
 		0B1C08D618A3883B00D4F58B /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
 		0B1C08DA18A3883B00D4F58B /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
-		0B1C08DB18A3883B00D4F58B /* ESComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550979D3BDD0E7141C48 /* ESComponent.m */; };
 		6026611BF7005CBCCBA49909 /* ESEntitySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 602665E109AC8CE9FE47191E /* ESEntitySpec.m */; };
 		6026631FBF95A838C00D9611 /* ESSystem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6026633037CC88FB18D8F589 /* ESSystem.h */; };
 		602663C1E330312CA8A12A1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
@@ -36,15 +35,11 @@
 		60266B7A28294BD4648903D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
-		85D8501C3271E1C61757119C /* ESComponentSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D853EDE569895766CFF861 /* ESComponentSpec.m */; };
 		85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A40B54895A0164D8768 /* SomeThirdComponent.m */; };
-		85D853DD13408B405E2EF60D /* ESComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550979D3BDD0E7141C48 /* ESComponent.m */; };
 		85D85A69D294886F5F866282 /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
-		85D85B9708A59B797B1E2D0E /* ESComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550979D3BDD0E7141C48 /* ESComponent.m */; };
 		85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */; };
 		85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
 		B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntities.m */; };
-		B06B026185A32A74264CC44B /* NSNotificationMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B000845879007114E2DBC /* NSNotificationMatcher.m */; };
 		B06B0433B7A950AA7E9EB93E /* SomeOtherComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */; };
 		B06B05511ECA4929A43C60FD /* ESEntitiesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */; };
 		B06B088EEB6026FDC8FC91BB /* ESCollectionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */; };
@@ -119,15 +114,15 @@
 		60266DB5B510EE20C17FA196 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSystemsSpec.m; sourceTree = "<group>"; };
 		60266F46E3E5F3490E945A5A /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		638F05EE76CD0AA2FBD86A86 /* ESEntity+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESEntity+Internal.h"; sourceTree = "<group>"; };
+		638F0C0856DB0B94EE88842B /* ESEntities+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESEntities+Internal.h"; sourceTree = "<group>"; };
+		638F0C3F3A5D72080F06897E /* ESCollection+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESCollection+Internal.h"; sourceTree = "<group>"; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
-		85D853EDE569895766CFF861 /* ESComponentSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESComponentSpec.m; sourceTree = "<group>"; };
-		85D8550979D3BDD0E7141C48 /* ESComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESComponent.m; sourceTree = "<group>"; };
 		85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcherSpec.m; sourceTree = "<group>"; };
 		85D85A40B54895A0164D8768 /* SomeThirdComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeThirdComponent.m; sourceTree = "<group>"; };
 		85D85C555490C2019A6FD13C /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
 		85D85C8171E09DEB7802B57F /* ESMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESMatcher.h; sourceTree = "<group>"; };
-		B06B000845879007114E2DBC /* NSNotificationMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNotificationMatcher.m; sourceTree = "<group>"; };
 		B06B003BC9B7BF20962E1E90 /* ESEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntities.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
 		B06B01E58C73C158BF02110B /* SomeOtherComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeOtherComponent.h; sourceTree = "<group>"; };
@@ -136,7 +131,6 @@
 		B06B05414306C58E1034B764 /* ESEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntities.m; sourceTree = "<group>"; };
 		B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESCollectionSpec.m; sourceTree = "<group>"; };
 		B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESEntitiesSpec.m; sourceTree = "<group>"; };
-		B06B0E92E5F80B6330526B3D /* NSNotificationMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNotificationMatcher.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +239,7 @@
 				B06B03C052A655C348D441D2 /* ESCollection.h */,
 				85D85C8171E09DEB7802B57F /* ESMatcher.h */,
 				85D85C555490C2019A6FD13C /* ESMatcher.m */,
-				85D8550979D3BDD0E7141C48 /* ESComponent.m */,
+				638F008900C39156E0C8164E /* Internal */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -276,20 +270,19 @@
 				602665E109AC8CE9FE47191E /* ESEntitySpec.m */,
 				B06B09526BD11CEC08FBFC6A /* ESEntitiesSpec.m */,
 				B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */,
-				B06B0BEE6CE61D753F35A876 /* Matchers */,
 				85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */,
-				85D853EDE569895766CFF861 /* ESComponentSpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
 		};
-		B06B0BEE6CE61D753F35A876 /* Matchers */ = {
+		638F008900C39156E0C8164E /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				B06B0E92E5F80B6330526B3D /* NSNotificationMatcher.h */,
-				B06B000845879007114E2DBC /* NSNotificationMatcher.m */,
+				638F0C3F3A5D72080F06897E /* ESCollection+Internal.h */,
+				638F05EE76CD0AA2FBD86A86 /* ESEntity+Internal.h */,
+				638F0C0856DB0B94EE88842B /* ESEntities+Internal.h */,
 			);
-			path = Matchers;
+			path = Internal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,7 +447,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B1C08D318A3872600D4F58B /* SomeOtherComponent.m in Sources */,
-				0B1C08DB18A3883B00D4F58B /* ESComponent.m in Sources */,
 				0B1C08CA18A385FD00D4F58B /* main.m in Sources */,
 				0B1C08D618A3883B00D4F58B /* ESEntities.m in Sources */,
 				0B1351ED18A8CE61001D23AF /* ESCollection.mm in Sources */,
@@ -479,12 +471,9 @@
 				B06B0433B7A950AA7E9EB93E /* SomeOtherComponent.m in Sources */,
 				B06B088EEB6026FDC8FC91BB /* ESCollectionSpec.m in Sources */,
 				0B1351EC18A8CE60001D23AF /* ESCollection.mm in Sources */,
-				B06B026185A32A74264CC44B /* NSNotificationMatcher.m in Sources */,
 				85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */,
 				85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */,
 				85D85A69D294886F5F866282 /* ESMatcher.m in Sources */,
-				85D85B9708A59B797B1E2D0E /* ESComponent.m in Sources */,
-				85D8501C3271E1C61757119C /* ESComponentSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,7 +486,6 @@
 				B06B01DF7F0AA1AD1AE763E8 /* ESEntities.m in Sources */,
 				85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */,
 				0B1351EB18A8CE60001D23AF /* ESCollection.mm in Sources */,
-				85D853DD13408B405E2EF60D /* ESComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

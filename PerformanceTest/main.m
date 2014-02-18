@@ -1,4 +1,4 @@
-#import "ESEntities.h"
+#import "ESEntities+Internal.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "MGBenchmark.h"

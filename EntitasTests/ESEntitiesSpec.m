@@ -5,6 +5,8 @@
 #import "ESCollection.h"
 #import "SomeOtherComponent.h"
 #import "SomeThirdComponent.h"
+#import "ESEntities+Internal.h"
+#import "ESCollection+Internal.h"
 
 SPEC_BEGIN(ESEntitiesSpec)
 
@@ -61,7 +63,7 @@ SPEC_BEGIN(ESEntitiesSpec)
 
             it(@"should add a reference to itself when creating and entity", ^{
                 ESEntity *entity = [entities createEntity];
-                [[entity.entities should] equal:entities];
+                [[[entity valueForKey:@"_repository"] should] equal:entities];
             });
 
 //            it(@"should return a collection with the given set", ^{
