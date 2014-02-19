@@ -1,5 +1,14 @@
 Roadmap
 ====
+ 
+### 0.1.1
+- add ReactiveSystem
+- add method - (NSArray *)getEntitiesWithComponentsOfType:(Class)type
+- make Entitas+Extensions.h and add:
+  - a singleton tag component class
+  - a singleton entity accesor category on EntityRepository
+  - introduce sharedRepository and repositoryByName:(NSString*)
+  - Base ESComponentClass with examples of handy class and instance methods
 
 ### 0.1.0 Improve usability:
 	
@@ -12,15 +21,5 @@ Roadmap
   - ~~Create internal folder witch will contain all +Internal Categories~~
   - ~~Move internal API to internal Categories~~
 - ~~remove ESComponent class and have only the prototype~~
-- Fix ESMatcher
+- ~~Fix ESMatcher~~
 - ~~get rid of ESChangedEntity~~
- 
-### 0.1.1
-- add ReactiveSystem
-- add method - (NSArray *)getEntitiesWithComponentsOfType:(Class)type
-- make Entitas+Extensions.h and add:
-  - a singleton tag component class
-  - a singleton entity accesor category on EntityRepository
-  - introduce sharedRepository and repositoryByName:(NSString*)
-  - Base ESComponentClass with examples of handy class and instance methods
-
