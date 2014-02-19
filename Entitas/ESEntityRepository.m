@@ -46,18 +46,6 @@
     [_entities removeObject:entity];
 }
 
-- (NSArray *)getEntitiesWithComponentsOfTypes:(NSSet *)types
-{
-    NSMutableArray *matchingEntities = [NSMutableArray array];
-    for(ESEntity *entity in _entities)
-    {
-        if ([entity hasComponentsOfTypes:types])
-            [matchingEntities addObject:entity];
-    };
-
-    return matchingEntities;
-}
-
 - (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity {
     for(ESCollection *collection in [self internalCollectionsForType:type])
     {
@@ -92,7 +80,7 @@
     {
         ESCollection *collection = [[ESCollection alloc] initWithMatcher:matcher];
 
-        for(ESEntity *entity in [self getEntitiesWithComponentsOfTypes:[matcher componentTypes]])
+        for(ESEntity *entity in _entities)
         {
             if([collection.typeMatcher areComponentsMatching:[entity componentTypes]]) {
                 [collection addEntity:entity];

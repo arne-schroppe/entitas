@@ -4,6 +4,8 @@
 #import "SomeComponent.h"
 #import "ESCollection+Internal.h"
 #import "ESEntity+Internal.h"
+#import "SomeOtherComponent.h"
+#import "SomeThirdComponent.h"
 
 registerMatcher(Notification)
 
@@ -45,21 +47,21 @@ SPEC_BEGIN(ESCollectionSpec)
             [[[collection entities] should] haveCountOf:1];
         });
 
-        it(@"should preserve the order of entities", ^{
+        it(@"should preserve the order of entities defined by index", ^{
 
             ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
             [collection addEntity:entity1];
 
-            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
             [collection addEntity:entity2];
 
-            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
             [collection addEntity:entity3];
 
             [[[collection entities] should] haveCountOf:3];
             [[[collection entities][0] should] beIdenticalTo:entity1];
-            [[[collection entities][1] should] beIdenticalTo:entity2];
-            [[[collection entities][2] should] beIdenticalTo:entity3];
+            [[[collection entities][1] should] beIdenticalTo:entity3];
+            [[[collection entities][2] should] beIdenticalTo:entity2];
         });
 
         it(@"should notify observers when an entity is added", ^{
@@ -186,8 +188,8 @@ SPEC_BEGIN(ESCollectionSpec)
             [[entityArray should] beIdenticalTo:collection.entities];
 
         });
-        
-        context(@"Collection is provided by Entities", ^{
+
+        context(@"Collection is provided by repository", ^{
             //Given
             ESEntityRepository *repo = [[ESEntityRepository alloc]init];
             ESEntity *e1 = [repo createEntity];
@@ -195,19 +197,75 @@ SPEC_BEGIN(ESCollectionSpec)
             [e1 addComponent:[SomeComponent new]];
             [e2 addComponent:[SomeComponent new]];
             ESCollection *collection1 = [repo collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
-            
+
             it(@"should be possible to remove components on entities during the loop. There for return a copy of entities set.", ^{
-                
+
                 [[[collection1 entities] should] haveCountOf:2];
-                
+
                 for(ESEntity *e in collection1.entities){
                     [e removeComponentOfType:[SomeComponent class]];
                 }
-                
+
                 [[[collection1 entities] should] haveCountOf:0];
             });
         });
 
+
+        context(@"Matcher Collections", ^{
+
+            it(@"should properly filter AllOf and remove components inside a loop", ^{
+                //Given
+                ESEntityRepository *repository = [[ESEntityRepository alloc]init];
+                ESEntity *e1 = [repository createEntity];
+                ESEntity *e2 = [repository createEntity];
+                ESEntity *e3 = [repository createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e1 addComponent:[SomeOtherComponent new]];
+                [e2 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                [e3 addComponent:[SomeComponent new]];
+                [e3 addComponent:[SomeThirdComponent new]];
+                ESCollection *collection = [repository collectionForMatcher:[ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil]];
+
+                [[[collection entities] should] haveCountOf:2];
+
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeOtherComponent class]];
+                }
+
+                [[[collection entities] should] haveCountOf:0];
+                [e3 addComponent:[SomeOtherComponent new]];
+                [[[collection entities] should] haveCountOf:1];
+                [e1 addComponent:[SomeOtherComponent new]];
+                [[[collection entities] should] haveCountOf:2];
+            });
+
+            it(@"should properly filter AnyOf and remove components inside a loop", ^{
+                //Given
+                ESEntityRepository *entities = [[ESEntityRepository alloc]init];
+                ESEntity *e1 = [entities createEntity];
+                ESEntity *e2 = [entities createEntity];
+                ESEntity *e3 = [entities createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                [e3 addComponent:[SomeComponent new]];
+                [e3 addComponent:[SomeThirdComponent new]];
+                ESCollection *collection = [entities collectionForMatcher:[ESMatcher anyOf:[SomeComponent class], [SomeThirdComponent class], nil]];
+
+                [[[collection entities] should] haveCountOf:2];
+
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeComponent class]];
+                }
+
+                [[[collection entities] should] haveCountOf:1];
+                [e2 addComponent:[SomeThirdComponent new]];
+                [[[collection entities] should] haveCountOf:2];
+                [e1 addComponent:[SomeThirdComponent new]];
+                [[[collection entities] should] haveCountOf:3];
+            });
+
+        });
 
     });
 
