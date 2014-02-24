@@ -19,14 +19,6 @@ $ pod install
 To contribute a patch or feature please create a branch and use github pull-requests. 
 Checkout [github-flow] for more info.
 
-Embed:
---
-To embed this library with [CocoaPods] please add the Wooga CocoaPods repository.
-
-```
-$ pod repo add wooga-cocoapods-specs https://github.com/wooga/cocoapods-specs.git
-```
-
 [github-flow]: http://scottchacon.com/2011/08/31/github-flow.html
 [cocoapods]: http://cocoapods.org/
 [ash]: http://www.richardlord.net/blog/introducing-ash
