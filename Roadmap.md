@@ -4,6 +4,9 @@ Roadmap
 ### 0.1.1
 - add ReactiveSystem
 - add method - (NSArray *)getEntitiesWithComponentsOfType:(Class)type
+- add methods to ESCollection:
+  - entitiesWithoutTypes:(NSSet*)
+  - entitiesWithoutMatcher:(ESMatcher*)
 - make Entitas+Extensions.h and add:
   - a singleton tag component class
   - a singleton entity accesor category on EntityRepository
