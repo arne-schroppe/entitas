@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "ESComponent.h"
 
-@interface SomeComponent : ESComponent
+@interface SomeComponent : NSObject <ESComponent>
 
 @property NSInteger value;
 

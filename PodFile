@@ -1,5 +1,10 @@
-platform :ios
-
 target :EntitasTests, :exclusive => true do
-	pod 'Kiwi', 	"~> 1.1.1" 
+    platform :ios, '6.0'
+	pod 'Kiwi', 	"~> 1.1.1"
+	pod 'MGBenchmark'
+end
+
+target :PerformanceTest, :exclusive => true do
+    platform :osx, '10.7'
+	pod 'MGBenchmark'
 end

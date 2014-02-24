@@ -1,10 +1,13 @@
 PODS:
   - Kiwi (1.1.1)
+  - MGBenchmark (0.3.0)
 
 DEPENDENCIES:
   - Kiwi (~> 1.1.1)
+  - MGBenchmark
 
 SPEC CHECKSUMS:
   Kiwi: ab0fa8d13b97dca05915e31df9b2d888d74ab717
+  MGBenchmark: 6cadc5362f32f1ccfd0352d1456978941ad29c23
 
-COCOAPODS: 0.20.2
+COCOAPODS: 0.29.0

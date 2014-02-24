@@ -1,23 +1,26 @@
-#import "ESEntity.h"
-#import "ESEntities.h"
+#import "ESEntity+Internal.h"
+#import "ESEntityRepository+Internal.h"
 
 @implementation ESEntity
 {
     NSMutableSet *_componentTypes;
     NSMutableDictionary *_components;
+    ESEntityRepository *_repository;
+    u_long _creationIndex;
 }
 
-- (id)init
-{
+- (instancetype)initWithIndex:(u_long)creationIndex inRepository:(ESEntityRepository *)repository {
     self = [super init];
-    if (self)
-    {
+    if (self) {
+        _creationIndex = creationIndex;
+        _repository = repository;
         _components = [NSMutableDictionary dictionary];
         _componentTypes = [NSMutableSet set];
     }
 
     return self;
 }
+
 
 - (void)addComponent:(NSObject <ESComponent> *)component
 {
@@ -26,14 +29,14 @@
 
     [_componentTypes addObject:[component class]];
     [_components setObject:component forKey:(id <NSCopying>) [component class]];
-    [_entities component:component ofType:[component class] hasBeenAddedToEntity:self];
+    [_repository componentOfType:[component class] hasBeenAddedToEntity:self];
 }
 
 
 - (void)exchangeComponent:(NSObject <ESComponent> *)component {
     [_componentTypes addObject:[component class]];
     [_components setObject:component forKey:(id <NSCopying>) [component class]];
-    [_entities component:component ofType:[component class] hasBeenExchangedInEntity:self];
+    [_repository componentOfType:[component class] hasBeenExchangedInEntity:self];
 }
 
 
@@ -51,10 +54,9 @@
 {
     if ([self hasComponentOfType:type])
     {
-        NSObject <ESComponent> *component = [_components objectForKey:type];
         [_components removeObjectForKey:type];
         [_componentTypes removeObject:type];
-        [_entities component:component ofType:type hasBeenRemovedFromEntity:self];
+        [_repository componentOfType:type hasBeenRemovedFromEntity:self];
     }
 }
 
@@ -73,9 +75,9 @@
     return _componentTypes;
 }
 
-- (NSDictionary *)components
+- (u_long) creationIndex
 {
-    return _components;
+    return _creationIndex;
 }
 
 - (NSString *)description

@@ -1,10 +1,11 @@
 #import "Kiwi.h"
 #import "ESCollection.h"
-#import "ESEntity.h"
-#import "ESEntities.h"
+#import "ESEntityRepository.h"
 #import "SomeComponent.h"
-#import "NSNotificationMatcher.h"
-#import "ESChangedEntity.h"
+#import "ESCollection+Internal.h"
+#import "ESEntity+Internal.h"
+#import "SomeOtherComponent.h"
+#import "SomeThirdComponent.h"
 
 registerMatcher(Notification)
 
@@ -15,15 +16,11 @@ SPEC_BEGIN(ESCollectionSpec)
         __block ESCollection *collection;
         __block NSSet *set;
         __block ESEntity *entity;
-        __block ESChangedEntity *changedEntity;
-        __block id notificationReceiver;
 
         beforeEach(^{
             set = [NSSet set];
             collection = [[ESCollection alloc] initWithTypes:set];
             entity = [[ESEntity alloc] init];
-            changedEntity = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
-            notificationReceiver = [KWMock mock];
         });
 
         it(@"should be instantiated", ^{
@@ -31,133 +28,244 @@ SPEC_BEGIN(ESCollectionSpec)
             [[collection should] beKindOfClass:[ESCollection class]];
         });
 
-//        it(@"should be initialized with a Set", ^{
-//            [[[collection types] should] equal:set];
-//        });
-
         it(@"should add an entity", ^{
-            [collection addEntity:changedEntity];
+            [collection addEntity:entity];
             [[[collection entities] should] contain:entity];
         });
 
         it(@"should remove an entity", ^{
-            [collection addEntity:changedEntity];
-            [collection removeEntity:changedEntity];
-            [[[collection entities] shouldNot] contain:entity];
+            [collection addEntity:entity];
+            [collection removeEntity:entity];
+            NSArray *collectedEntities = [collection entities];
+            [[collectedEntities shouldNot] contain:entity];
         });
 
         it(@"should not add an entity more than once", ^{
-            [collection addEntity:changedEntity];
-            [collection addEntity:changedEntity];
+            [collection addEntity:entity];
+            [collection addEntity:entity];
             [[[collection entities] should] contain:entity];
             [[[collection entities] should] haveCountOf:1];
         });
 
-        it(@"should preserve the order of entities", ^{
+        it(@"should preserve the order of entities defined by index", ^{
 
-            ESEntity *entity1 = [[ESEntity alloc] init];
-            ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity1 components:nil changeType:ESEntityAdded];
-            [collection addEntity:changedEntity1];
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
 
-            ESEntity *entity2 = [[ESEntity alloc] init];
-            ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity2 components:nil changeType:ESEntityAdded];
-            [collection addEntity:changedEntity2];
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection addEntity:entity2];
 
-            ESEntity *entity3 = [[ESEntity alloc] init];
-            ESChangedEntity *changedEntity3 = [[ESChangedEntity alloc] initWithOriginalEntity:entity3 components:nil changeType:ESEntityAdded];
-            [collection addEntity:changedEntity3];
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity3];
 
             [[[collection entities] should] haveCountOf:3];
             [[[collection entities][0] should] beIdenticalTo:entity1];
-            [[[collection entities][1] should] beIdenticalTo:entity2];
-            [[[collection entities][2] should] beIdenticalTo:entity3];
+            [[[collection entities][1] should] beIdenticalTo:entity3];
+            [[[collection entities][2] should] beIdenticalTo:entity2];
         });
 
         it(@"should notify observers when an entity is added", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityAdded];
-            [[observer should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
-            [collection addEntity:changedEntity];
+            [[observer should] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityAdded)];
+            [collection addEntity:entity];
         });
-
-//        it(@"should post a notfication when an entity is added the contains an ESChangedEntity object", ^{
-//            [notificationReceiver stub:@selector(notification) withBlock:(id (^)(NSArray *params)) ^
-//            {
-//                NSNotification *notification = [params objectAtIndex:0];
-//                ESChangedEntity *changedEntity = [notification.userInfo objectForKey:[ESChangedEntity class]];
-//                [[changedEntity shouldNot] beNil];
-//                [[changedEntity should] beKindOfClass:[ESChangedEntity class]];
-//            }];
-//            [[NSNotificationCenter defaultCenter] addObserver:notificationReceiver selector:@selector(notification) name:ESEntityAdded object:collection];
-//            [[notificationReceiver should] receive:@selector(notification) withCount:1];
-//            [collection addEntity:entity becauseOfAddedComponent:nil];
-//        });
 
         it(@"should notify observers when an entity is removed", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityRemoved];
-            [[observer should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
-            [collection addEntity:changedEntity];
-            [collection removeEntity:changedEntity];
+            [[observer should] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityRemoved)];
+            [collection addEntity:entity];
+            [collection removeEntity:entity];
         });
 
         it(@"should not notify observers that have been removed", ^{
             id observer = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer forEvent:ESEntityRemoved];
             [collection removeObserver:observer forEvent:ESEntityRemoved];
-            [[observer shouldNot] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity, collection];
-            [collection addEntity:changedEntity];
-            [collection removeEntity:changedEntity];
+            [[observer shouldNot] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityAdded)];
+            [collection addEntity:entity];
+            [collection removeEntity:entity];
         });
 
         it(@"should notify observers when an entity is removed and added", ^{
-            [collection addEntity:changedEntity];
-            ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityRemoved];
-            ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
+            [collection addEntity:entity];
             id observer1 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             id observer2 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer1 forEvent:ESEntityRemoved];
             [collection addObserver:observer2 forEvent:ESEntityAdded];
-            [[observer1 should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity1, collection];
-            [[observer2 should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity2, collection];
-            [collection remove:changedEntity1 andAddEntity:changedEntity2];
+            [[observer1 should] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityRemoved)];
+            [[observer2 should] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityAdded)];
+            [collection exchangeEntity:entity];
         });
 
 
 
         it(@"should only notify observers of an added entity if the exchanged entity was not part of the collection before", ^{
-            ESChangedEntity *changedEntity1 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityRemoved];
-            ESChangedEntity *changedEntity2 = [[ESChangedEntity alloc] initWithOriginalEntity:entity components:nil changeType:ESEntityAdded];
             id observer1 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             id observer2 = [KWMock mockWithName:@"collection observer" forProtocol:@protocol(ESCollectionObserver)];
             [collection addObserver:observer1 forEvent:ESEntityRemoved];
             [collection addObserver:observer2 forEvent:ESEntityAdded];
-            [[observer1 shouldNot] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity1, collection];
-            [[observer2 should] receive:@selector(entity:changedInCollection:) withCount:1 arguments:changedEntity2, collection];
-            [collection remove:changedEntity1 andAddEntity:changedEntity2];
+            [[observer1 shouldNot] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityRemoved)];
+            [[observer2 should] receive:@selector(entity:changedInCollection:withChangeType:) withCount:1 arguments:entity, collection, theValue(ESEntityAdded)];
+            [collection exchangeEntity:entity];
         });
-        
-        context(@"Collection is provided by Entities", ^{
+
+        it(@"should give back cached entities", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection addEntity:entity3];
+
+            NSArray *entityArray = collection.entities;
+
+            [[entityArray should] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should not give back cached entities if new entity is added", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection addEntity:entity3];
+
+            [[entityArray shouldNot] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should not give back cached entities if an entity is removed", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            [collection removeEntity:entity2];
+
+            [[entityArray shouldNot] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should give back cached entities if an entity not in collection is removed", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            ESEntity *entity3 = [[ESEntity alloc] initWithIndex:2 inRepository:nil ];
+            [collection removeEntity:entity3];
+
+            [[entityArray should] beIdenticalTo:collection.entities];
+
+        });
+
+        it(@"should give back cached entities if an entity is exchanged", ^{
+            ESEntity *entity1 = [[ESEntity alloc] initWithIndex:0 inRepository:nil ];
+            [collection addEntity:entity1];
+
+            ESEntity *entity2 = [[ESEntity alloc] initWithIndex:1 inRepository:nil ];
+            [collection addEntity:entity2];
+
+            NSArray *entityArray = collection.entities;
+
+            [collection exchangeEntity:entity2];
+
+            [[entityArray should] beIdenticalTo:collection.entities];
+
+        });
+
+        context(@"Collection is provided by repository", ^{
             //Given
-            ESEntities *entities = [[ESEntities alloc]init];
-            ESEntity *e1 = [entities createEntity];
-            ESEntity *e2 = [entities createEntity];
+            ESEntityRepository *repo = [[ESEntityRepository alloc]init];
+            ESEntity *e1 = [repo createEntity];
+            ESEntity *e2 = [repo createEntity];
             [e1 addComponent:[SomeComponent new]];
             [e2 addComponent:[SomeComponent new]];
-            ESCollection *collection = [entities collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
-            
+            ESCollection *collection1 = [repo collectionForTypes:[NSSet setWithObject:[SomeComponent class]]];
+
             it(@"should be possible to remove components on entities during the loop. There for return a copy of entities set.", ^{
-                
-                [[[collection entities] should] haveCountOf:2];
-                
-                for(ESEntity *e in collection.entities){
+
+                [[[collection1 entities] should] haveCountOf:2];
+
+                for(ESEntity *e in collection1.entities){
                     [e removeComponentOfType:[SomeComponent class]];
                 }
-                
-                [[[collection entities] should] haveCountOf:0];
+
+                [[[collection1 entities] should] haveCountOf:0];
             });
         });
 
+
+        context(@"Matcher Collections", ^{
+
+            it(@"should properly filter AllOf and remove components inside a loop", ^{
+                //Given
+                ESEntityRepository *repository = [[ESEntityRepository alloc]init];
+                ESEntity *e1 = [repository createEntity];
+                ESEntity *e2 = [repository createEntity];
+                ESEntity *e3 = [repository createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e1 addComponent:[SomeOtherComponent new]];
+                [e2 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                [e3 addComponent:[SomeComponent new]];
+                [e3 addComponent:[SomeThirdComponent new]];
+                ESCollection *collection = [repository collectionForMatcher:[ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil]];
+
+                [[[collection entities] should] haveCountOf:2];
+
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeOtherComponent class]];
+                }
+
+                [[[collection entities] should] haveCountOf:0];
+                [e3 addComponent:[SomeOtherComponent new]];
+                [[[collection entities] should] haveCountOf:1];
+                [e1 addComponent:[SomeOtherComponent new]];
+                [[[collection entities] should] haveCountOf:2];
+            });
+
+            it(@"should properly filter AnyOf and remove components inside a loop", ^{
+                //Given
+                ESEntityRepository *entities = [[ESEntityRepository alloc]init];
+                ESEntity *e1 = [entities createEntity];
+                ESEntity *e2 = [entities createEntity];
+                ESEntity *e3 = [entities createEntity];
+                [e1 addComponent:[SomeComponent new]];
+                [e2 addComponent:[SomeOtherComponent new]];
+                [e3 addComponent:[SomeComponent new]];
+                [e3 addComponent:[SomeThirdComponent new]];
+                ESCollection *collection = [entities collectionForMatcher:[ESMatcher anyOf:[SomeComponent class], [SomeThirdComponent class], nil]];
+
+                [[[collection entities] should] haveCountOf:2];
+
+                for(ESEntity *e in collection.entities){
+                    [e removeComponentOfType:[SomeComponent class]];
+                }
+
+                [[[collection entities] should] haveCountOf:1];
+                [e2 addComponent:[SomeThirdComponent new]];
+                [[[collection entities] should] haveCountOf:2];
+                [e1 addComponent:[SomeThirdComponent new]];
+                [[[collection entities] should] haveCountOf:3];
+            });
+
+        });
 
     });
 
