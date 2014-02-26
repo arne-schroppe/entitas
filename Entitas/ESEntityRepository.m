@@ -75,20 +75,12 @@
     };
 }
 
-- (NSArray *)entitiesForType:(Class)type
-{
-    return [[self collectionForMatcher:[ESMatcher just:type]] entities];
-}
-
-- (NSArray *)entitiesForTypes:(NSSet *)types
-{
-    return [[self collectionForTypes:types] entities];
-}
 
 - (NSArray *)entitiesForMatcher:(ESMatcher *)matcher
 {
     return [[self collectionForMatcher:matcher] entities];
 }
+
 
 - (ESCollection *)collectionForMatcher:(ESMatcher *)matcher
 {
