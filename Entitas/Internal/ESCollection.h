@@ -1,4 +1,5 @@
-#import "ESEntity.h"
+#import "Entitas.h"
+
 
 @protocol ESCollectionObserver;
 

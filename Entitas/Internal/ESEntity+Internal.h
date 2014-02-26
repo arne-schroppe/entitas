@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "ESEntity.h"
+#import "Entitas.h"
+
 
 @class ESEntityRepository;
 
