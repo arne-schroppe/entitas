@@ -11,6 +11,8 @@
 
 - (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity;
 
+- (ESCollection *)collectionForTypes:(NSSet *)types;
+
 - (ESCollection *)collectionForMatcher:(ESMatcher *)matcher;
 
 @end
