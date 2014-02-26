@@ -1,4 +1,6 @@
 #import "ESEntityRepository+Internal.h"
+#import "ESEntity.h"
+#import "ESCollection.h"
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "MGBenchmark.h"
@@ -31,18 +33,32 @@ void test1(){
     
     MGBenchStep(@"Test", @"Collection is created");
     
-    NSArray *collectedEntities;
+    NSArray *collectedEntities = collection.entities;
+    
+    MGBenchStep(@"Test", @"Getting all entities initially");
+    
     for (int i = 0; i < 100; i++) {
         collectedEntities = collection.entities;
     }
     
-    MGBenchStep(@"Test", @"Getting all entities from collection 100 times");
+    MGBenchStep(@"Test", @"Getting all entities from collection cache 100 times");
+    
+    
+    
+    ESMatcher *matcher = [ESMatcher just:[SomeComponent class]];
+    for (int i = 0; i < 100; i++) {
+        collectedEntities = [repo entitiesForMatcher:matcher];
+    }
+    
+    MGBenchStep(@"Test", @"Getting all entities direct from repository 100 times");
+    
     
     for (ESEntity *entity in collectedEntities) {
         [entity exchangeComponent:[SomeComponent new]];
     }
     
     MGBenchStep(@"Test", @"Exchanged component in all entities of the collection");
+    
     
     for (ESEntity *entity in repo.allEntities) {
         [repo destroyEntity:entity];

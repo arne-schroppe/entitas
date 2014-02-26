@@ -129,9 +129,9 @@
     return [_collectionsForType objectForKey:type];
 }
 
-- (NSArray *)allEntities
+- (NSSet *)allEntities
 {
-    return [_entities allObjects];
+    return [_entities copy];
 }
 
 @end

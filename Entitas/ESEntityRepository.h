@@ -13,12 +13,8 @@
 
 - (BOOL)containsEntity:(ESEntity *)entity;
 
-- (NSArray *)allEntities;
-
-- (NSArray *)entitiesForType:(Class)type;
-
-- (NSArray *)entitiesForTypes:(NSSet *)types;
-
 - (NSArray *)entitiesForMatcher:(ESMatcher *)matcher;
+
+- (NSSet *)allEntities;
 
 @end
