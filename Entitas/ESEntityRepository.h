@@ -1,8 +1,8 @@
 #import <Foundation/Foundation.h>
-#import "ESEntity.h"
-#import "ESCollection.h"
+
 
 @class ESMatcher;
+@class ESEntity;
 
 
 @interface ESEntityRepository : NSObject
@@ -11,8 +11,14 @@
 
 - (void)destroyEntity:(ESEntity *)entity;
 
-- (ESCollection *)collectionForTypes:(NSSet *)types;
+- (BOOL)containsEntity:(ESEntity *)entity;
 
-- (ESCollection *)collectionForMatcher:(ESMatcher *)matcher;
+- (NSArray *)allEntities;
+
+- (NSArray *)entitiesForType:(Class)type;
+
+- (NSArray *)entitiesForTypes:(NSSet *)types;
+
+- (NSArray *)entitiesForMatcher:(ESMatcher *)matcher;
 
 @end
