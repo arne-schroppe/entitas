@@ -7,10 +7,10 @@
 
 -(void)executeWithEntities:(NSArray *)entities;
 
--(id)triggeringComponentTypes;
+-(ESMatcher *)triggeringComponents;
 
 @optional
--(id)mandatoryComponentTypes;
+-(ESMatcher *)mandatoryComponents;
 
 
 @end

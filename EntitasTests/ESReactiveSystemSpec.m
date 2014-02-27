@@ -11,10 +11,9 @@
 #import "ESEntityRepository+Internal.h"
 
 
-@interface GXBlockMatcher : NSObject<HCMatcher>
-- (id)initWithBlock:(BOOL (^)(id)) block;
+@interface GXBlockMatcher : NSObject <HCMatcher>
+- (id)initWithBlock:(BOOL (^)(id))block;
 @end
-
 
 
 @implementation GXBlockMatcher {
@@ -22,7 +21,7 @@
 }
 
 
-- (id)initWithBlock:(BOOL (^)(id)) block {
+- (id)initWithBlock:(BOOL (^)(id))block {
 	self = [super init];
 	if (self) {
 		_block = block;
@@ -41,12 +40,12 @@
 
 
 
-@interface GXIsSetContainingOnlyEntityWithComponentTypes : NSObject<HCMatcher>
+@interface IsSingleEntityWithComponentTypes : NSObject <HCMatcher>
 - (id)initWithTypes:(NSSet *)types;
 @end
 
 
-@implementation GXIsSetContainingOnlyEntityWithComponentTypes {
+@implementation IsSingleEntityWithComponentTypes {
 	NSSet *_types;
 }
 
@@ -58,6 +57,7 @@
 
 	return self;
 }
+
 
 - (BOOL)matches:(id)item {
 
@@ -77,14 +77,9 @@
 
 	ESEntity *containedEntity = (ESEntity *) containedItem;
 
-
 	if (![containedEntity.componentTypes isEqualToSet:_types]) {
 		return NO;
 	}
-
-//    if ([containedEntity componentOfType:_class] == nil) {
-//        return NO;
-//    }
 
 	return YES;
 }
@@ -93,20 +88,18 @@
 
 
 
-@interface GXEntityCreatingSystem : NSObject<ESReactiveSystemClient>
-
+@interface EntitySpawningSystem : NSObject <ESReactiveSystemClient>
 - (id)initWithEntities:(ESEntityRepository *)entities;
-
 @end
 
 
-@implementation GXEntityCreatingSystem {
+@implementation EntitySpawningSystem {
 	ESEntityRepository *_entities;
 	BOOL _hasCreatedEntity;
 }
 
 - (void)executeWithEntities:(NSArray *)entities {
-	if(_hasCreatedEntity) {
+	if (_hasCreatedEntity) {
 		return;
 	}
 	ESEntity *newEntity = [_entities createEntity];
@@ -114,6 +107,7 @@
 	[newEntity addComponent:[SomeOtherComponent new]];
 	_hasCreatedEntity = YES;
 }
+
 
 - (id)initWithEntities:(ESEntityRepository *)entities {
 	self = [super init];
@@ -125,213 +119,72 @@
 	return self;
 }
 
-- (NSSet *)triggeringComponentTypes {
-	return [NSSet setWithObject:[SomeComponent class]];
+
+- (ESMatcher *)triggeringComponents {
+	return [ESMatcher just:[SomeComponent class]];
 }
 
 @end
 
 
 
-
-/*
-@interface GXTestInjector : JSObjectionInjector
-- (id)initWithEntities:(ESEntities *)entities andFeaturesService:(GXFeaturesService *)service;
-@end
-
-
-@implementation GXTestInjector {
-	ESEntities *_entities;
-	GXFeaturesService *_featuresService;
-}
-
-- (id)initWithEntities:(ESEntities *)entities andFeaturesService:(GXFeaturesService *)featuresService {
-	self = [super init];
-	if (self) {
-		_entities = entities;
-		_featuresService = featuresService;
-	}
-	return self;
-}
-
-
-- (id)getObject:(id)classOrProtocol {
-	if (classOrProtocol == [ESEntities class]) {
-		return _entities;
-	}
-	else if (classOrProtocol == [GXFeaturesService class]) {
-		return _featuresService;
-	}
-	return [[classOrProtocol alloc] init];
-}
-
-
-@end
-*/
 
 SPEC_BEGIN(ESReactiveSystemSpec)
 
 	describe(@"ESReactiveSystemSpec", ^{
 
-		//__block JSObjectionInjector *injector;
+		ESMatcher *emptyMatcher = [ESMatcher allOfSet:[NSSet set]];
 		__block ESEntityRepository *entities;
 
 
+
 		beforeEach(^{
-
 			entities = [ESEntityRepository new];
-
-			/*
-			featuresService = [GXFeaturesService nullMockWithName:@"featuresService"];
-
-			injector = [[GXTestInjector alloc] initWithEntities:entities andFeaturesService:featuresService];
-			[JSObjection stub:@selector(defaultInjector) andReturn:injector];
-
-			[featuresService stub:@selector(areFeaturesMatching:) andReturn:theValue(YES)];
-
-			*/
 		});
 
 
-		it(@"should not allow triggering components to be empty", ^{
+		//TODO should we really disallow this? How could this be useful?
+		xit(@"should not allow triggering components to be empty", ^{
 			// given
-			NSObject<ESReactiveSystemClient>  *system = (NSObject<ESReactiveSystemClient>*) [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet set]];
+			NSObject <ESReactiveSystemClient> *system = (NSObject <ESReactiveSystemClient> *) [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:emptyMatcher];
 
 			//then
 			[[theBlock(^{
-				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:system entityRepository:entities notificationType:ESEntityAdded];
+				ESReactiveSystem *_ = [[ESReactiveSystem alloc] initWithSystem:system entityRepository:entities notificationType:ESEntityAdded];
 			}) should] raiseWithName:NSInternalInconsistencyException];
 		});
 
-
-		it(@"should not allow triggering components to be nil", ^{
+		//TODO should we really disallow this? How could this be useful?
+		xit(@"should not allow triggering components to be nil", ^{
 			// given
-			NSObject<ESReactiveSystemClient>  *system = (NSObject<ESReactiveSystemClient>*) [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:nil];
+			NSObject <ESReactiveSystemClient> *system = (NSObject <ESReactiveSystemClient> *) [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:nil];
 
 			//then
 			[[theBlock(^{
-				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:system entityRepository:entities notificationType:ESEntityAdded];
+				ESReactiveSystem *_ = [[ESReactiveSystem alloc] initWithSystem:system entityRepository:entities notificationType:ESEntityAdded];
 			}) should] raiseWithName:NSInternalInconsistencyException];
 		});
-
-//
-//			it(@"should inject its dependencies", ^{
-//
-//				// given
-//				NSObject<ESReactiveSystemClient>  *system = (NSObject<ESReactiveSystemClient>*) [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
-//				[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-//				[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
-//
-//				// expectations
-//				[[injector should] receive:@selector(injectDependencies:)];
-//
-//				//when
-//				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:system notificationType:ESEntityAdded];
-//
-//			});
 
 
 		it(@"should not execute the client system if no entities were collected", ^{
-			NSObject<ESReactiveSystemClient>  *system = (NSObject<ESReactiveSystemClient>*) [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			NSObject <ESReactiveSystemClient> *system = (NSObject <ESReactiveSystemClient> *) [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:system entityRepository:entities notificationType:ESEntityAdded];
-			
+
 
 			[[system shouldNot] receive:@selector(executeWithEntities:)];
 			[reactiveSystem execute];
 		});
 
 
-//			it(@"should execute the client system if any of the features it is part of is active", ^{
-//				//given
-//				KWMock  *clientSystem = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-//				[clientSystem stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-//				[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
-//
-//
-//				[featuresService stub:@selector(areFeaturesMatching:) andReturn:theValue(YES)];
-//
-//				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject<ESReactiveSystemClient>*) clientSystem notificationType:ESEntityAdded inFeatures:[NSSet mock]];
-//
-//				ESEntity *triggerEntity = [entities createEntity];
-//				[triggerEntity addComponent:[SomeComponent new]];
-//
-//				//expectations
-//				[[clientSystem should] receive:@selector(executeWithEntities:)];
-//
-//				//when
-//				[reactiveSystem execute];
-//			});
-
-//			it(@"should execute the client system if no features defined", ^{
-//				//given
-//				KWMock  *clientSystem = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-//				[clientSystem stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-//				[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
-//
-//				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject<ESReactiveSystemClient>*) clientSystem notificationType:ESEntityAdded inFeatures:nil];
-//
-//				ESEntity *triggerEntity = [entities createEntity];
-//				[triggerEntity addComponent:[SomeComponent new]];
-//
-//				//expectations
-//				[[[featuresService shouldNot] receive] areFeaturesMatching:any()];
-//				[[clientSystem should] receive:@selector(executeWithEntities:)];
-//
-//				//when
-//				[reactiveSystem execute];
-//			});
-
-//			it(@"should not execute the client system if none of the features it is part of are active", ^{
-//
-//				//given
-//				NSObject<ESReactiveSystemClient>  *clientSystem = (NSObject<ESReactiveSystemClient>*) [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-//				[clientSystem stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-//				[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
-//
-//				[featuresService stub:@selector(areFeaturesMatching:) andReturn:theValue(NO)];
-//
-//				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:clientSystem notificationType:ESEntityAdded inFeatures:[NSSet mock]];
-//
-//				ESEntity *triggerEntity = [entities createEntity];
-//				[triggerEntity addComponent:[SomeComponent new]];
-//
-//				//expectations
-//				[[clientSystem shouldNot] receive:@selector(executeWithEntities:)];
-//
-//				//when
-//				[reactiveSystem execute];
-//			});
-
-//			it(@"should still clear the collected entities after execution even if no feature of the system is active", ^{
-//
-//				// given
-//				KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-//				[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObjects:[SomeComponent class], nil]];
-//				[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
-//
-//				ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system notificationType:ESEntityAdded inFeatures:[NSSet mock]];
-//
-//				[featuresService stub:@selector(areFeaturesMatching:) andReturn:theValue(NO)];
-//				ESEntity *entity = [entities createEntity];
-//				[entity addComponent:[SomeComponent new]];
-//				[[system shouldNot] receive:@selector(executeWithEntities:)];
-//				[reactiveSystem execute];
-//
-//				[featuresService stub:@selector(areFeaturesMatching:) andReturn:theValue(YES)];
-//				[[system shouldNot] receive:@selector(executeWithEntities:) ];
-//				[reactiveSystem execute];
-//
-//			});
-
 		it(@"should execute the client system with a collection of added entities", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system entityRepository:entities notificationType:ESEntityAdded];
 
@@ -339,17 +192,17 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]]];
 			[reactiveSystem execute];
 		});
 
 
 		it(@"should allow the use of component matchers for triggering components", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
 
 			ESMatcher *matcher = [ESMatcher just:[SomeComponent class]];
-			[system stub:@selector(triggeringComponentTypes) andReturn:matcher];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			[system stub:@selector(triggeringComponents) andReturn:matcher];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system entityRepository:entities notificationType:ESEntityAdded];
@@ -358,15 +211,15 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]]];
 			[reactiveSystem execute];
 		});
 
 
 		it(@"should not execute its client system if a mandatory component is added, only when a triggering component is added", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet setWithObject:[SomeOtherComponent class]]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:[ESMatcher just:[SomeOtherComponent class]]];
 
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
@@ -382,9 +235,9 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 
 		it(@"should only execute its client system with entities that still have all mandatory components", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet setWithObject:[SomeOtherComponent class]]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:[ESMatcher just:[SomeOtherComponent class]]];
 
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeOtherComponent new]];
@@ -399,20 +252,18 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[entity2 addComponent:[SomeComponent new]];
 			[entity2 removeComponentOfType:[SomeOtherComponent class]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil ]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil ]]];
 			[reactiveSystem execute];
 		});
-
-
 
 
 		it(@"should allow the use of component matchers for mandatory components", ^{
 
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
 			ESMatcher *matcher = [ESMatcher just:[SomeOtherComponent class]];
 
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:matcher];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:matcher];
 
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeOtherComponent new]];
@@ -427,18 +278,16 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[entity2 addComponent:[SomeComponent new]];
 			[entity2 removeComponentOfType:[SomeOtherComponent class]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil ]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil ]]];
 			[reactiveSystem execute];
 
 		});
 
 
-
-
 		it(@"should only listen to one collection", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system entityRepository:entities notificationType:ESEntityAdded];
 
@@ -451,16 +300,16 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			ESEntity *otherEntity = [entities createEntity];
 			[otherEntity addComponent:[SomeOtherComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]] ];
-			[[system shouldNot] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeOtherComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]]];
+			[[system shouldNot] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeOtherComponent class]]]];
 			[reactiveSystem execute];
 
 		});
 
 		it(@"should execute the client system with a collection of entities that had components added", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESEntity *entity = [entities createEntity];
 
@@ -469,14 +318,14 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 			[entity addComponent:[SomeComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]]];
 			[reactiveSystem execute];
 		});
 
 		it(@"should execute the client system with a collection of non-duplicated entities, even when component is added twice", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESEntity *entity = [entities createEntity];
 
@@ -486,15 +335,15 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[entity addComponent:[SomeComponent new]];
 			[entity exchangeComponent:[SomeComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]]];
 			[reactiveSystem execute];
 		});
 
 
 		it(@"should execute the client system with a collection of entities that had components removed", ^{
-			KWMock  *system =  [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
@@ -505,15 +354,15 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 			[entity removeComponentOfType:[SomeComponent class]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeOtherComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeOtherComponent class]]]];
 			[reactiveSystem execute];
 		});
 
 
 		it(@"should execute the client system with a collection of non-duplicated entities, even when component is removed twice", ^{
-			KWMock  *system =  [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
@@ -526,7 +375,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[entity addComponent:[SomeComponent new]];
 			[entity removeComponentOfType:[SomeComponent class]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeOtherComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeOtherComponent class]]]];
 			[reactiveSystem execute];
 		});
 
@@ -534,8 +383,8 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		it(@"should also include completely removed entities", ^{
 
 			KWMock *system = [KWMock nullMockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
@@ -551,11 +400,10 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-
 		it(@"should execute the client system only with entities it's interested in", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system entityRepository:entities notificationType:ESEntityAdded];
 
@@ -567,15 +415,15 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			ESEntity *entity2 = [entities createEntity];
 			[entity2 addComponent:[SomeOtherComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObjects:[SomeComponent class], [SomeOtherComponent class], nil]]];
 			[reactiveSystem execute];
 		});
 
 
 		it(@"should clear the collected entities after execution", ^{
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system entityRepository:entities notificationType:ESEntityAdded];
 
@@ -583,7 +431,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			ESEntity *entity = [entities createEntity];
 			[entity addComponent:[SomeComponent new]];
 
-			[[system should] receive:@selector(executeWithEntities:) withArguments:[[GXIsSetContainingOnlyEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]] ];
+			[[system should] receive:@selector(executeWithEntities:) withArguments:[[IsSingleEntityWithComponentTypes alloc] initWithTypes:[NSSet setWithObject:[SomeComponent class]]]];
 
 			[reactiveSystem execute];
 
@@ -594,9 +442,9 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 		it(@"should still clear the collected entities after execution even if no entity fulfilled the requirements", ^{
 
-			KWMock  *system =  [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[system stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[system stub:@selector(mandatoryComponentTypes) andReturn:[NSSet setWithObject:[SomeOtherComponent class]]];
+			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
+			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[system stub:@selector(mandatoryComponents) andReturn:[ESMatcher just:[SomeOtherComponent class]]];
 
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:(NSObject <ESReactiveSystemClient> *) system entityRepository:entities notificationType:ESEntityAdded];
 
@@ -613,13 +461,9 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-
-
-
-
 		it(@"should collect entities, that are added while the client system is executing, to a new collection which is used in the next execution", ^{
 
-			GXEntityCreatingSystem *clientSystem = [[GXEntityCreatingSystem alloc] initWithEntities:entities];
+			EntitySpawningSystem *clientSystem = [[EntitySpawningSystem alloc] initWithEntities:entities];
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:clientSystem entityRepository:entities notificationType:ESEntityAdded];
 
 
@@ -643,7 +487,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 				ESEntity *containedEntity = (ESEntity *) containedItem;
 
-				if(containedEntity.componentTypes.count != 1) {
+				if (containedEntity.componentTypes.count != 1) {
 					return NO;
 				}
 
@@ -692,8 +536,8 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		it(@"should clear collections and remove observer on deactivation", ^{
 			// given
 			id clientSystem = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[clientSystem stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			[clientSystem stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[clientSystem stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESCollection *watcherCollection = [ESCollection nullMockWithName:@"watcher collection"];
 			[entities stub:@selector(collectionForMatcher:) andReturn:watcherCollection withArguments:[ESMatcher just:[SomeComponent class]]];
@@ -711,8 +555,8 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		it(@"should deactivate itself and than add itself as observer on activation", ^{
 			// given
 			id clientSystem = [KWMock mockForProtocol:@protocol(ESReactiveSystemClient)];
-			[clientSystem stub:@selector(triggeringComponentTypes) andReturn:[NSSet setWithObject:[SomeComponent class]]];
-			[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
+			[clientSystem stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
+			[clientSystem stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
 
 			ESCollection *watcherCollection = [ESCollection nullMockWithName:@"watcher collection"];
 			[entities stub:@selector(collectionForMatcher:) andReturn:watcherCollection withArguments:[ESMatcher just:[SomeComponent class]]];

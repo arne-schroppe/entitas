@@ -7,8 +7,7 @@
 @protocol ESReactiveSystemClient;
 
 
-//TODO move collecitonobserver to private category
-@interface ESReactiveSystem : NSObject<ESSystem, ESCollectionObserver>
+@interface ESReactiveSystem : NSObject<ESSystem>
 
 @property NSObject<ESReactiveSystemClient> *clientSystem;
 @property (readonly) NSArray *collectedEntities;

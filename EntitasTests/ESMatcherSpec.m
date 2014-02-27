@@ -21,9 +21,7 @@ SPEC_BEGIN(ESMatcherSpec)
 
         context(@"for all component types", ^{
 
-            it(@"should return YES if all component types are present in the entity", ^{
-
-
+            it(@"should match if all component types are present in the entity", ^{
                 matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
 
                 ESEntity *entity = [repo createEntity];
@@ -36,7 +34,31 @@ SPEC_BEGIN(ESMatcherSpec)
             });
 
 
-            it(@"should return NO if not all component types are present in the entity", ^{
+			it(@"should match anything if matcher has no component types", ^{
+				matcher = [ESMatcher allOfSet:[NSSet set]];
+
+				ESEntity *entity = [repo createEntity];
+				[entity addComponent:[SomeComponent new]];
+				[entity addComponent:[SomeOtherComponent new]];
+
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+				[[theValue(isMatching) should] beYes];
+			});
+
+
+			it(@"should match an empty entity if matcher has no component types", ^{
+				matcher = [ESMatcher allOfSet:[NSSet set]];
+
+				ESEntity *entity = [repo createEntity];
+
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+				[[theValue(isMatching) should] beYes];
+			});
+
+
+            it(@"should not match if not all component types are present in the entity", ^{
 
 
                 matcher = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
@@ -88,7 +110,7 @@ SPEC_BEGIN(ESMatcherSpec)
 
         context(@"for any component types", ^{
 
-            it(@"should return YES if any of the components are present", ^{
+            it(@"should match if any of the components are present", ^{
 
 
                 matcher = [ESMatcher anyOf:[SomeComponent class], [SomeOtherComponent class], nil];
@@ -105,7 +127,7 @@ SPEC_BEGIN(ESMatcherSpec)
             });
 
 
-            it(@"should return NO if none of the components are present", ^{
+            it(@"should not match if none of the components are present", ^{
 
 
                 matcher = [ESMatcher anyOf:[SomeComponent class], [SomeOtherComponent class], nil];
@@ -120,6 +142,33 @@ SPEC_BEGIN(ESMatcherSpec)
                 [[theValue(isMatching) should] beNo];
 
             });
+
+
+
+
+			it(@"should match nothing if matcher has no component types", ^{
+				matcher = [ESMatcher anyOfSet:[NSSet set]];
+
+				ESEntity *entity = [repo createEntity];
+				[entity addComponent:[SomeComponent new]];
+				[entity addComponent:[SomeOtherComponent new]];
+
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+				[[theValue(isMatching) should] beNo];
+			});
+
+
+			it(@"should not match an empty entity if matcher has no component types", ^{
+				matcher = [ESMatcher anyOfSet:[NSSet set]];
+
+				ESEntity *entity = [repo createEntity];
+
+				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+
+				[[theValue(isMatching) should] beNo];
+			});
+
 
 
             it(@"should be equal to another matcher of the same type with the same components", ^{
@@ -160,7 +209,7 @@ SPEC_BEGIN(ESMatcherSpec)
 
         context(@"for just one component type", ^{
 
-            it(@"should return YES if the component is present", ^{
+            it(@"should match if the component is present", ^{
 
 
                 matcher = [ESMatcher just:[SomeComponent class]];
@@ -176,7 +225,7 @@ SPEC_BEGIN(ESMatcherSpec)
             });
 
 
-            it(@"should return NO if the components is not present", ^{
+            it(@"should not match if the components is not present", ^{
 
                 matcher = [ESMatcher just:[SomeComponent class]];
 
