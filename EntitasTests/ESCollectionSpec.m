@@ -1,6 +1,6 @@
 #import "Kiwi.h"
 #import "ESCollection.h"
-#import "ESEntityRepository.h"
+#import "ESEntityRepository+Internal.h"
 #import "SomeComponent.h"
 #import "ESCollection+Internal.h"
 #import "ESEntity+Internal.h"

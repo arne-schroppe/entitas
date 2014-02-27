@@ -33,17 +33,17 @@
     return entity;
 }
 
-- (BOOL)containsEntity:(ESEntity *)entity
-{
-    return [_entities containsObject:entity];
-}
-
 - (void)destroyEntity:(ESEntity *)entity
 {
     for (Class componentType in [[entity componentTypes] copy])
         [entity removeComponentOfType:componentType];
 
     [_entities removeObject:entity];
+}
+
+- (BOOL)containsEntity:(ESEntity *)entity
+{
+    return [_entities containsObject:entity];
 }
 
 - (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity {
@@ -75,7 +75,15 @@
     };
 }
 
-- (ESCollection *)collectionForMatcher:(ESMatcher *)matcher {
+
+- (NSArray *)entitiesForMatcher:(ESMatcher *)matcher
+{
+    return [[self collectionForMatcher:matcher] entities];
+}
+
+
+- (ESCollection *)collectionForMatcher:(ESMatcher *)matcher
+{
     if (![_collections objectForKey:matcher])
     {
         ESCollection *collection = [[ESCollection alloc] initWithMatcher:matcher];
@@ -97,13 +105,13 @@
     return [_collections objectForKey:matcher];
 }
 
-
-
-- (ESCollection *)collectionForTypes:(NSSet *)types {
+- (ESCollection *)collectionForTypes:(NSSet *)types
+{
     if (types.count < 1)
         [NSException raise:@"Empty type set." format:@"A collection for an empty type-set cannot be provided."];
     return [self collectionForMatcher:[ESMatcher allOfSet:types]];
 }
+
 
 - (NSMutableSet *)internalCollectionsForType:(Class)type
 {
@@ -113,11 +121,9 @@
     return [_collectionsForType objectForKey:type];
 }
 
-
-
-- (NSArray *)allEntities
+- (NSSet *)allEntities
 {
-    return [_entities allObjects];
+    return [_entities copy];
 }
 
 @end

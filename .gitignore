@@ -3,6 +3,7 @@
 
 # Let's try and keep the Pods out of the repo
 Entitas.xcworkspace
+Entitas.xcodeproj/project.xcworkspace/
 Pods
 DerivedData
 xcuserdata

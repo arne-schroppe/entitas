@@ -1,9 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "ESEntityRepository.h"
 
-@interface ESEntityRepository (Internal)
+@class ESCollection;
 
-- (BOOL)containsEntity:(ESEntity *)entity;
+@interface ESEntityRepository (Internal)
 
 - (void)componentOfType:(Class)type hasBeenAddedToEntity:(ESEntity *)entity;
 
@@ -11,6 +11,8 @@
 
 - (void)componentOfType:(Class)type hasBeenRemovedFromEntity:(ESEntity *)entity;
 
-- (NSArray *)allEntities;
+- (ESCollection *)collectionForTypes:(NSSet *)types;
+
+- (ESCollection *)collectionForMatcher:(ESMatcher *)matcher;
 
 @end

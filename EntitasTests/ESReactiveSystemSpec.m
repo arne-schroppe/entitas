@@ -8,6 +8,7 @@
 #import "SomeComponent.h"
 #import "SomeOtherComponent.h"
 #import "ESReactiveSystem.h"
+#import "ESEntityRepository+Internal.h"
 
 
 @interface GXBlockMatcher : NSObject<HCMatcher>
@@ -446,7 +447,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[entity addComponent:[SomeComponent new]];
 
 
-			ESCollection *otherCollection = [entities collectionForTypes:[NSSet setWithObject:[SomeOtherComponent class]]];
+			ESCollection *otherCollection = [entities collectionForMatcher:[ESMatcher just:[SomeOtherComponent class]]];
 			ESEntity *otherEntity = [entities createEntity];
 			[otherEntity addComponent:[SomeOtherComponent new]];
 
@@ -695,7 +696,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
 
 			ESCollection *watcherCollection = [ESCollection nullMockWithName:@"watcher collection"];
-			[entities stub:@selector(collectionForTypes:) andReturn:watcherCollection withArguments:[NSSet setWithObject:[SomeComponent class]]];
+			[entities stub:@selector(collectionForMatcher:) andReturn:watcherCollection withArguments:[ESMatcher just:[SomeComponent class]]];
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:clientSystem entityRepository:entities notificationType:ESEntityAdded];
 
 
@@ -714,7 +715,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[clientSystem stub:@selector(mandatoryComponentTypes) andReturn:[NSSet set]];
 
 			ESCollection *watcherCollection = [ESCollection nullMockWithName:@"watcher collection"];
-			[entities stub:@selector(collectionForTypes:) andReturn:watcherCollection withArguments:[NSSet setWithObject:[SomeComponent class]]];
+			[entities stub:@selector(collectionForMatcher:) andReturn:watcherCollection withArguments:[ESMatcher just:[SomeComponent class]]];
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:clientSystem entityRepository:entities notificationType:ESEntityAdded];
 
 

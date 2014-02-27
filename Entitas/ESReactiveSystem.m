@@ -3,6 +3,7 @@
 #import "ESEntityRepository.h"
 #import "ESReactiveSystem.h"
 #import "ESReactiveSystemClient.h"
+#import "ESEntityRepository+Internal.h"
 
 
 @implementation ESReactiveSystem {
@@ -42,7 +43,7 @@
 			NSSet *triggeringComponentSet = (NSSet *) componentsOrMatcher;
 			NSAssert(triggeringComponentSet != nil && triggeringComponentSet.count > 0, @"Triggering components can't be empty");
 
-			_watcherCollection = [_entityRepository collectionForTypes:triggeringComponentSet];
+			_watcherCollection = [_entityRepository collectionForMatcher:[ESMatcher allOfSet:triggeringComponentSet]];
 		}
 		else if ([componentsOrMatcher isKindOfClass:[ESMatcher class]]) {
 			ESMatcher *matcher = componentsOrMatcher;
