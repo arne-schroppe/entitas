@@ -2,7 +2,7 @@
 #import "ESSystem.h"
 #import "ESEntityRepository.h"
 #import "ESReactiveSystem.h"
-#import "ESReactiveSystemClient.h"
+#import "ESReactiveSubSystem.h"
 #import "ESEntityRepository+Internal.h"
 
 
@@ -27,7 +27,7 @@
 }
 
 
-- (id)initWithSystem:(NSObject <ESReactiveSystemClient> *)system entityRepository:(ESEntityRepository *)entityRepository notificationType:(ESEntityChange)type {
+- (id)initWithSystem:(NSObject <ESReactiveSubSystem> *)system entityRepository:(ESEntityRepository *)entityRepository notificationType:(ESEntityChange)type {
     NSAssert(system, @"Needs a system");
 
     self = [super init];
@@ -41,7 +41,7 @@
         ESMatcher *triggeringMatcher = _clientSystem.triggeringComponents;
         _watcherCollection = [_entityRepository collectionForMatcher:triggeringMatcher];
 
-        _mandatoryComponents = [ESMatcher allOfSet:[NSSet set]]; //allow everything by default
+        _mandatoryComponents = [ESMatcher allOf:nil]; //allow everything by default
         if ([_clientSystem respondsToSelector:@selector(mandatoryComponents)]) {
             ESMatcher * mandatoryComponents = _clientSystem.mandatoryComponents;
             _mandatoryComponents = mandatoryComponents;

@@ -55,6 +55,9 @@
 
 
 + (ESMatcher *)just:(Class)someClass {
+	if (someClass == nil) {
+		return [[ESAllComponentTypes alloc] initWithTypes:[NSSet set]];
+	}
     return [[ESAllComponentTypes alloc] initWithTypes:[NSSet setWithObject:someClass]];
 }
 

@@ -128,7 +128,7 @@
 		85D85C555490C2019A6FD13C /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
 		85D85C8171E09DEB7802B57F /* ESMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESMatcher.h; sourceTree = "<group>"; };
 		85D85DA69F55B3F15FD94207 /* ESReactiveSystemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystemSpec.m; sourceTree = "<group>"; };
-		85D85F02D744F267FD3E7FD3 /* ESReactiveSystemClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSystemClient.h; sourceTree = "<group>"; };
+		85D85F02D744F267FD3E7FD3 /* ESReactiveSubSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSubSystem.h; sourceTree = "<group>"; };
 		B06B003BC9B7BF20962E1E90 /* ESEntityRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntityRepository.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
 		B06B01E58C73C158BF02110B /* SomeOtherComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeOtherComponent.h; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 				638F09AFABAA69E5076225DE /* Entitas.h */,
 				85D8598D4F940B8E9806FD1B /* ESReactiveSystem.m */,
 				85D8509DA6C3F006EEB28386 /* ESReactiveSystem.h */,
-				85D85F02D744F267FD3E7FD3 /* ESReactiveSystemClient.h */,
+				85D85F02D744F267FD3E7FD3 /* ESReactiveSubSystem.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";

@@ -3,7 +3,7 @@
 @class ESMatcher;
 
 
-@protocol ESReactiveSystemClient <NSObject>
+@protocol ESReactiveSubSystem <NSObject>
 
 -(void)executeWithEntities:(NSArray *)entities;
 

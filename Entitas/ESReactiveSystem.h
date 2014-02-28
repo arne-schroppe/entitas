@@ -4,15 +4,15 @@
 
 @class ESEntity;
 @class ESMatcher;
-@protocol ESReactiveSystemClient;
+@protocol ESReactiveSubSystem;
 
 
 @interface ESReactiveSystem : NSObject<ESSystem>
 
-@property NSObject<ESReactiveSystemClient> *clientSystem;
+@property NSObject<ESReactiveSubSystem> *clientSystem;
 @property (readonly) NSArray *collectedEntities;
 @property (readonly) ESEntityChange notificationType;
 
-- (id)initWithSystem:(NSObject <ESReactiveSystemClient> *)system entityRepository:(ESEntityRepository *)entityRepository notificationType:(ESEntityChange)type;
+- (id)initWithSystem:(NSObject <ESReactiveSubSystem> *)system entityRepository:(ESEntityRepository *)entityRepository notificationType:(ESEntityChange)type;
 
 @end
