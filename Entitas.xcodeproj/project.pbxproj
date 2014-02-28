@@ -16,6 +16,7 @@
 		0B1C08D518A3883B00D4F58B /* ESEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6026612B451F8481D098CDEF /* ESEntity.m */; };
 		0B1C08D618A3883B00D4F58B /* ESEntityRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntityRepository.m */; };
 		0B1C08DA18A3883B00D4F58B /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
+		0B57264418C0BE9700478619 /* ZZZSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B57264318C0BE9700478619 /* ZZZSpec.m */; };
 		6026611BF7005CBCCBA49909 /* ESEntitySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 602665E109AC8CE9FE47191E /* ESEntitySpec.m */; };
 		6026631FBF95A838C00D9611 /* ESSystem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6026633037CC88FB18D8F589 /* ESSystem.h */; };
 		602663C1E330312CA8A12A1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602660DC88A48822B365AACC /* Foundation.framework */; };
@@ -91,6 +92,7 @@
 		0B1C08C918A385FD00D4F58B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0B1C08CC18A385FD00D4F58B /* PerformanceTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerformanceTest-Prefix.pch"; sourceTree = "<group>"; };
 		0B1C08CD18A385FD00D4F58B /* PerformanceTest.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = PerformanceTest.1; sourceTree = "<group>"; };
+		0B57264318C0BE9700478619 /* ZZZSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZZSpec.m; sourceTree = "<group>"; };
 		15CB0BF60FED4C4F906B5959 /* Pods-PerformanceTest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerformanceTest.xcconfig"; path = "Pods/Pods-PerformanceTest.xcconfig"; sourceTree = "<group>"; };
 		38591DBF038641D3B9A8355C /* libPods-EntitasTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EntitasTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A8656A5792C467A9F822656 /* libPods-PerformanceTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerformanceTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +271,7 @@
 				B06B09526BD11CEC08FBFC6A /* ESEntityRepositorySpec.m */,
 				B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */,
 				85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */,
+				0B57264318C0BE9700478619 /* ZZZSpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B57264418C0BE9700478619 /* ZZZSpec.m in Sources */,
 				60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */,
 				602663E20AC390008AA94EEA /* ESSystems.m in Sources */,
 				6026611BF7005CBCCBA49909 /* ESEntitySpec.m in Sources */,
@@ -607,6 +611,8 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Entitas/Entitas-Prefix.pch";
 				INFOPLIST_FILE = "EntitasTests/EntitasTests-Info.plist";
@@ -651,6 +657,8 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Entitas/Entitas-Prefix.pch";
 				INFOPLIST_FILE = "EntitasTests/EntitasTests-Info.plist";
