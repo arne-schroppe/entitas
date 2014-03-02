@@ -40,7 +40,9 @@
 		85D8582B74E805FF9FED9F93 /* ESReactiveSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8598D4F940B8E9806FD1B /* ESReactiveSystem.m */; };
 		85D85A69D294886F5F866282 /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
 		85D85A7C423758FC2885E86E /* ESReactiveSystem2.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D855D5656490624AF7AA5B /* ESReactiveSystem2.m */; };
+		85D85B0486967929E4B734B5 /* ESReactiveSystem4.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A7FB57D7C7C30430B0E /* ESReactiveSystem4.m */; };
 		85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */; };
+		85D85C60F1EFF251502E1CB2 /* ESReactiveSystem4.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A7FB57D7C7C30430B0E /* ESReactiveSystem4.m */; };
 		85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
 		85D85DFA4529C3917B537EF8 /* ESReactiveSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8598D4F940B8E9806FD1B /* ESReactiveSystem.m */; };
 		85D85E3D107BD2ABBC393685 /* ESReactiveSystemSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85DA69F55B3F15FD94207 /* ESReactiveSystemSpec.m */; };
@@ -132,16 +134,19 @@
 		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
 		85D854244EF24EE64E6142AC /* ReactiveSystemUsageExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactiveSystemUsageExamples.m; sourceTree = "<group>"; };
 		85D855D5656490624AF7AA5B /* ESReactiveSystem2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystem2.m; sourceTree = "<group>"; };
+		85D8588922AFBB4E8FDADB8C /* ESReactiveSubSystem4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSubSystem4.h; sourceTree = "<group>"; };
 		85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcherSpec.m; sourceTree = "<group>"; };
 		85D8598D4F940B8E9806FD1B /* ESReactiveSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystem.m; sourceTree = "<group>"; };
 		85D859F8672F5A83A40D4947 /* ESReactiveSubSystem3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSubSystem3.h; sourceTree = "<group>"; };
 		85D85A40B54895A0164D8768 /* SomeThirdComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeThirdComponent.m; sourceTree = "<group>"; };
 		85D85A4BCFD03E534CAAE0CD /* ESReactiveSystem3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystem3.m; sourceTree = "<group>"; };
+		85D85A7FB57D7C7C30430B0E /* ESReactiveSystem4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystem4.m; sourceTree = "<group>"; };
 		85D85C555490C2019A6FD13C /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
 		85D85C8171E09DEB7802B57F /* ESMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESMatcher.h; sourceTree = "<group>"; };
 		85D85D2E727FD0F260BD24DD /* ESReactiveSystem3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSystem3.h; sourceTree = "<group>"; };
 		85D85DA69F55B3F15FD94207 /* ESReactiveSystemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystemSpec.m; sourceTree = "<group>"; };
 		85D85F02D744F267FD3E7FD3 /* ESReactiveSubSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSubSystem.h; sourceTree = "<group>"; };
+		85D85F4164C6CEB803B07A0D /* ESReactiveSystem4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSystem4.h; sourceTree = "<group>"; };
 		B06B003BC9B7BF20962E1E90 /* ESEntityRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntityRepository.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
 		B06B01E58C73C158BF02110B /* SomeOtherComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeOtherComponent.h; sourceTree = "<group>"; };
@@ -266,6 +271,9 @@
 				85D85A4BCFD03E534CAAE0CD /* ESReactiveSystem3.m */,
 				85D85D2E727FD0F260BD24DD /* ESReactiveSystem3.h */,
 				85D859F8672F5A83A40D4947 /* ESReactiveSubSystem3.h */,
+				85D85A7FB57D7C7C30430B0E /* ESReactiveSystem4.m */,
+				85D85F4164C6CEB803B07A0D /* ESReactiveSystem4.h */,
+				85D8588922AFBB4E8FDADB8C /* ESReactiveSubSystem4.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -511,6 +519,7 @@
 				85D85FDF96C214D5C5A9F37C /* ESReactiveSystem2.m in Sources */,
 				85D85275E3A8923974F032F9 /* ReactiveSystemUsageExamples.m in Sources */,
 				85D856FBF9395B531D98266D /* ESReactiveSystem3.m in Sources */,
+				85D85B0486967929E4B734B5 /* ESReactiveSystem4.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +535,7 @@
 				CFC2055B18BE097F006A4A50 /* ESCollection.mm in Sources */,
 				85D85A7C423758FC2885E86E /* ESReactiveSystem2.m in Sources */,
 				85D856D52E6301B9C905B53B /* ESReactiveSystem3.m in Sources */,
+				85D85C60F1EFF251502E1CB2 /* ESReactiveSystem4.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

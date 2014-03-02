@@ -6,6 +6,8 @@
 #import "ESReactiveSubSystem.h"
 #import "ESReactiveSubSystem3.h"
 #import "ESReactiveSystem3.h"
+#import "ESReactiveSubSystem4.h"
+#import "ESReactiveSystem4.h"
 
 
 @interface PrintString : NSObject<ESReactiveSubSystem>
@@ -50,12 +52,42 @@
 
 
 
+
+@interface PrintString4 : NSObject<ESReactiveSubSystem4>
+
+@end
+
+@implementation PrintString4
+
+- (void)executeWithEntities:(NSArray *)entities {
+	NSLog(@"Hello, Version 4!");
+}
+
+
+- (ESEntityChange)notificationType {
+	return ESEntityAdded;
+}
+
+
+- (ESMatcher *)triggeringComponents {
+	return [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
+}
+
+
+- (ESMatcher *)mandatoryComponents {
+	return [ESMatcher allOf:[SomeComponent class], nil];
+}
+
+@end
+
+
+
 SPEC_BEGIN(ReactiveSystemExamples)
 
 describe(@"Reactive system creation", ^{
 
 
-	it(@"Version 1", ^{
+	it(@"Version 1: Classic", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem *system = [[ESReactiveSystem alloc] initWithSystem:[PrintString new]
@@ -74,7 +106,7 @@ describe(@"Reactive system creation", ^{
 
 
 
-	it(@"Version 2", ^{
+	it(@"Version 2: Block", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem2 *system = [[ESReactiveSystem2 alloc] initWithEntityRepository:repo
@@ -102,7 +134,7 @@ describe(@"Reactive system creation", ^{
 
 
 
-	it(@"Version 3", ^{
+	it(@"Version 3: Barebones subsystem", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem3 *system = [[ESReactiveSystem3 alloc] initWithEntityRepository:repo
@@ -114,6 +146,25 @@ describe(@"Reactive system creation", ^{
 																					       nil]];
 		system.mandatoryComponents = [ESMatcher allOf:[SomeComponent class], nil];
 
+
+		for (int i=0; i < 4; ++i) {
+			[system execute];
+
+			ESEntity *entity = [repo createEntity];
+			[entity addComponent:[SomeComponent new]];
+			[entity addComponent:[SomeOtherComponent new]];
+		}
+
+	});
+
+
+
+
+	it(@"Version 4: All inclusive", ^{
+
+		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
+		ESReactiveSystem4 *system = [[ESReactiveSystem4 alloc] initWithSystem:[PrintString4 new]
+														   entityRepository:repo];
 
 		for (int i=0; i < 4; ++i) {
 			[system execute];
