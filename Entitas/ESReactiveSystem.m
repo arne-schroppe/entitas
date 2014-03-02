@@ -60,9 +60,12 @@
         return;
     }
 
-    NSArray *entitiesForCurrentExecution = [_collectedEntities filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(ESEntity *evaluatedObject, NSDictionary *bindings) {
-        return [_mandatoryComponents areComponentsMatching:evaluatedObject.componentTypes];
-    }]];
+	NSMutableArray *entitiesForCurrentExecution = [[NSMutableArray alloc] init];
+	for (ESEntity *entity in _collectedEntities) {
+		if ([_mandatoryComponents areComponentsMatching:entity.componentTypes]) {
+			[entitiesForCurrentExecution addObject:entity];
+		}
+	}
 
     _collectedEntities = [[NSMutableArray alloc] init];
 

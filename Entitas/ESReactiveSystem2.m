@@ -64,7 +64,6 @@
     }
 
     NSMutableArray *entitiesForCurrentExecution = [[NSMutableArray alloc] init];
-
 	for (ESEntity *entity in _collectedEntities) {
 		if ([_mandatoryComponents areComponentsMatching:entity.componentTypes]) {
 			[entitiesForCurrentExecution addObject:entity];
