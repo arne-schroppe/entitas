@@ -11,31 +11,9 @@
 #import "ESEntityRepository+Internal.h"
 
 
-@interface GXBlockMatcher : NSObject <HCMatcher>
+
+@interface BlockMatcher : NSObject <HCMatcher>
 - (id)initWithBlock:(BOOL (^)(id))block;
-@end
-
-
-@implementation GXBlockMatcher {
-	BOOL (^_block)(id);
-}
-
-
-- (id)initWithBlock:(BOOL (^)(id))block {
-	self = [super init];
-	if (self) {
-		_block = block;
-	}
-
-	return self;
-}
-
-
-- (BOOL)matches:(id)item {
-	return _block(item);
-}
-
-
 @end
 
 
@@ -45,84 +23,9 @@
 @end
 
 
-@implementation IsSingleEntityWithComponentTypes {
-	NSSet *_types;
-}
-
-- (id)initWithTypes:(NSSet *)types; {
-	self = [super init];
-	if (self) {
-		_types = types;
-	}
-
-	return self;
-}
-
-
-- (BOOL)matches:(id)item {
-
-	if (![item respondsToSelector:@selector(firstObject)]) {
-		return NO;
-	}
-
-	NSArray *array = (NSArray *) item;
-	if (array.count != 1) {
-		return NO;
-	}
-
-	id firstObject = [array firstObject];
-	if (![firstObject isMemberOfClass:[ESEntity class]]) {
-		return NO;
-	}
-
-	ESEntity *entity = (ESEntity *) firstObject;
-	if (![entity.componentTypes isEqualToSet:_types]) {
-		return NO;
-	}
-
-	return YES;
-}
-@end
-
-
-
 
 @interface EntitySpawningSystem : NSObject <ESReactiveSubSystem>
 - (id)initWithEntities:(ESEntityRepository *)entities;
-@end
-
-
-@implementation EntitySpawningSystem {
-	ESEntityRepository *_entities;
-	BOOL _hasCreatedEntity;
-}
-
-- (void)executeWithEntities:(NSArray *)entities {
-	if (_hasCreatedEntity) {
-		return;
-	}
-	ESEntity *newEntity = [_entities createEntity];
-	[newEntity addComponent:[SomeComponent new]];
-	[newEntity addComponent:[SomeOtherComponent new]];
-	_hasCreatedEntity = YES;
-}
-
-
-- (id)initWithEntities:(ESEntityRepository *)entities {
-	self = [super init];
-	if (self) {
-		_entities = entities;
-		_hasCreatedEntity = NO;
-	}
-
-	return self;
-}
-
-
-- (ESMatcher *)triggeringComponents {
-	return [ESMatcher just:[SomeComponent class]];
-}
-
 @end
 
 
@@ -497,7 +400,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 				return YES;
 			};
 
-			[[clientSystem should] receive:@selector(executeWithEntities:) withArguments:[[GXBlockMatcher alloc] initWithBlock:isEntityWithOneTestComponent]];
+			[[clientSystem should] receive:@selector(executeWithEntities:) withArguments:[[BlockMatcher alloc] initWithBlock:isEntityWithOneTestComponent]];
 			[reactiveSystem execute];
 
 			BOOL (^isEntityWithBothTestAndOtherComponent)(id) = ^BOOL(id item) {
@@ -524,7 +427,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 				return YES;
 			};
 
-			[[clientSystem should] receive:@selector(executeWithEntities:) withArguments:[[GXBlockMatcher alloc] initWithBlock:isEntityWithBothTestAndOtherComponent]];
+			[[clientSystem should] receive:@selector(executeWithEntities:) withArguments:[[BlockMatcher alloc] initWithBlock:isEntityWithBothTestAndOtherComponent]];
 			[reactiveSystem execute];
 
 
@@ -573,3 +476,101 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 
 SPEC_END
+
+
+
+
+@implementation EntitySpawningSystem {
+	ESEntityRepository *_entities;
+	BOOL _hasCreatedEntity;
+}
+
+- (void)executeWithEntities:(NSArray *)entities {
+	if (_hasCreatedEntity) {
+		return;
+	}
+	ESEntity *newEntity = [_entities createEntity];
+	[newEntity addComponent:[SomeComponent new]];
+	[newEntity addComponent:[SomeOtherComponent new]];
+	_hasCreatedEntity = YES;
+}
+
+- (id)initWithEntities:(ESEntityRepository *)entities {
+	self = [super init];
+	if (self) {
+		_entities = entities;
+		_hasCreatedEntity = NO;
+	}
+
+	return self;
+}
+
+- (ESMatcher *)triggeringComponents {
+	return [ESMatcher just:[SomeComponent class]];
+}
+
+@end
+
+
+
+@implementation BlockMatcher {
+	BOOL (^_block)(id);
+}
+
+- (id)initWithBlock:(BOOL (^)(id))block {
+	self = [super init];
+	if (self) {
+		_block = block;
+	}
+
+	return self;
+}
+
+- (BOOL)matches:(id)item {
+	return _block(item);
+}
+
+@end
+
+
+
+@implementation IsSingleEntityWithComponentTypes {
+	NSSet *_types;
+}
+
+- (id)initWithTypes:(NSSet *)types; {
+	self = [super init];
+	if (self) {
+		_types = types;
+	}
+
+	return self;
+}
+
+
+
+- (BOOL)matches:(id)item {
+
+	if (![item respondsToSelector:@selector(firstObject)]) {
+		return NO;
+	}
+
+	NSArray *array = (NSArray *) item;
+	if (array.count != 1) {
+		return NO;
+	}
+
+	id firstObject = [array firstObject];
+	if (![firstObject isMemberOfClass:[ESEntity class]]) {
+		return NO;
+	}
+
+	ESEntity *entity = (ESEntity *) firstObject;
+	if (![entity.componentTypes isEqualToSet:_types]) {
+		return NO;
+	}
+
+	return YES;
+}
+@end
+
