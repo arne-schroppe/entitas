@@ -16,6 +16,7 @@ desc 'Setup coveralls and xctool'
 task :setup do
   puts `sudo easy_install cpp-coveralls`
   puts `brew install xctool`
+  puts `gem install cocoapods`
 end
 
 desc 'Run the tests'
