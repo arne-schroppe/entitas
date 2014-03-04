@@ -31,7 +31,7 @@ task :coveralls do
 
   generate_gcov(dir)
   copy_gcov_to_project_dir(dir)
-  send_report([scheme_for_name(""), scheme_for_name("Tests"), "Pods"])
+  send_report([scheme_for_name("Tests"), "Pods"])
   remove_gcov_dir
 end
 
