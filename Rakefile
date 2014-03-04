@@ -82,7 +82,7 @@ end
 
 def generate_gcov(gcov_dir)
   command = "ls -al #{gcov_dir} && cd #{gcov_dir}"
-  Dir["#{gcov_dir}/*.gcda"].each do |file|
+  Dir["#{gcov_dir}/*.gcno"].each do |file|
     command << " && gcov-4.2 '#{file}' -o '#{gcov_dir}'"
   end
   run(command, "Generating GCOV failed");
