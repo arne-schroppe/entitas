@@ -1,5 +1,6 @@
 Entitas
 ====
+[![Build Status](https://travis-ci.org/wooga/entitas.png?branch=master)](https://travis-ci.org/wooga/entitas)[![Coverage Status](https://coveralls.io/repos/wooga/entitas/badge.png?branch=master)](https://coveralls.io/r/wooga/entitas?branch=master)
 
 Entitas is an entity-system written in Objective-C. It is very much inspired by existing entity-systems in ActionScript3 like [Ash], [Ember] and [XEmber].
 
