@@ -93,7 +93,7 @@ def copy_gcov_to_project_dir(gcov_dir)
 end
 
 def send_report(excludes)
-  command = "coveralls --verbose"
+  command = "coveralls --verbose -E *.h"
   excludes.each do |exclude|
     command << " -e '#{exclude}'"
   end
