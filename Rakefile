@@ -75,14 +75,14 @@ def compile(workspace, scheme, is_test)
 end
 
 def gcov_dir
-  scheme = scheme_for_name("")
+  scheme = scheme_for_name("Tests")
   settings = build_settings_per_target(workspace, scheme)[scheme]
   "#{settings['OBJECT_FILE_DIR_normal']}/#{settings['CURRENT_ARCH']}"
 end
 
 def generate_gcov(gcov_dir)
   command = "ls -al #{gcov_dir} && cd #{gcov_dir}"
-  Dir["#{gcov_dir}/*.gcno"].each do |file|
+  Dir["#{gcov_dir}/*.gcda"].each do |file|
     command << " && gcov-4.2 '#{file}' -o '#{gcov_dir}'"
   end
   run(command, "Generating GCOV failed");
