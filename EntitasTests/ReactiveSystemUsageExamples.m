@@ -91,8 +91,8 @@ describe(@"Reactive system creation", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem *system = [[ESReactiveSystem alloc] initWithSystem:[PrintString new]
-								   entityRepository:repo
-								   notificationType:ESEntityAdded];
+														   entityRepository:repo
+														   notificationType:ESEntityAdded];
 
 		for (int i=0; i < 4; ++i) {
 			[system execute];
@@ -110,16 +110,14 @@ describe(@"Reactive system creation", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem2 *system = [[ESReactiveSystem2 alloc] initWithEntityRepository:repo
-						                               notificationType:ESEntityAdded
-								                       triggers:[ESMatcher allOf:
-										          [SomeComponent class],
-											  [SomeOtherComponent class],
-											   nil]
-							                           executeBlock:^(NSArray *array) {
-							                               NSLog(@"Hello, Version 2!");
-							                           }];
-							   
-							   
+																	   notificationType:ESEntityAdded
+																			   triggers:[ESMatcher allOf:
+																					      [SomeComponent class],
+																						  [SomeOtherComponent class],
+																						   nil]
+																		   executeBlock:^(NSArray *array) {
+																			   NSLog(@"Hello, Version 2!");
+																		   }];
 		system.mandatoryComponents = [ESMatcher allOf:[SomeComponent class], nil];
 
 
@@ -140,12 +138,12 @@ describe(@"Reactive system creation", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem3 *system = [[ESReactiveSystem3 alloc] initWithEntityRepository:repo
-									              subSystem:[PrintString3 new]
-							                       notificationType:ESEntityAdded
-									               triggers:[ESMatcher allOf:
-											      [SomeComponent class],
-											      [SomeOtherComponent class],
-											       nil]];
+																			  subSystem:[PrintString3 new]
+																	   notificationType:ESEntityAdded
+																			   triggers:[ESMatcher allOf:
+																					      [SomeComponent class],
+																					      [SomeOtherComponent class],
+																					       nil]];
 		system.mandatoryComponents = [ESMatcher allOf:[SomeComponent class], nil];
 
 
@@ -166,7 +164,7 @@ describe(@"Reactive system creation", ^{
 
 		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
 		ESReactiveSystem4 *system = [[ESReactiveSystem4 alloc] initWithSystem:[PrintString4 new]
-								     entityRepository:repo];
+														   entityRepository:repo];
 
 		for (int i=0; i < 4; ++i) {
 			[system execute];
