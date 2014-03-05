@@ -1,5 +1,7 @@
 #import "Kiwi.h"
 
+extern void __gcov_flush(void);
+
 SPEC_BEGIN(ZZZSpec)
 
 describe(@"ZZZ", ^{
