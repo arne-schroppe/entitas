@@ -35,6 +35,7 @@
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
 		85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A40B54895A0164D8768 /* SomeThirdComponent.m */; };
 		85D85275E3A8923974F032F9 /* ReactiveSystemUsageExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D854244EF24EE64E6142AC /* ReactiveSystemUsageExamples.m */; };
+		85D854F58EC3F0AA1BDBE975 /* ESRepositoryObserverSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C7A13500B99A142A19C /* ESRepositoryObserverSpec.m */; };
 		85D8582B74E805FF9FED9F93 /* ESReactiveSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8598D4F940B8E9806FD1B /* ESReactiveSystem.m */; };
 		85D85A69D294886F5F866282 /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
 		85D85B0486967929E4B734B5 /* ESReactiveSystem4.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A7FB57D7C7C30430B0E /* ESReactiveSystem4.m */; };
@@ -45,8 +46,10 @@
 		85D85D14014224A19413A90A /* ESReactiveSystem5.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85B16BCF9895D83EA29B7 /* ESReactiveSystem5.m */; };
 		85D85D5B087CA40A5F268621 /* ESReactiveSystemSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D851269A87097B236B8CE2 /* ESReactiveSystemSettings.m */; };
 		85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
+		85D85DA035691FA90A52B836 /* ESRepositoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */; };
 		85D85DFA4529C3917B537EF8 /* ESReactiveSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8598D4F940B8E9806FD1B /* ESReactiveSystem.m */; };
 		85D85E3D107BD2ABBC393685 /* ESReactiveSystemSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85DA69F55B3F15FD94207 /* ESReactiveSystemSpec.m */; };
+		85D85F53A9314DD89C85B456 /* ESRepositoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */; };
 		B06B01DF7F0AA1AD1AE763E8 /* ESEntityRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntityRepository.m */; };
 		B06B0433B7A950AA7E9EB93E /* SomeOtherComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */; };
 		B06B05511ECA4929A43C60FD /* ESEntityRepositorySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B09526BD11CEC08FBFC6A /* ESEntityRepositorySpec.m */; };
@@ -134,6 +137,8 @@
 		85D851269A87097B236B8CE2 /* ESReactiveSystemSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystemSettings.m; sourceTree = "<group>"; };
 		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
 		85D854244EF24EE64E6142AC /* ReactiveSystemUsageExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactiveSystemUsageExamples.m; sourceTree = "<group>"; };
+		85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRepositoryObserver.m; sourceTree = "<group>"; };
+		85D856B50F31BAD0158A4165 /* ESRepositoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRepositoryObserver.h; sourceTree = "<group>"; };
 		85D857EB244DFB44E0BC84C1 /* ESReactiveSystem5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSystem5.h; sourceTree = "<group>"; };
 		85D85832784021B258B04250 /* ESReactiveSystemSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSystemSettings.h; sourceTree = "<group>"; };
 		85D8588922AFBB4E8FDADB8C /* ESReactiveSubSystem4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSubSystem4.h; sourceTree = "<group>"; };
@@ -143,6 +148,7 @@
 		85D85A7FB57D7C7C30430B0E /* ESReactiveSystem4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystem4.m; sourceTree = "<group>"; };
 		85D85B16BCF9895D83EA29B7 /* ESReactiveSystem5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystem5.m; sourceTree = "<group>"; };
 		85D85C555490C2019A6FD13C /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
+		85D85C7A13500B99A142A19C /* ESRepositoryObserverSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRepositoryObserverSpec.m; sourceTree = "<group>"; };
 		85D85C8171E09DEB7802B57F /* ESMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESMatcher.h; sourceTree = "<group>"; };
 		85D85DA69F55B3F15FD94207 /* ESReactiveSystemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESReactiveSystemSpec.m; sourceTree = "<group>"; };
 		85D85F02D744F267FD3E7FD3 /* ESReactiveSubSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESReactiveSubSystem.h; sourceTree = "<group>"; };
@@ -274,6 +280,8 @@
 				85D85832784021B258B04250 /* ESReactiveSystemSettings.h */,
 				85D85B16BCF9895D83EA29B7 /* ESReactiveSystem5.m */,
 				85D857EB244DFB44E0BC84C1 /* ESReactiveSystem5.h */,
+				85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */,
+				85D856B50F31BAD0158A4165 /* ESRepositoryObserver.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -308,6 +316,7 @@
 				85D85DA69F55B3F15FD94207 /* ESReactiveSystemSpec.m */,
 				85D854244EF24EE64E6142AC /* ReactiveSystemUsageExamples.m */,
 				0B57264318C0BE9700478619 /* ZZZSpec.m */,
+				85D85C7A13500B99A142A19C /* ESRepositoryObserverSpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -520,6 +529,8 @@
 				85D85B0486967929E4B734B5 /* ESReactiveSystem4.m in Sources */,
 				85D85BE616C5A561F69324A5 /* ESReactiveSystemSettings.m in Sources */,
 				85D85D14014224A19413A90A /* ESReactiveSystem5.m in Sources */,
+				85D85F53A9314DD89C85B456 /* ESRepositoryObserver.m in Sources */,
+				85D854F58EC3F0AA1BDBE975 /* ESRepositoryObserverSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +547,7 @@
 				85D85C60F1EFF251502E1CB2 /* ESReactiveSystem4.m in Sources */,
 				85D85D5B087CA40A5F268621 /* ESReactiveSystemSettings.m in Sources */,
 				85D85CD19B76767294EFE3F9 /* ESReactiveSystem5.m in Sources */,
+				85D85DA035691FA90A52B836 /* ESRepositoryObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

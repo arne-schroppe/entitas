@@ -8,6 +8,7 @@
 #import "ESReactiveSubSystem5.h"
 #import "ESReactiveSystemSettings.h"
 #import "ESReactiveSystem5.h"
+#import "ESRepositoryObserver.h"
 
 
 @interface PrintString : NSObject<ESReactiveSubSystem>
@@ -93,6 +94,40 @@
 
 
 
+@interface PrintString7 : NSObject<ESSystem>
+
+@end
+
+@implementation PrintString7 {
+	ESRepositoryObserver *_repositoryObserver;
+}
+
+- (id)initWithRepo:(ESEntityRepository *)repo {
+	self = [super init];
+	if (self) {
+		ESMatcher *triggeringComponents = [ESMatcher allOf:[SomeComponent class], [SomeOtherComponent class], nil];
+		_repositoryObserver = [[ESRepositoryObserver alloc] initWithRepository:repo matcher:triggeringComponents target:self];
+	}
+
+	return self;
+}
+
+
+- (void)execute {
+	[_repositoryObserver executeWithCollectedEntities];
+}
+
+- (void)executeWithEntities:(NSArray *)entities {
+	NSLog(@"Hello, Version 7!");
+}
+
+
+
+
+@end
+
+
+
 SPEC_BEGIN(ReactiveSystemExamples)
 
 describe(@"Reactive system creation", ^{
@@ -152,6 +187,22 @@ describe(@"Reactive system creation", ^{
 
     });
 
+
+
+	it(@"Version 7: Repo observer", ^{
+
+		ESEntityRepository *repo = [[ESEntityRepository alloc] init];
+		PrintString7 *system = [[PrintString7 alloc] initWithRepo:repo];
+
+		for (int i=0; i < 4; ++i) {
+			[system execute];
+
+			ESEntity *entity = [repo createEntity];
+			[entity addComponent:[SomeComponent new]];
+			[entity addComponent:[SomeOtherComponent new]];
+		}
+
+	});
 
 });
 

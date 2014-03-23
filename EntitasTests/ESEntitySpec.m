@@ -5,6 +5,7 @@
 #import "ESEntityRepository.h"
 #import "ESEntity+Internal.h"
 #import "ESEntityRepository+Internal.h"
+#import "SomeThirdComponent.h"
 
 registerMatcher(NSNotificationMatcher)
 
@@ -123,6 +124,7 @@ SPEC_BEGIN(ESEntitySpec)
             [entity exchangeComponent:component];
             [entity removeComponentOfType:[component class]];
         });
+
     });
 
 SPEC_END

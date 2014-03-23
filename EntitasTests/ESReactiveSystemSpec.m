@@ -25,7 +25,7 @@
 
 
 @interface EntitySpawningSystem : NSObject <ESReactiveSubSystem>
-- (id)initWithEntities:(ESEntityRepository *)entities;
+- (id)initWithRepository:(ESEntityRepository *)entities;
 @end
 
 
@@ -70,7 +70,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should not execute the client system if no repo were collected", ^{
+		it(@"should not execute the client system if no entities were collected", ^{
 			NSObject <ESReactiveSubSystem> *system = (NSObject <ESReactiveSubSystem> *) [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -83,7 +83,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should execute the client system with a collection of added repo", ^{
+		it(@"should execute the client system with a collection of added entities", ^{
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -136,7 +136,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should only execute its client system with repo that still have all mandatory components", ^{
+		it(@"should only execute its client system with entities that still have all mandatory components", ^{
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:[ESMatcher just:[SomeOtherComponent class]]];
@@ -208,7 +208,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 
 		});
 
-		it(@"should execute the client system with a collection of repo that had components added", ^{
+		it(@"should execute the client system with a collection of entities that had components added", ^{
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -224,7 +224,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 			[reactiveSystem execute];
 		});
 
-		it(@"should execute the client system with a collection of non-duplicated repo, even when component is added twice", ^{
+		it(@"should execute the client system with a collection of non-duplicated entities, even when component is added twice", ^{
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -242,7 +242,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should execute the client system with a collection of repo that had components removed", ^{
+		it(@"should execute the client system with a collection of entities that had components removed", ^{
 			KWMock *system = [KWMock nullMockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -261,7 +261,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should execute the client system with a collection of non-duplicated repo, even when component is removed twice", ^{
+		it(@"should execute the client system with a collection of non-duplicated entities, even when component is removed twice", ^{
 			KWMock *system = [KWMock nullMockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -282,7 +282,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should also include completely removed repo", ^{
+		it(@"should also include completely removed entities", ^{
 
 			KWMock *system = [KWMock nullMockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
@@ -302,7 +302,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should execute the client system only with repo it's interested in", ^{
+		it(@"should execute the client system only with entities it's interested in", ^{
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -322,7 +322,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should clear the collected repo after execution", ^{
+		it(@"should clear the collected entities after execution", ^{
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
 			[system stub:@selector(mandatoryComponents) andReturn:emptyMatcher];
@@ -342,7 +342,7 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should still clear the collected repo after execution even if no entity fulfilled the requirements", ^{
+		it(@"should still clear the collected entities after execution even if no entity fulfilled the requirements", ^{
 
 			KWMock *system = [KWMock mockForProtocol:@protocol(ESReactiveSubSystem)];
 			[system stub:@selector(triggeringComponents) andReturn:[ESMatcher just:[SomeComponent class]]];
@@ -363,9 +363,9 @@ SPEC_BEGIN(ESReactiveSystemSpec)
 		});
 
 
-		it(@"should collect repo, that are added while the client system is executing, to a new collection which is used in the next execution", ^{
+		it(@"should collect entities, that are added while the client system is executing, to a new collection which is used in the next execution", ^{
 
-			EntitySpawningSystem *clientSystem = [[EntitySpawningSystem alloc] initWithEntities:repo];
+			EntitySpawningSystem *clientSystem = [[EntitySpawningSystem alloc] initWithRepository:repo];
 			ESReactiveSystem *reactiveSystem = [[ESReactiveSystem alloc] initWithSystem:clientSystem entityRepository:repo notificationType:ESEntityAdded];
 
 
@@ -495,7 +495,7 @@ SPEC_END
 	_hasCreatedEntity = YES;
 }
 
-- (id)initWithEntities:(ESEntityRepository *)entities {
+- (id)initWithRepository:(ESEntityRepository *)entities {
 	self = [super init];
 	if (self) {
 		_entities = entities;
