@@ -43,7 +43,7 @@
 		return;
 	}
 
-	NSArray *entitiesForTarget = [_collectedEntities copy];
+	NSArray *entitiesForTarget = _collectedEntities;
 	_collectedEntities = [[NSMutableArray alloc] init];
 	[_target executeWithEntities:entitiesForTarget];
 }
