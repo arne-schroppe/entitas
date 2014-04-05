@@ -1,6 +1,5 @@
 #import "ESEntity+Internal.h"
 #import "ESEntityRepository+Internal.h"
-#import "ESMatcher.h"
 
 
 @implementation ESEntity
@@ -81,8 +80,6 @@
 {
     return _creationIndex;
 }
-
-
 
 - (NSString *)description
 {

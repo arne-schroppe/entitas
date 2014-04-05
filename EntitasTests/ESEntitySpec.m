@@ -5,7 +5,6 @@
 #import "ESEntityRepository.h"
 #import "ESEntity+Internal.h"
 #import "ESEntityRepository+Internal.h"
-#import "SomeThirdComponent.h"
 
 registerMatcher(NSNotificationMatcher)
 

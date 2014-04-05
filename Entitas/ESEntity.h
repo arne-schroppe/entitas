@@ -22,8 +22,5 @@
 - (BOOL)hasComponentsOfTypes:(NSSet *)types;
 
 - (NSSet *)componentTypes;
-- (BOOL)isEqual:(id)other;
-- (BOOL)isEqualToEntity:(ESEntity *)entity;
-- (NSUInteger)hash;
 
 @end
