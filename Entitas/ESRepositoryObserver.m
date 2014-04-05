@@ -43,6 +43,7 @@
 		return;
 	}
 
+	//If creating new NSMutableArray's is too expensive, we could also just create two of them, use removeAllObjects and switch between them
 	NSArray *entitiesForTarget = _collectedEntities;
 	_collectedEntities = [[NSMutableArray alloc] init];
 	[_target executeWithEntities:entitiesForTarget];
