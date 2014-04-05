@@ -1,8 +1,4 @@
 #import "ESRepositoryObserver.h"
-#import "ESMatcher.h"
-#import "ESEntityRepository.h"
-#import "ESReactiveSubSystem5.h"
-#import "ESCollection.h"
 #import "ESEntityRepository+Internal.h"
 
 

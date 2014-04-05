@@ -5,10 +5,17 @@
 @class ESEntityRepository;
 
 
+@protocol ESEntityRepositoryDelegate
+
+- (void)executeWithEntities:(NSArray *)entities;
+
+@end
+
+
 @interface ESRepositoryObserver : NSObject
 
-- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target;
-- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target trigger:(ESEntityChange)changeTrigger;
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id<ESEntityRepositoryDelegate>)target;
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id<ESEntityRepositoryDelegate>)target trigger:(ESEntityChange)changeTrigger;
 
 - (void)executeWithCollectedEntities;
 

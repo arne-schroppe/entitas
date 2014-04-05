@@ -1,9 +1,6 @@
 #import "Kiwi.h"
 #import "ESRepositoryObserver.h"
-#import "ESMatcher.h"
 #import "SomeComponent.h"
-#import "ESEntityRepository.h"
-#import "ESEntity.h"
 #import "SomeOtherComponent.h"
 #import "ESEntity+Internal.h"
 
@@ -19,9 +16,6 @@
 @interface BlockMatcher2 : NSObject <HCMatcher>
 - (id)initWithBlock:(BOOL (^)(id))block;
 @end
-
-
-
 
 
 SPEC_BEGIN(ESRepositoryObserverSpec)
@@ -363,9 +357,7 @@ SPEC_END
 
 @implementation ObserverSystem
 
-- (void)executeWithEntities:(NSArray *)entities {
-
-}
+- (void)executeWithEntities:(NSArray *)entities {}
 
 @end
 
