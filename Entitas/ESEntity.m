@@ -1,7 +1,6 @@
 #import "ESEntity+Internal.h"
 #import "ESEntityRepository+Internal.h"
 
-
 @implementation ESEntity
 {
     NSMutableSet *_componentTypes;
