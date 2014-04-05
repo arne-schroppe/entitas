@@ -33,26 +33,26 @@ SPEC_BEGIN(ESMatcherSpec)
             });
 
 
-			it(@"should match anything if matcher has no component types", ^{
-				matcher = [ESMatcher allOf:nil];
+            it(@"should match anything if matcher has no component types", ^{
+                matcher = [ESMatcher allOf:nil];
 
-				ESEntity *entity = [repo createEntity];
-				[entity addComponent:[SomeComponent new]];
-				[entity addComponent:[SomeOtherComponent new]];
+                ESEntity *entity = [repo createEntity];
+                [entity addComponent:[SomeComponent new]];
+                [entity addComponent:[SomeOtherComponent new]];
 
-				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
-				[[theValue(isMatching) should] beYes];
-			});
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                [[theValue(isMatching) should] beYes];
+            });
 
 
-			it(@"should match an empty entity if matcher has no component types", ^{
-				matcher = [ESMatcher allOf:nil];
+            it(@"should match an empty entity if matcher has no component types", ^{
+                matcher = [ESMatcher allOf:nil];
 
-				ESEntity *entity = [repo createEntity];
+                ESEntity *entity = [repo createEntity];
 
-				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
-				[[theValue(isMatching) should] beYes];
-			});
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                [[theValue(isMatching) should] beYes];
+            });
 
 
             it(@"should not match if not all component types are present in the entity", ^{
@@ -120,26 +120,26 @@ SPEC_BEGIN(ESMatcherSpec)
 
 
 
-			it(@"should match nothing if matcher has no component types", ^{
-				matcher = [ESMatcher anyOf:nil];
+            it(@"should match nothing if matcher has no component types", ^{
+                matcher = [ESMatcher anyOf:nil];
 
-				ESEntity *entity = [repo createEntity];
-				[entity addComponent:[SomeComponent new]];
-				[entity addComponent:[SomeOtherComponent new]];
+                ESEntity *entity = [repo createEntity];
+                [entity addComponent:[SomeComponent new]];
+                [entity addComponent:[SomeOtherComponent new]];
 
-				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
-				[[theValue(isMatching) should] beNo];
-			});
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                [[theValue(isMatching) should] beNo];
+            });
 
 
-			it(@"should not match an empty entity if matcher has no component types", ^{
-				matcher = [ESMatcher anyOf:nil];
+            it(@"should not match an empty entity if matcher has no component types", ^{
+                matcher = [ESMatcher anyOf:nil];
 
-				ESEntity *entity = [repo createEntity];
+                ESEntity *entity = [repo createEntity];
 
-				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
-				[[theValue(isMatching) should] beNo];
-			});
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                [[theValue(isMatching) should] beNo];
+            });
 
 
 
@@ -195,25 +195,25 @@ SPEC_BEGIN(ESMatcherSpec)
             });
 
 
-			it(@"should match if the component is nil", ^{
-				matcher = [ESMatcher just:nil];
+            it(@"should match if the component is nil", ^{
+                matcher = [ESMatcher just:nil];
 
-				ESEntity *entity = [repo createEntity];
-				[entity addComponent:[SomeOtherComponent new]];
+                ESEntity *entity = [repo createEntity];
+                [entity addComponent:[SomeOtherComponent new]];
 
-				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
-				[[theValue(isMatching) should] beYes];
-			});
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                [[theValue(isMatching) should] beYes];
+            });
 
 
-			it(@"should match an empty entity if the components is nil", ^{
-				matcher = [ESMatcher just:nil];
+            it(@"should match an empty entity if the components is nil", ^{
+                matcher = [ESMatcher just:nil];
 
-				ESEntity *entity = [repo createEntity];
+                ESEntity *entity = [repo createEntity];
 
-				BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
-				[[theValue(isMatching) should] beYes];
-			});
+                BOOL isMatching = [matcher areComponentsMatching:[entity componentTypes]];
+                [[theValue(isMatching) should] beYes];
+            });
 
 
             it(@"should be equal to another matcher of the same type with the same components", ^{

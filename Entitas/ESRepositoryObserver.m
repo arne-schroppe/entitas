@@ -8,66 +8,66 @@
 
 
 @implementation ESRepositoryObserver {
-	id _target;
-	ESCollection *_watcherCollection;
-	NSMutableArray *_collectedEntities;
-	ESEntityChange _changeTrigger;
+    id _target;
+    ESCollection *_watcherCollection;
+    NSMutableArray *_collectedEntities;
+    ESEntityChange _changeTrigger;
 }
 
 
 - (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target {
-	return [self initWithRepository:repository matcher:matcher target:target trigger:ESEntityAdded];
+    return [self initWithRepository:repository matcher:matcher target:target trigger:ESEntityAdded];
 }
 
 - (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target trigger:(ESEntityChange)changeTrigger
 {
-	self = [super init];
-	if (self) {
-		NSAssert(repository != nil, @"Repository cannot be nil");
-		NSAssert(matcher != nil, @"Matcher cannot be nil");
-		NSAssert(target != nil, @"Target cannot be nil");
+    self = [super init];
+    if (self) {
+        NSAssert(repository != nil, @"Repository cannot be nil");
+        NSAssert(matcher != nil, @"Matcher cannot be nil");
+        NSAssert(target != nil, @"Target cannot be nil");
 
-		_target = target;
-		_changeTrigger = changeTrigger;
-		_collectedEntities = [[NSMutableArray alloc] init];
-		_watcherCollection = [repository collectionForMatcher:matcher];
-		[self startListening];
-	}
+        _target = target;
+        _changeTrigger = changeTrigger;
+        _collectedEntities = [[NSMutableArray alloc] init];
+        _watcherCollection = [repository collectionForMatcher:matcher];
+        [self startListening];
+    }
 
-	return self;
+    return self;
 }
 
 
 - (void)executeWithCollectedEntities {
-	if( _collectedEntities.count == 0) {
-		return;
-	}
+    if( _collectedEntities.count == 0) {
+        return;
+    }
 
-	//If creating new NSMutableArray's is too expensive, we could also just create two of them, use removeAllObjects and switch between them
-	NSArray *entitiesForTarget = _collectedEntities;
-	_collectedEntities = [[NSMutableArray alloc] init];
-	[_target executeWithEntities:entitiesForTarget];
+    //If creating new NSMutableArray's is too expensive, we could also just create two of them, use removeAllObjects and switch between them
+    NSArray *entitiesForTarget = _collectedEntities;
+    _collectedEntities = [[NSMutableArray alloc] init];
+    [_target executeWithEntities:entitiesForTarget];
 }
 
 
 - (void)deactivate {
-	_collectedEntities = [[NSMutableArray alloc] init];
-	[self stopListening];
+    _collectedEntities = [[NSMutableArray alloc] init];
+    [self stopListening];
 }
 
 
 - (void)activate {
-	[self startListening];
+    [self startListening];
 }
 
 
 - (void)startListening {
-	[_watcherCollection addObserver:self forEvent:_changeTrigger];
+    [_watcherCollection addObserver:self forEvent:_changeTrigger];
 }
 
 
 - (void)stopListening {
-	[_watcherCollection removeObserver:self forEvent:_changeTrigger];
+    [_watcherCollection removeObserver:self forEvent:_changeTrigger];
 }
 
 
@@ -77,10 +77,10 @@
 @implementation ESRepositoryObserver (CollectionObserver)
 
 - (void)entity:(ESEntity *)changedEntity changedInCollection:(ESCollection *)collection withChangeType:(ESEntityChange)changeType {
-	ESEntity *originalEntity = changedEntity;
-	if (![_collectedEntities containsObject:originalEntity]) {
-		[_collectedEntities addObject:originalEntity];
-	}
+    ESEntity *originalEntity = changedEntity;
+    if (![_collectedEntities containsObject:originalEntity]) {
+        [_collectedEntities addObject:originalEntity];
+    }
 }
 
 @end
