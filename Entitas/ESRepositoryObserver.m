@@ -15,10 +15,16 @@
 	id _target;
 	ESCollection *_watcherCollection;
 	NSMutableArray *_collectedEntities;
+	ESEntityChange _changeTrigger;
 }
 
 
 - (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target {
+	return [self initWithRepository:repository matcher:matcher target:target trigger:ESEntityAdded];
+}
+
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target trigger:(ESEntityChange)changeTrigger
+{
 	self = [super init];
 	if (self) {
 		NSAssert(repository != nil, @"Repository cannot be nil");
@@ -26,9 +32,10 @@
 		NSAssert(target != nil, @"Target cannot be nil");
 
 		_target = target;
+		_changeTrigger = changeTrigger;
 		_collectedEntities = [[NSMutableArray alloc] init];
 		_watcherCollection = [repository collectionForMatcher:matcher];
-		[_watcherCollection addObserver:self forEvent:ESEntityAdded];
+		[self startListening];
 	}
 
 	return self;
@@ -44,6 +51,28 @@
 	_collectedEntities = [[NSMutableArray alloc] init];
 	[_target executeWithEntities:entitiesForTarget];
 }
+
+
+- (void)deactivate {
+	_collectedEntities = [[NSMutableArray alloc] init];
+	[self stopListening];
+}
+
+
+- (void)activate {
+	[self startListening];
+}
+
+
+- (void)startListening {
+	[_watcherCollection addObserver:self forEvent:_changeTrigger];
+}
+
+
+- (void)stopListening {
+	[_watcherCollection removeObserver:self forEvent:_changeTrigger];
+}
+
 
 @end
 
