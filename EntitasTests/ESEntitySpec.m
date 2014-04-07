@@ -123,6 +123,7 @@ SPEC_BEGIN(ESEntitySpec)
             [entity exchangeComponent:component];
             [entity removeComponentOfType:[component class]];
         });
+
     });
 
 SPEC_END

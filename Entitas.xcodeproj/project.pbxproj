@@ -34,9 +34,12 @@
 		60266BCAC77A44E44C3FF2D3 /* ESSystemsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 60266EB8B37D32F3A1F8FB8D /* ESSystemsSpec.m */; };
 		60266FA3AC278C9A8E342CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 602666B1B326B33430D2AB89 /* InfoPlist.strings */; };
 		85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85A40B54895A0164D8768 /* SomeThirdComponent.m */; };
+		85D854F58EC3F0AA1BDBE975 /* ESRepositoryObserverSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C7A13500B99A142A19C /* ESRepositoryObserverSpec.m */; };
 		85D85A69D294886F5F866282 /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
 		85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */; };
 		85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D85C555490C2019A6FD13C /* ESMatcher.m */; };
+		85D85DA035691FA90A52B836 /* ESRepositoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */; };
+		85D85F53A9314DD89C85B456 /* ESRepositoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */; };
 		B06B01DF7F0AA1AD1AE763E8 /* ESEntityRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B05414306C58E1034B764 /* ESEntityRepository.m */; };
 		B06B0433B7A950AA7E9EB93E /* SomeOtherComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */; };
 		B06B05511ECA4929A43C60FD /* ESEntityRepositorySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B06B09526BD11CEC08FBFC6A /* ESEntityRepositorySpec.m */; };
@@ -120,9 +123,12 @@
 		638F0C3F3A5D72080F06897E /* ESCollection+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ESCollection+Internal.h"; sourceTree = "<group>"; };
 		7232792ED17C4E54A8F0B196 /* Pods-EntitasTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntitasTests.xcconfig"; path = "Pods/Pods-EntitasTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		85D852E1D2575CD7B4FC77D5 /* SomeThirdComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SomeThirdComponent.h; sourceTree = "<group>"; };
+		85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRepositoryObserver.m; sourceTree = "<group>"; };
+		85D856B50F31BAD0158A4165 /* ESRepositoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRepositoryObserver.h; sourceTree = "<group>"; };
 		85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcherSpec.m; sourceTree = "<group>"; };
 		85D85A40B54895A0164D8768 /* SomeThirdComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeThirdComponent.m; sourceTree = "<group>"; };
 		85D85C555490C2019A6FD13C /* ESMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESMatcher.m; sourceTree = "<group>"; };
+		85D85C7A13500B99A142A19C /* ESRepositoryObserverSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESRepositoryObserverSpec.m; sourceTree = "<group>"; };
 		85D85C8171E09DEB7802B57F /* ESMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESMatcher.h; sourceTree = "<group>"; };
 		B06B003BC9B7BF20962E1E90 /* ESEntityRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESEntityRepository.h; sourceTree = "<group>"; };
 		B06B0057B68CBD6960BAAD7C /* SomeOtherComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SomeOtherComponent.m; sourceTree = "<group>"; };
@@ -240,6 +246,8 @@
 				85D85C555490C2019A6FD13C /* ESMatcher.m */,
 				638F008900C39156E0C8164E /* Internal */,
 				638F09AFABAA69E5076225DE /* Entitas.h */,
+				85D8550CB72E96AEDC6FD751 /* ESRepositoryObserver.m */,
+				85D856B50F31BAD0158A4165 /* ESRepositoryObserver.h */,
 			);
 			path = Entitas;
 			sourceTree = "<group>";
@@ -272,6 +280,7 @@
 				B06B064A2A6B69E7224A2B2E /* ESCollectionSpec.m */,
 				85D8589BE4512AADE54AAD19 /* ESMatcherSpec.m */,
 				0B57264318C0BE9700478619 /* ZZZSpec.m */,
+				85D85C7A13500B99A142A19C /* ESRepositoryObserverSpec.m */,
 			);
 			path = EntitasTests;
 			sourceTree = "<group>";
@@ -478,6 +487,8 @@
 				85D8512AC523E79FFD7A2531 /* SomeThirdComponent.m in Sources */,
 				85D85C0ACE2FBBF625520940 /* ESMatcherSpec.m in Sources */,
 				85D85A69D294886F5F866282 /* ESMatcher.m in Sources */,
+				85D85F53A9314DD89C85B456 /* ESRepositoryObserver.m in Sources */,
+				85D854F58EC3F0AA1BDBE975 /* ESRepositoryObserverSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +501,7 @@
 				B06B01DF7F0AA1AD1AE763E8 /* ESEntityRepository.m in Sources */,
 				85D85D836DFC610EF1F9106F /* ESMatcher.m in Sources */,
 				CFC2055B18BE097F006A4A50 /* ESCollection.mm in Sources */,
+				85D85DA035691FA90A52B836 /* ESRepositoryObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
