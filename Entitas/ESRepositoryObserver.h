@@ -14,10 +14,10 @@
 
 @interface ESRepositoryObserver : NSObject
 
-- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id<ESEntityRepositoryDelegate>)target;
-- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id<ESEntityRepositoryDelegate>)target trigger:(ESEntityChange)changeTrigger;
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher;
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher trigger:(ESEntityChange)changeTrigger;
 
-- (void)executeWithCollectedEntities;
+- (NSArray *)drain;
 
 - (void)deactivate;
 - (void)activate;
