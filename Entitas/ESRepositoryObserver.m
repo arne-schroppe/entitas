@@ -8,26 +8,23 @@
 
 
 @implementation ESRepositoryObserver {
-    id _target;
     ESCollection *_watcherCollection;
     NSMutableArray *_collectedEntities;
     ESEntityChange _changeTrigger;
 }
 
 
-- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target {
-    return [self initWithRepository:repository matcher:matcher target:target trigger:ESEntityAdded];
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher {
+    return [self initWithRepository:repository matcher:matcher trigger:ESEntityAdded];
 }
 
-- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher target:(id)target trigger:(ESEntityChange)changeTrigger
-{
+
+- (id)initWithRepository:(ESEntityRepository *)repository matcher:(ESMatcher *)matcher trigger:(ESEntityChange)changeTrigger {
     self = [super init];
     if (self) {
         NSAssert(repository != nil, @"Repository cannot be nil");
         NSAssert(matcher != nil, @"Matcher cannot be nil");
-        NSAssert(target != nil, @"Target cannot be nil");
 
-        _target = target;
         _changeTrigger = changeTrigger;
         _collectedEntities = [[NSMutableArray alloc] init];
         _watcherCollection = [repository collectionForMatcher:matcher];
@@ -38,15 +35,15 @@
 }
 
 
-- (void)executeWithCollectedEntities {
+- (NSArray *)drain {
     if( _collectedEntities.count == 0) {
-        return;
+        return @[];
     }
 
-    //If creating new NSMutableArray's is too expensive, we could also just create two of them, use removeAllObjects and switch between them
-    NSArray *entitiesForTarget = _collectedEntities;
+    //If creating new NSMutableArrays is too expensive, we could instead just create two of them, use removeAllObjects and switch between them
+    NSArray *returnedEntities = _collectedEntities;
     _collectedEntities = [[NSMutableArray alloc] init];
-    [_target executeWithEntities:entitiesForTarget];
+	return returnedEntities;
 }
 
 
